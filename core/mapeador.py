@@ -212,14 +212,14 @@ def analisar_estrutura_com_progresso(url):
 # ============================================
 
 
-def analisar_estrutura(url, pegar_screenshot=False):
+def analisar_estrutura(url, pegar_screenshot=False, headless=True):
     print(f"🔍 Analisando: {url}")
     dados = []
     screenshot_base64 = None
     try:
         with sync_playwright() as p:
             launch_options = {
-                "headless": True,
+                "headless": headless,  # ⭐ AGORA USA O PARÂMETRO
                 "timeout": TIMEOUT_NAVEGADOR,
                 "args": ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
             }
@@ -323,3 +323,25 @@ def salvar_mapa_atual(dados, url, descricao=None):
     except Exception as e:
         print(f"⚠️ Não foi possível salvar no banco: {e}")
         return None
+
+
+def analisar_estrutura_com_fallback(url):
+    # Tenta em modo headless primeiro
+    try:
+        print("🔍 Tentando mapear em modo headless...")
+        dados = analisar_estrutura(url, headless=True)
+        if dados:
+            print(f"✅ Mapeamento headless concluído! {len(dados)} elementos")
+            return dados
+        else:
+            raise Exception("Nenhum dado retornado do headless")
+    except Exception as e:
+        print(f"⚠️ Erro no headless: {e}")
+        print("🪟 Tentando com janela aberta...")
+        dados = analisar_estrutura(url, headless=False)
+        if dados:
+            print(f"✅ Mapeamento com janela concluído! {len(dados)} elementos")
+            return dados
+        else:
+            print("❌ Falha no mapeamento com janela também!")
+            return []

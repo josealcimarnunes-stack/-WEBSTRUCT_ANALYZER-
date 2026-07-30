@@ -1321,3 +1321,47 @@ function testarErro() {
         document.getElementById('statusMapeamento').style.color = '#f85149';
     }
 }
+async function mapear() {
+    // ... código existente ...
+    
+    try {
+        const response = await fetch('/mapear_progresso?url=' + encodeURIComponent(url));
+        // ... processa a resposta ...
+    } catch (error) {
+        // Se deu erro, mostra o aviso de anti-bot
+        document.getElementById('avisoAntiBot').style.display = 'block';
+        document.getElementById('statusMapeamento').innerHTML = '⚠️ Site detectou bot! Clique em "Abrir Janela" para continuar.';
+    }
+}
+
+function confirmarJanela() {
+    const url = document.getElementById('urlInput').value.trim();
+    if (!url) {
+        mostrarToast('❌ Digite uma URL primeiro!', 'error');
+        return;
+    }
+    
+    mostrarToast('🪟 Tentando mapear...', 'info');
+    document.getElementById('avisoAntiBot').style.display = 'none';
+    
+    fetch('/mapear_com_fallback', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ url: url })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            mostrarToast('✅ ' + data.mensagem, 'success');
+            // Recarrega os dados
+            location.reload();
+        } else {
+            mostrarToast('❌ Erro: ' + data.erro, 'error');
+        }
+    })
+    .catch(error => {
+        mostrarToast('❌ Erro: ' + error.message, 'error');
+    });
+}

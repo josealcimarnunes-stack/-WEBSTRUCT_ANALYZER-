@@ -506,9 +506,151 @@ def abrir_navegador():
             print(f"📋 Abra manualmente: {url}")
 
 
+@app.route("/mapear_com_fallback", methods=["POST"])
+def mapear_com_fallback():
+    url = request.json.get("url", "")
+    if not url:
+        return jsonify({"erro": "URL não fornecida"}), 400
+
+    try:
+        from mapeador import analisar_estrutura_com_fallback
+
+        dados = analisar_estrutura_com_fallback(url)
+
+        if dados:
+            global cache_mapa
+            cache_mapa["dados"] = dados
+            cache_mapa["url"] = url
+            cache_mapa["total"] = len(dados)
+
+            return jsonify(
+                {
+                    "sucesso": True,
+                    "total": len(dados),
+                    "mensagem": f"✅ {len(dados)} elementos mapeados!",
+                }
+            )
+        else:
+            return jsonify({"erro": "Não foi possível mapear o site"}), 500
+    except Exception as e:
+        print(f"❌ Erro no mapeamento com fallback: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return jsonify({"erro": str(e)}), 500
+
+
 if __name__ == "__main__":
     print("🚀 Struct Analyzer Pro")
     print("🌐 Abrindo navegador...")
     threading.Thread(target=abrir_navegador, daemon=True).start()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
+
+
+# ============================================
+# ⭐ ROTA PARA MAPEAR COM JANELA ABERTA ⭐
+# ============================================
+@app.route("/mapear_com_janela", methods=["POST"])
+def mapear_com_janela():
+    url = request.args.get("url", "")
+    if not url:
+        return jsonify({"erro": "URL não fornecida"}), 400
+
+    try:
+        # ⭐ USA A FUNÇÃO COM headless=False (ABRE JANELA) ⭐
+        from mapeador import analisar_estrutura
+
+        dados = analisar_estrutura(url, pegar_screenshot=False, headless=False)
+
+        # Atualiza o cache
+        global cache_mapa
+        cache_mapa["dados"] = dados
+        cache_mapa["url"] = url
+        cache_mapa["total"] = len(dados)
+
+        return jsonify(
+            {
+                "sucesso": True,
+                "total": len(dados),
+                "dados": dados[:10],  # Retorna só os primeiros 10 pra não pesar
+            }
+        )
+    except Exception as e:
+        print(f"❌ Erro no mapeamento com janela: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return jsonify({"erro": str(e)}), 500
+
+
+@app.route("/mapear_com_fallback", methods=["POST"])
+def mapear_com_fallback():
+    url = request.json.get("url", "")
+    if not url:
+        return jsonify({"erro": "URL não fornecida"}), 400
+
+    try:
+        from mapeador import analisar_estrutura_com_fallback
+
+        dados = analisar_estrutura_com_fallback(url)
+
+        if dados:
+            # Atualiza o cache
+            global cache_mapa
+            cache_mapa["dados"] = dados
+            cache_mapa["url"] = url
+            cache_mapa["total"] = len(dados)
+
+            return jsonify(
+                {
+                    "sucesso": True,
+                    "total": len(dados),
+                    "mensagem": f"✅ {len(dados)} elementos mapeados!",
+                }
+            )
+        else:
+            return jsonify({"erro": "Não foi possível mapear o site"}), 500
+    except Exception as e:
+        print(f"❌ Erro: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return jsonify({"erro": str(e)}), 500
+
+
+# ============================================
+# ⭐ ROTA PARA MAPEAMENTO COM FALLBACK (HEADLESS → JANELA) ⭐
+# ============================================
+@app.route("/mapear_com_fallback", methods=["POST"])
+def mapear_com_fallback():
+    url = request.json.get("url", "")
+    if not url:
+        return jsonify({"erro": "URL não fornecida"}), 400
+
+    try:
+        from mapeador import analisar_estrutura_com_fallback
+
+        dados = analisar_estrutura_com_fallback(url)
+
+        if dados:
+            global cache_mapa
+            cache_mapa["dados"] = dados
+            cache_mapa["url"] = url
+            cache_mapa["total"] = len(dados)
+
+            return jsonify(
+                {
+                    "sucesso": True,
+                    "total": len(dados),
+                    "mensagem": f"✅ {len(dados)} elementos mapeados!",
+                }
+            )
+        else:
+            return jsonify({"erro": "Não foi possível mapear o site"}), 500
+    except Exception as e:
+        print(f"❌ Erro no mapeamento com fallback: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return jsonify({"erro": str(e)}), 500
