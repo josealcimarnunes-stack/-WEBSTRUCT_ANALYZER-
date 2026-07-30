@@ -633,10 +633,17 @@ function mostrarResultados(elementos) {
         const texto = elem.texto ? elem.texto.slice(0, 60) : 'sem texto';
         const idx = elementosCompletos.indexOf(elem);
         const indexReal = idx >= 0 ? idx : 0;
+        
+        // ⭐ VERIFICA SE 'classe' É STRING ANTES DE USAR .slice() ⭐
+        let classeDisplay = '';
+        if (elem.classe && typeof elem.classe === 'string' && elem.classe.length > 0) {
+            classeDisplay = '<span class="classe">.' + elem.classe.slice(0, 20) + '</span>';
+        }
+        
         html += `
             <li onclick="mostrarModal(${indexReal})">
                 <span class="tag">${elem.tag || '?'}</span>
-                ${elem.classe ? '<span class="classe">.' + elem.classe.slice(0, 20) + '</span>' : ''}
+                ${classeDisplay}
                 ${elem.id ? '<span class="id">#' + elem.id + '</span>' : ''}
                 <span class="texto">"' + texto + '"</span>
                 <span class="badge">🔍</span>
@@ -662,7 +669,7 @@ function mostrarModal(index) {
     const body = document.getElementById('modalBody');
     let html = `
         <div class="detalhe-item"><label>Tag</label><code>${elemento.tag || 'N/A'}</code></div>
-        <div class="detalhe-item"><label>Classe</label><code>${elemento.classe || '(nenhuma)'}</code></div>
+        <div class="detalhe-item"><label>Classe</label><code>${typeof elemento.classe === 'string' ? elemento.classe : '(nenhuma)'}</code></div>
         <div class="detalhe-item"><label>ID</label><code>${elemento.id || '(nenhum)'}</code></div>
         <div class="detalhe-item">
             <label>Seletor CSS</label>
@@ -685,36 +692,6 @@ function mostrarModal(index) {
 
     body.innerHTML = html;
     document.getElementById('elementoModal').style.display = 'flex';
-}
-
-function gerarCodigoPlaywright(elemento) {
-    if (elemento.seletor_css && elemento.seletor_css !== 'N/A') return 'page.locator("' + elemento.seletor_css + '")';
-    if (elemento.xpath && elemento.xpath !== 'N/A') return 'page.locator("xpath=' + elemento.xpath + '")';
-    return '# Seletor não disponível';
-}
-
-function copiarSeletor(texto, tipo) {
-    if (!texto || texto === 'N/A' || texto === '# Seletor não disponível') {
-        mostrarToast('Não há seletor para copiar', 'error');
-        return;
-    }
-    navigator.clipboard.writeText(texto).then(function() {
-        const botoes = document.querySelectorAll('.btn-copiar');
-        for (let i = 0; i < botoes.length; i++) {
-            const b = botoes[i];
-            if (b.innerText.includes(tipo) || b.innerText.includes('📋')) {
-                const original = b.innerText;
-                b.innerText = '✅ Copiado!';
-                b.classList.add('copiado');
-                setTimeout(function() { b.innerText = original; b.classList.remove('copiado'); }, 2000);
-            }
-        }
-        mostrarToast('✅ Seletor copiado!', 'success');
-    }).catch(function() { mostrarToast('Copie manualmente: Ctrl+C', 'error'); });
-}
-
-function fecharModal() {
-    document.getElementById('elementoModal').style.display = 'none';
 }
 
 // ============================================
@@ -1279,3 +1256,68 @@ function testarBotao() {
 }
 
 window.testarBotao = testarBotao;
+// ============================================
+// ⭐ SISTEMA DE DETECÇÃO DE ERROS ⭐
+// ============================================
+
+// Função que captura erros globais
+function capturarErros() {
+    // 1. Captura erros não tratados
+    window.onerror = function(mensagem, url, linha, coluna, erro) {
+        console.error('🚨 ERRO CAPTURADO:', mensagem, erro);
+        mostrarToast('❌ Erro: ' + mensagem, 'error');
+        document.getElementById('statusMapeamento').innerHTML = '❌ Erro: ' + mensagem;
+        document.getElementById('statusMapeamento').style.color = '#f85149';
+        return true;
+    };
+
+    // 2. Captura promessas rejeitadas
+    window.addEventListener('unhandledrejection', function(event) {
+        console.error('🚨 PROMESSA REJEITADA:', event.reason);
+        mostrarToast('❌ Erro: ' + event.reason, 'error');
+        document.getElementById('statusMapeamento').innerHTML = '❌ Erro: ' + event.reason;
+        document.getElementById('statusMapeamento').style.color = '#f85149';
+    });
+
+    // 3. Captura erros de fetch
+    const fetchOriginal = window.fetch;
+    window.fetch = function(...args) {
+        return fetchOriginal.apply(this, args).catch(function(erro) {
+            console.error('🚨 ERRO NO FETCH:', erro);
+            mostrarToast('❌ Erro na requisição: ' + erro.message, 'error');
+            document.getElementById('statusMapeamento').innerHTML = '❌ Erro: ' + erro.message;
+            document.getElementById('statusMapeamento').style.color = '#f85149';
+            throw erro;
+        });
+    };
+
+    console.log('✅ Sistema de detecção de erros ativado!');
+}
+
+// ============================================
+// ⭐ FUNÇÃO PARA LIMPAR ERROS DA TELA ⭐
+// ============================================
+
+function limparErros() {
+    const status = document.getElementById('statusMapeamento');
+    if (status) {
+        status.innerHTML = '';
+        status.style.color = '#e6edf3';
+    }
+}
+
+// ============================================
+// ⭐ FUNÇÃO PARA TESTAR ERRO ⭐
+// ============================================
+
+function testarErro() {
+    try {
+        // Força um erro pra testar a detecção
+        throw new Error('🧪 Erro de teste forçado!');
+    } catch (erro) {
+        console.error('🧪 Teste de erro:', erro);
+        mostrarToast('🧪 Teste: ' + erro.message, 'error');
+        document.getElementById('statusMapeamento').innerHTML = '🧪 Teste: ' + erro.message;
+        document.getElementById('statusMapeamento').style.color = '#f85149';
+    }
+}
