@@ -29,6 +29,25 @@ Base = declarative_base()
 # Cria a sessão
 SessionLocal = sessionmaker(bind=engine)
 
+
+# ============================================
+# FUNÇÃO AUXILIAR PARA CONVERTER TIPOS
+# ============================================
+
+
+def para_string(valor):
+    """Converte qualquer valor para string segura para o banco"""
+    if valor is None:
+        return ""
+    if isinstance(valor, dict):
+        return ""
+    if isinstance(valor, list):
+        return " ".join(str(v) for v in valor)
+    if isinstance(valor, bool):
+        return "1" if valor else "0"
+    return str(valor)
+
+
 # ============================================
 # MODELOS (TABELAS)
 # ============================================
@@ -44,7 +63,6 @@ class Mapa(Base):
     versao = Column(String(50), default="1.0")
     descricao = Column(String(200), nullable=True)
 
-    # Relacionamento com elementos
     elementos = relationship(
         "Elemento", back_populates="mapa", cascade="all, delete-orphan"
     )
@@ -105,17 +123,14 @@ class Elemento(Base):
 
 
 def criar_tabelas():
-    """Cria todas as tabelas no banco de dados"""
     Base.metadata.create_all(bind=engine)
     print("✅ Tabelas criadas com sucesso!")
 
 
 def salvar_mapa(dados, url, descricao=None):
-    """Salva um mapa completo no banco de dados"""
     session = SessionLocal()
 
     try:
-        # Cria o mapa
         mapa = Mapa(
             url=url,
             total_elementos=len(dados),
@@ -125,20 +140,19 @@ def salvar_mapa(dados, url, descricao=None):
         session.add(mapa)
         session.flush()
 
-        # Cria os elementos
         for elem in dados:
             elemento = Elemento(
                 mapa_id=mapa.id,
                 posicao=elem.get("posicao"),
                 profundidade=elem.get("profundidade"),
-                tag=elem.get("tag"),
-                classe=elem.get("classe"),
-                elemento_id=elem.get("id"),
-                link=elem.get("link"),
-                texto=elem.get("texto"),
-                pai=elem.get("pai"),
-                seletor_css=elem.get("seletor_css"),
-                xpath=elem.get("xpath"),
+                tag=para_string(elem.get("tag")),
+                classe=para_string(elem.get("classe")),
+                elemento_id=para_string(elem.get("id")),
+                link=para_string(elem.get("link")),
+                texto=para_string(elem.get("texto")),
+                pai=para_string(elem.get("pai")),
+                seletor_css=para_string(elem.get("seletor_css")),
+                xpath=para_string(elem.get("xpath")),
                 estavel=True,
             )
             session.add(elemento)
@@ -152,13 +166,15 @@ def salvar_mapa(dados, url, descricao=None):
     except Exception as e:
         session.rollback()
         print(f"❌ Erro ao salvar mapa: {e}")
+        import traceback
+
+        traceback.print_exc()
         return None
     finally:
         session.close()
 
 
 def buscar_ultimo_mapa(url):
-    """Busca o último mapa salvo para uma URL"""
     session = SessionLocal()
     try:
         mapa = (
@@ -176,7 +192,6 @@ def buscar_ultimo_mapa(url):
 
 
 def listar_mapas(url=None, limite=10):
-    """Lista os mapas salvos"""
     session = SessionLocal()
     try:
         query = session.query(Mapa)
@@ -192,7 +207,6 @@ def listar_mapas(url=None, limite=10):
 
 
 def contar_mapas():
-    """Conta quantos mapas estão salvos"""
     session = SessionLocal()
     try:
         total = session.query(Mapa).count()
@@ -205,7 +219,6 @@ def contar_mapas():
 
 
 def comparar_mapas(mapa_atual, mapa_anterior):
-    """Compara dois mapas e retorna as diferenças"""
     if not mapa_anterior:
         return {"status": "primeiro_mapa", "mensagem": "Este é o primeiro mapa salvo."}
 
@@ -261,7 +274,6 @@ def comparar_mapas(mapa_atual, mapa_anterior):
 
 
 def get_db():
-    """Retorna uma sessão do banco de dados"""
     db = SessionLocal()
     try:
         yield db
@@ -270,7 +282,6 @@ def get_db():
 
 
 def contar_mapas_por_url(url):
-
     session = SessionLocal()
     try:
         total = session.query(Mapa).filter(Mapa.url == url).count()

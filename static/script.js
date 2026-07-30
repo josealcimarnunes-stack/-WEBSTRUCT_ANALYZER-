@@ -93,13 +93,27 @@ async function mostrarInfoUrl() {
 // ============================================
 
 async function mapear() {
+    console.log('🔥 Botão Map clicado!');
     const url = document.getElementById('urlInput').value.trim();
+    console.log('📌 URL:', url);
+
     if (!url) {
         mostrarToast('Digite uma URL!', 'error');
         return;
     }
     urlParaMapear = url;
-    
+
+    // ⭐ BOTÃO MUDA PARA "MAPEANDO..."
+    const btn = document.getElementById('btnPrincipal');
+    btn.innerHTML = '⏳ Mapeando...';
+    btn.disabled = true;
+    btn.style.opacity = '0.8';
+    btn.style.cursor = 'wait';
+
+    // Desabilita o input durante o mapeamento
+    document.getElementById('urlInput').disabled = true;
+    document.getElementById('urlInput').style.opacity = '0.6';
+
     try {
         // ⭐ 1. TIRA A FOTO RÁPIDA ⭐
         const responsePreview = await fetch('/previa_rapida', {
@@ -108,32 +122,25 @@ async function mapear() {
             body: JSON.stringify({ url: url })
         });
         const dataPreview = await responsePreview.json();
-        
-        // 2. MOSTRA A FOTO NO MODAL (SEM OPÇÕES)
+
+        // 2. PREPARA O MODAL
         const modalBody = document.getElementById('modalBodyConfirm');
         const modalFooter = document.getElementById('modalFooterConfirm');
         const confirmUrl = document.getElementById('confirmUrl');
         const previewDiv = document.getElementById('previaPagina');
         const previewImg = document.getElementById('screenshotPreview');
-        
+
         confirmUrl.textContent = url;
-        
-        // Prepara a foto
+
         let fotoSrc = '';
         if (dataPreview && dataPreview.screenshot) {
             fotoSrc = 'data:image/png;base64,' + dataPreview.screenshot;
-            if (previewImg) {
-                previewImg.src = fotoSrc;
-            }
-            if (previewDiv) {
-                previewDiv.style.display = 'block';
-            }
+            if (previewImg) previewImg.src = fotoSrc;
+            if (previewDiv) previewDiv.style.display = 'block';
         } else {
-            if (previewDiv) {
-                previewDiv.style.display = 'none';
-            }
+            if (previewDiv) previewDiv.style.display = 'none';
         }
-        
+
         // ⭐ MOSTRA O MODAL COM A FOTO E MENSAGEM DE CARREGAMENTO ⭐
         modalBody.innerHTML = `
             <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -149,17 +156,17 @@ async function mapear() {
                 </div>
             </div>
         `;
-        
+
         // Remove os botões do footer temporariamente
         modalFooter.innerHTML = `
             <span style="color: #8b949e; font-size: 14px;">⏳ Carregando informações...</span>
         `;
-        
+
         document.getElementById('confirmModal').style.display = 'flex';
-        
+
         // ⭐ 3. ESPERA 3 SEGUNDOS ⭐
         await new Promise(resolve => setTimeout(resolve, 3000));
-        
+
         // ⭐ 4. VERIFICA O MAPA SALVO E MOSTRA AS OPÇÕES ⭐
         const params = new URLSearchParams();
         params.append('url', url);
@@ -168,9 +175,12 @@ async function mapear() {
             headers: { 'Accept': 'application/json' }
         });
         const dataCheck = await responseCheck.json();
-        
+
+        console.log('✅ dataCheck recebido:', dataCheck);
+
         // Atualiza o modal com as opções
         if (dataCheck.existe) {
+            console.log('✅ Mapa encontrado! Mostrando opções...');
             modalBody.innerHTML = `
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <div style="background: #0d1117; padding: 12px; border-radius: 8px; border-left: 4px solid #3fb950;">
@@ -194,6 +204,7 @@ async function mapear() {
                 </button>
             `;
         } else {
+            console.log('❌ Nenhum mapa encontrado.');
             modalBody.innerHTML = `
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <div style="background: #0d1117; padding: 12px; border-radius: 8px; border-left: 4px solid #d29922;">
@@ -211,7 +222,7 @@ async function mapear() {
                 </button>
             `;
         }
-        
+
         // ⭐ MANTÉM A FOTO NO MODAL ⭐
         const previewDiv2 = document.getElementById('previaPagina');
         if (previewDiv2) {
@@ -223,11 +234,20 @@ async function mapear() {
                 `;
             }
         }
-        
+
     } catch (error) {
-        console.error('Erro ao preparar mapeamento:', error);
+        console.error('❌ Erro ao preparar mapeamento:', error);
         mostrarToast('Erro ao carregar prévia da página', 'error');
         document.getElementById('confirmModal').style.display = 'flex';
+
+        // ⭐ VOLTA O BOTÃO AO NORMAL ⭐
+        const btn = document.getElementById('btnPrincipal');
+        btn.innerHTML = '🚀 Map';
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+        document.getElementById('urlInput').disabled = false;
+        document.getElementById('urlInput').style.opacity = '1';
     }
 }
 
@@ -242,6 +262,10 @@ async function confirmarMapeamento(confirmado) {
         document.getElementById('statusMapeamento').innerHTML = '❌ Mapeamento cancelado!';
         document.getElementById('statusMapeamento').style.color = '#f85149';
         mostrarToast('Mapeamento cancelado!', 'error');
+        
+        // Habilita o input novamente
+        document.getElementById('urlInput').disabled = false;
+        document.getElementById('urlInput').style.opacity = '1';
         
         alternarBotao(true);
         dadosMapeados = [];
@@ -308,7 +332,6 @@ async function confirmarMapeamento(confirmado) {
                 elementosCompletos = dadosMapeados;
                 totalElementos = dadosMapeados.length;
                 
-                
                 progressoContainer.style.display = 'none';
                 sucessoContainer.style.display = 'block';
                 document.getElementById('sucessoDetalhes').textContent = totalElementos + ' elementos encontrados';
@@ -318,14 +341,11 @@ async function confirmarMapeamento(confirmado) {
                 mostrarToast('✅ ' + totalElementos + ' elementos mapeados com sucesso!', 'success');
                 
                 mostrarResultados(dadosMapeados);
-                alternarBotao(false);
                 
-                botao.disabled = false;
-                botao.innerHTML = '🚀 Map';
+                // ⭐⭐⭐ MOSTRA O BOTÃO REINICIAR ⭐⭐⭐
+                document.getElementById('areaReiniciar').style.display = 'block';
+                document.getElementById('btnPrincipal').style.display = 'none';
                 
-            } else if (data.status === 'erro') {
-                mostrarToast('❌ Erro: ' + data.mensagem, 'error');
-                eventSource.close();
                 botao.disabled = false;
                 botao.innerHTML = '🚀 Map';
             }
@@ -336,6 +356,8 @@ async function confirmarMapeamento(confirmado) {
             eventSource.close();
             botao.disabled = false;
             botao.innerHTML = '🚀 Map';
+            document.getElementById('urlInput').disabled = false;
+            document.getElementById('urlInput').style.opacity = '1';
         };
         
     } catch (error) {
@@ -345,6 +367,8 @@ async function confirmarMapeamento(confirmado) {
         mostrarToast('Erro: ' + error.message, 'error');
         botao.disabled = false;
         botao.innerHTML = '🚀 Map';
+        document.getElementById('urlInput').disabled = false;
+        document.getElementById('urlInput').style.opacity = '1';
     }
 }
 
@@ -394,9 +418,9 @@ async function carregarMapaSalvoDireto() {
             elementosCompletos = dadosMapeados;
             totalElementos = data.total;
             
-            document.getElementById('estatisticas').style.display = 'flex';
-            document.getElementById('statTotal').textContent = data.total;
-            document.getElementById('statTags').textContent = Object.keys(data.tags || {}).length;
+            // document.getElementById('estatisticas').style.display = 'flex';
+            // document.getElementById('statTotal').textContent = data.total;
+            // document.getElementById('statTags').textContent = Object.keys(data.tags || {}).length;
             
             document.getElementById('statusMapeamento').innerHTML = '✅ Mapa carregado do banco! ' + data.total + ' elementos';
             document.getElementById('statusMapeamento').style.color = '#3fb950';
@@ -425,60 +449,83 @@ function mapearNovo() {
 }
 
 // ============================================
-// CONTROLE DO BOTÃO PRINCIPAL
+// CONTROLE DO BOTÃO PRINCIPAL E REINICIAR
 // ============================================
 
 function alternarBotao(paraMap) {
     const btn = document.getElementById('btnPrincipal');
+    const areaReiniciar = document.getElementById('areaReiniciar');
+    const urlInput = document.getElementById('urlInput');
+    
     if (!btn) return;
     
     if (paraMap) {
+        // MODO MAPEAMENTO
         btn.innerHTML = '🚀 Map';
         btn.onclick = function() { mapear(); };
-        btn.style.background = 'linear-gradient(135deg, #238636, #2ea043)';
+        btn.style.display = 'inline-block';
+        btn.disabled = false;
+        
+        // ESCONDE ÁREA REINICIAR
+        if (areaReiniciar) {
+            areaReiniciar.style.display = 'none';
+        }
+        
+        // HABILITA INPUT
+        if (urlInput) {
+            urlInput.disabled = false;
+            urlInput.style.opacity = '1';
+        }
+        
     } else {
-        btn.innerHTML = '🔄';
-        btn.onclick = function() { reiniciarComNovaUrl(); };
-        btn.style.background = 'linear-gradient(135deg, #da2811, #111ec9)';
+        // MODO FINALIZADO - MOSTRA REINICIAR
+        btn.style.display = 'none';
+        btn.disabled = true;
+        
+        // MOSTRA ÁREA REINICIAR
+        if (areaReiniciar) {
+            areaReiniciar.style.display = 'block';
+        }
+        
+        // DESABILITA INPUT
+        if (urlInput) {
+            urlInput.disabled = true;
+            urlInput.style.opacity = '0.6';
+        }
     }
 }
 
-function reiniciarComNovaUrl() {
-    const url = document.getElementById('urlInput').value.trim();
-    if (!url) {
-        mostrarToast('❌ Digite uma URL primeiro!', 'error');
+// ============================================
+// FUNÇÃO DE REINICIAR O SISTEMA (VIA ROTA)
+// ============================================
+
+function reiniciarSistema() {
+    if (!confirm('🔄 Tem certeza que quer reiniciar? Os dados atuais serão perdidos!')) {
         return;
     }
     
-    dadosMapeados = [];
-    elementosCompletos = [];
-    totalElementos = 0;
+    mostrarToast('🔄 Reiniciando sistema...', 'info');
     
-    document.getElementById('estatisticas').style.display = 'none';
-    document.getElementById('bancoResultados').style.display = 'none';
-    document.getElementById('sucessoContainer').style.display = 'none';
-    document.getElementById('areaDecisao').style.display = 'none';
-    document.getElementById('areaCarregarMapa').style.display = 'none';
-    document.getElementById('urlInfo').style.display = 'none';
-    
-    const container = document.getElementById('resultadosContainer');
-    container.innerHTML = `
-        <div id="estadoInicial" class="estado-inicial">
-            <img src="/static/gif2.gif" alt="Mapeie um site" class="gif-placeholder">
-            <h3>https://github.com/alcitech7-oss</h3>
-            <p>Digite a URL acima e clique em <strong>"Map"</strong></p>
-        </div>
-        <div id="resultadosLista" style="display: none;"></div>
-    `;
-    
-    document.getElementById('statusMapeamento').innerHTML = '';
-    document.getElementById('searchInput').value = '';
-    document.getElementById('searchStatus').innerHTML = '📌 0 elementos encontrados';
-    
-    alternarBotao(true);
-    
-    mostrarInfoUrl();
-    mapear();
+    fetch('/reiniciar_sistema', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            mostrarToast('✅ Sistema reiniciado!', 'success');
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        } else {
+            mostrarToast('❌ Erro ao reiniciar: ' + data.erro, 'error');
+        }
+    })
+    .catch(error => {
+        mostrarToast('❌ Erro ao reiniciar: ' + error.message, 'error');
+    });
 }
 
 // ============================================
@@ -1144,3 +1191,91 @@ function mostrarEstadoInicial() {
         <div id="resultadosLista" style="display: none;"></div>
     `;
 }
+
+// ============================================
+// ⭐ FUNÇÃO DO BOTÃO DE TESTE (REINICIAR SISTEMA) ⭐
+// ============================================
+
+function testarBotao() {
+    const btn = document.getElementById('btnTesteLado');
+    
+    if (btn) {
+        btn.style.background = 'linear-gradient(135deg, #f0883e, #f0a83e)';
+        btn.textContent = '⏳ REINICIANDO...';
+        btn.disabled = true;
+    }
+    
+    mostrarToast('🔄 Reiniciando sistema...', 'info');
+    
+    fetch('/reiniciar_sistema', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            mostrarToast('✅ Sistema reiniciado!', 'success');
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        } else {
+            mostrarToast('❌ Erro ao reiniciar: ' + data.erro, 'error');
+            if (btn) {
+                btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+                btn.textContent = '🧪 TESTE';
+                btn.disabled = false;
+            }
+        }
+    })
+    .catch(error => {
+        mostrarToast('❌ Erro ao reiniciar: ' + error.message, 'error');
+        if (btn) {
+            btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+            btn.textContent = '🧪 TESTE';
+            btn.disabled = false;
+        }
+    });
+}
+// ============================================
+// ⭐ FUNÇÃO DO BOTÃO DE TESTE ⭐
+// ============================================
+
+function testarBotao() {
+    const btn = document.getElementById('btnTesteLado');
+    if (btn) {
+        btn.style.background = 'linear-gradient(135deg, #f0883e, #f0a83e)';
+        btn.textContent = '⏳ REINICIANDO...';
+        btn.disabled = true;
+    }
+    mostrarToast('🔄 Reiniciando sistema...', 'info');
+    fetch('/reiniciar_sistema', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            mostrarToast('✅ Sistema reiniciado!', 'success');
+            setTimeout(() => location.reload(), 1000);
+        } else {
+            mostrarToast('❌ Erro: ' + data.erro, 'error');
+            if (btn) {
+                btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+                btn.textContent = '🧪 TESTE';
+                btn.disabled = false;
+            }
+        }
+    })
+    .catch(error => {
+        mostrarToast('❌ Erro: ' + error.message, 'error');
+        if (btn) {
+            btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+            btn.textContent = '🧪 TESTE';
+            btn.disabled = false;
+        }
+    });
+}
+
+window.testarBotao = testarBotao;

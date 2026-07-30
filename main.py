@@ -74,6 +74,22 @@ def index():
 
 
 # ============================================
+# ⭐ ROTA PARA REINICIAR O SISTEMA ⭐
+# ============================================
+@app.route("/reiniciar_sistema", methods=["POST"])
+def reiniciar_sistema_rota():
+    global cache_mapa
+    try:
+        # Limpa o cache
+        cache_mapa = {"dados": [], "url": "", "total": 0}
+        print("🔄 Sistema reiniciado com sucesso!")
+        return jsonify({"sucesso": True, "mensagem": "Sistema reiniciado!"})
+    except Exception as e:
+        print(f"❌ Erro ao reiniciar sistema: {e}")
+        return jsonify({"sucesso": False, "erro": str(e)}), 500
+
+
+# ============================================
 # ⭐ ROTA PARA FOTO RÁPIDA ⭐
 # ============================================
 @app.route("/previa_rapida", methods=["POST"])

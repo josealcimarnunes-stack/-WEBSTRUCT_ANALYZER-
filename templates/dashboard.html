@@ -33,15 +33,19 @@
                 </ol>
             </div>
 
-            <!-- URL INPUT + BOTÃO PRINCIPAL -->
+            <!-- URL INPUT + BOTÕES -->
             <div class="url-input-wrapper">
                 <div class="url-input">
                     <span class="input-icon">🔗</span>
-                    <input type="text" id="urlInput" placeholder="https://https://news.ycombinator.com/" value="https://news.ycombinator.com/">
-                    <button id="btnPrincipal" class="btn-primary" onclick="mapear()">
-                        🚀 Map
-                    </button>
+                    <input type="text" id="urlInput" placeholder="https://web.whatsapp.com/" value="https://web.whatsapp.com/">
+                    <button id="btnPrincipal" class="btn-primary" onclick="mapear()">🚀 Map</button>
+                    <button id="btnTesteLado" class="btn-teste" onclick="testarBotao()">🔄 Reiniciar Teste</button>
                 </div>
+            </div>
+
+            <!-- BOTÃO REINICIAR SISTEMA (APARECE DEPOIS DO MAPEAMENTO) -->
+            <div id="areaReiniciar" style="display: none; margin: 10px 0; text-align: center;">
+                <button onclick="reiniciarSistema()" class="btn-reiniciar">🔄 Reiniciar Sistema</button>
             </div>
 
             <!-- CAIXINHA DE INFO -->
@@ -54,31 +58,46 @@
                 <div id="decisaoConteudo"></div>
             </div>
 
+            <!-- STATUS -->
             <div id="statusMapeamento" class="status"></div>
 
-            <!-- ============================================
-            PROGRESSO (COM CONTADOR)
-            ============================================ -->
+            <!-- ESTATÍSTICAS -->
+            <div id="estatisticas" style="display: none;" class="estatisticas-painel">
+                <div class="stat-card stat-card-total">
+                    <span class="stat-icon">📊</span>
+                    <div>
+                        <span class="stat-label">Total de Elementos</span>
+                        <span class="stat-value" id="statTotal">0</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🏷️</span>
+                    <div>
+                        <span class="stat-label">Tags Únicas</span>
+                        <span class="stat-value" id="statTags">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROGRESSO -->
             <div id="progressoContainer" style="display:none;" class="progresso-wrapper">
                 <div class="progresso-info">
                     <span id="progressoTexto" class="progresso-label">⏳ Mapping...</span>
                     <span id="progressoPorcentagem" class="progresso-pct">0%</span>
                 </div>
-
-                <!-- ⭐ CONTADOR DE ELEMENTOS ⭐ -->
                 <div style="display: flex; justify-content: space-between; color: #8b949e; font-size: 13px; margin-bottom: 4px;">
                     <span id="progressoAtual">0</span>
                     <span>/</span>
                     <span id="progressoTotal">0</span>
                     <span>elementos</span>
                 </div>
-
                 <div class="progresso-barra">
                     <div id="progressoBarra" style="width:0%;"></div>
                 </div>
                 <div id="progressoMensagem" class="progresso-mensagem">Starting...</div>
             </div>
 
+            <!-- SUCESSO -->
             <div id="sucessoContainer" style="display:none;" class="sucesso-wrapper">
                 <div class="sucesso">
                     <span class="sucesso-icon">✅</span>
@@ -88,7 +107,6 @@
                     </div>
                 </div>
             </div>
-
 
             <!-- EXPORTAÇÃO E BANCO -->
             <div class="export-row" style="flex-direction: column; gap: 10px; align-items: stretch;">
@@ -114,12 +132,7 @@
             <div class="search-container">
                 <div class="search-box">
                     <span class="search-icon">🔎</span>
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="Buscar por tag, classe, ID ou texto... Ex: div, .classe, #id, 'texto'"
-                        oninput="filtrarElementos()"
-                    >
+                    <input type="text" id="searchInput" placeholder="Buscar por tag, classe, ID ou texto... Ex: div, .classe, #id, 'texto'" oninput="filtrarElementos()">
                     <button onclick="filtrarElementos()" class="btn-search">Buscar</button>
                     <button onclick="limparBusca()" class="btn-search-clear" id="btnClear" style="display:none;">✕</button>
                 </div>
@@ -156,9 +169,7 @@
             </div>
         </main>
 
-        <!-- ============================================
-        MODAL DE COMPARAÇÃO MANUAL
-        ============================================ -->
+        <!-- MODAL DE COMPARAÇÃO MANUAL -->
         <div id="compararManualModal" class="modal" style="display:none;">
             <div class="modal-content" style="max-width: 700px;">
                 <div class="modal-header">
@@ -186,9 +197,7 @@
             </div>
         </div>
 
-        <!-- ============================================
-        MODAL DE CONFIRMAÇÃO (COM FOTO)
-        ============================================ -->
+        <!-- MODAL DE CONFIRMAÇÃO -->
         <div id="confirmModal" class="modal-confirm" style="display:none;">
             <div class="modal-confirm-content">
                 <div class="modal-confirm-header">
@@ -197,9 +206,7 @@
                 </div>
                 <div class="modal-confirm-body" id="modalBodyConfirm">
                     <p style="color: #8b949e; font-size: 14px;">📸 Confira a prévia da página abaixo e decida o que fazer.</p>
-                    
-                    <p class="modal-confirm-url" id="confirmUrl">https://news.ycombinator.com/</p>
-                    
+                    <p class="modal-confirm-url" id="confirmUrl">https://web.whatsapp.com/</p>
                     <div id="previaPagina" style="margin-top: 10px; text-align: center; display: none;">
                         <img id="screenshotPreview" src="" alt="Prévia da página" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #30363d;">
                         <p style="color: #8b949e; font-size: 12px; margin-top: 4px;">📸 Prévia da página que será mapeada</p>
