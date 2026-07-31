@@ -1248,3 +1248,90 @@ function copiarSeletor(texto, tipo) {
         mostrarToast('❌ Erro ao copiar', 'error');
     });
 }
+// ⭐ FUNÇÃO PARA VERIFICAR MODO ANÔNIMO ⭐
+function verificarModo() {
+    fetch('/verificar_modo')
+        .then(response => response.json())
+        .then(data => {
+            if (data.anonimo) {
+                mostrarAvisoAnonimo();
+            }
+        })
+        .catch(error => console.error('Erro ao verificar modo:', error));
+}
+
+// ⭐ FUNÇÃO PARA MOSTRAR AVISO DE MODO ANÔNIMO ⭐
+function mostrarAvisoAnonimo() {
+    const aviso = document.createElement('div');
+    aviso.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 99999;
+        background: #0d1117;
+        border: 2px solid #f0883e;
+        border-radius: 16px;
+        padding: 30px 40px;
+        max-width: 500px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+    `;
+    
+    aviso.innerHTML = `
+        <div style="font-size: 48px; margin-bottom: 12px;">⚠️</div>
+        <h2 style="color: #f0883e; margin-bottom: 12px;">MODO ANÔNIMO DETECTADO!</h2>
+        <p style="color: #8b949e; font-size: 14px; line-height: 1.6;">
+            O sistema está rodando em <strong style="color: #f0883e;">modo anônimo</strong>.
+            <br><br>
+            A eficácia do mapeamento pode ser <strong style="color: #f85149;">REDUZIDA em até 70%</strong>!
+        </p>
+        <div style="background: #161b22; padding: 12px; border-radius: 8px; margin: 12px 0; text-align: left;">
+            <p style="color: #8b949e; font-size: 13px; margin: 4px 0;">
+                💡 <strong style="color: #58a6ff;">Para melhor eficiência:</strong>
+            </p>
+            <p style="color: #8b949e; font-size: 13px; margin: 4px 0;">
+                1. Faça login no Chrome
+            </p>
+            <p style="color: #8b949e; font-size: 13px; margin: 4px 0;">
+                2. Feche todas as janelas do Chrome
+            </p>
+            <p style="color: #8b949e; font-size: 13px; margin: 4px 0;">
+                3. Execute a ferramenta novamente
+            </p>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 16px;">
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                background: linear-gradient(135deg, #238636, #2ea043);
+                color: white;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 24px;
+                font-weight: 600;
+                cursor: pointer;
+            ">
+                ✅ Entendi
+            </button>
+            <button onclick="this.parentElement.parentElement.remove()" style="
+                background: #21262d;
+                color: #8b949e;
+                border: 1px solid #30363d;
+                border-radius: 8px;
+                padding: 10px 24px;
+                font-weight: 600;
+                cursor: pointer;
+            ">
+                ❌ Ignorar
+            </button>
+        </div>
+    `;
+    
+    document.body.appendChild(aviso);
+}
+
+// ⭐ CHAMA A VERIFICAÇÃO QUANDO O SISTEMA CARREGA ⭐
+document.addEventListener('DOMContentLoaded', function() {
+    // ... código existente ...
+    verificarModo(); // ⭐ NOVO
+});

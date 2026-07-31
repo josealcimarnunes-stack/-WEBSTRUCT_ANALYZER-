@@ -15,36 +15,92 @@ TIMEOUT_PAGINA = 120000
 TIMEOUT_NAVEGADOR = 60000
 
 
-# ⭐ DETECTA O SISTEMA OPERACIONAL ⭐
-def get_chrome_path():
+# ============================================
+# ⭐ FUNÇÃO PARA ENCONTRAR O CHROME REAL ⭐
+# ============================================
+
+
+def encontrar_chrome_real():
+    """Encontra o caminho do Chrome REAL instalado no sistema"""
     sistema = platform.system()
+
     if sistema == "Windows":
         caminhos = [
             "C:/Program Files/Google/Chrome/Application/chrome.exe",
             "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe",
+            os.path.expanduser("~/AppData/Local/Google/Chrome/Application/chrome.exe"),
         ]
         for caminho in caminhos:
             if os.path.exists(caminho):
-                print(f"✅ Chrome encontrado em: {caminho}")
+                print(f"✅ Chrome REAL encontrado em: {caminho}")
                 return caminho
-        print("❌ Chrome NÃO encontrado no Windows!")
-        return None
-    else:
+
+    elif sistema == "Darwin":  # macOS
+        caminho = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+        if os.path.exists(caminho):
+            print(f"✅ Chrome REAL encontrado em: {caminho}")
+            return caminho
+
+    else:  # Linux
         caminhos = [
+            "/usr/bin/google-chrome",
             "/usr/bin/google-chrome-stable",
             "/usr/bin/chromium-browser",
-            "/usr/bin/google-chrome",
-            "/usr/bin/chrome",
+            "/snap/bin/chromium",
         ]
         for caminho in caminhos:
             if os.path.exists(caminho):
-                print(f"✅ Chrome encontrado em: {caminho}")
+                print(f"✅ Chrome REAL encontrado em: {caminho}")
                 return caminho
-        print("❌ Chrome NÃO encontrado no Linux!")
-        return None
+
+    print("⚠️ Chrome REAL NÃO encontrado! Usando Chromium do Playwright.")
+    return None
 
 
-CAMINHO_CHROME = get_chrome_path()
+# ============================================
+# ⭐ FUNÇÃO PARA ENCONTRAR PERFIL DO CHROME ⭐
+# ============================================
+
+
+def encontrar_perfil_chrome():
+    """Procura a pasta de perfil do Chrome REAL"""
+    sistema = platform.system()
+    usuario = os.path.expanduser("~")
+
+    if sistema == "Windows":
+        caminhos = [
+            os.path.join(usuario, "AppData", "Local", "Google", "Chrome", "User Data"),
+            os.path.join(usuario, "AppData", "Local", "Chromium", "User Data"),
+        ]
+    elif sistema == "Darwin":  # macOS
+        caminhos = [
+            os.path.join(usuario, "Library", "Application Support", "Google", "Chrome"),
+            os.path.join(usuario, "Library", "Application Support", "Chromium"),
+        ]
+    else:  # Linux
+        caminhos = [
+            os.path.join(usuario, ".config", "google-chrome"),
+            os.path.join(usuario, ".config", "chromium"),
+            os.path.join(usuario, ".config", "google-chrome-beta"),
+        ]
+
+    for caminho in caminhos:
+        if os.path.exists(caminho):
+            print(f"✅ Perfil do Chrome encontrado em: {caminho}")
+            return caminho
+
+    print("⚠️ Perfil do Chrome NÃO encontrado! Usando modo anônimo.")
+    return None
+
+
+def verificar_modo_anonimo():
+    """Verifica se o sistema está em modo anônimo"""
+    return encontrar_perfil_chrome() is None
+
+
+# ⭐ GUARDA O CAMINHO DO CHROME REAL ⭐
+CAMINHO_CHROME_REAL = encontrar_chrome_real()
+CAMINHO_PERFIL_CHROME = encontrar_perfil_chrome()
 
 
 # ⭐ FUNÇÕES AUXILIARES ⭐
@@ -72,6 +128,8 @@ def gerar_xpath(tag, classe, id_elem, posicao):
 # ============================================
 # ⭐ FUNÇÃO PARA TIRAR FOTO RÁPIDA ⭐
 # ============================================
+
+
 def tirar_foto_rapida(url):
     print(f"📸 Tirando foto rápida de: {url}")
     try:
@@ -79,11 +137,23 @@ def tirar_foto_rapida(url):
             launch_options = {
                 "headless": True,
                 "timeout": TIMEOUT_NAVEGADOR,
-                "args": ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+                "args": [
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--disable-blink-features=AutomationControlled",
+                ],
             }
-            if CAMINHO_CHROME:
-                launch_options["executable_path"] = CAMINHO_CHROME
-                print(f"✅ Usando Chrome em: {CAMINHO_CHROME}")
+
+            # ⭐ USA O CHROME REAL SE POSSÍVEL ⭐
+            if CAMINHO_CHROME_REAL:
+                launch_options["executable_path"] = CAMINHO_CHROME_REAL
+                print(f"✅ Usando Chrome REAL em: {CAMINHO_CHROME_REAL}")
+
+            # ⭐ USA O PERFIL SE POSSÍVEL ⭐
+            if CAMINHO_PERFIL_CHROME:
+                launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
+                print(f"✅ Usando perfil do Chrome: {CAMINHO_PERFIL_CHROME}")
 
             browser = p.chromium.launch(**launch_options)
             page = browser.new_page()
@@ -105,6 +175,8 @@ def tirar_foto_rapida(url):
 # ============================================
 # ⭐ FUNÇÃO DE MAPEAMENTO COM PROGRESSO ⭐
 # ============================================
+
+
 def analisar_estrutura_com_progresso(url):
     print(f"🔍 Analisando: {url}")
     try:
@@ -112,11 +184,21 @@ def analisar_estrutura_com_progresso(url):
             launch_options = {
                 "headless": True,
                 "timeout": TIMEOUT_NAVEGADOR,
-                "args": ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+                "args": [
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--disable-blink-features=AutomationControlled",
+                ],
             }
-            if CAMINHO_CHROME:
-                launch_options["executable_path"] = CAMINHO_CHROME
-                print(f"✅ Usando Chrome em: {CAMINHO_CHROME}")
+
+            if CAMINHO_CHROME_REAL:
+                launch_options["executable_path"] = CAMINHO_CHROME_REAL
+                print(f"✅ Usando Chrome REAL em: {CAMINHO_CHROME_REAL}")
+
+            if CAMINHO_PERFIL_CHROME:
+                launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
+                print(f"✅ Usando perfil do Chrome: {CAMINHO_PERFIL_CHROME}")
 
             browser = p.chromium.launch(**launch_options)
             page = browser.new_page()
@@ -206,6 +288,8 @@ def analisar_estrutura_com_progresso(url):
 # ============================================
 # ⭐ FUNÇÃO DE MAPEAMENTO COMPLETO ⭐
 # ============================================
+
+
 def analisar_estrutura(url, pegar_screenshot=False, headless=True):
     print(f"🔍 Analisando: {url}")
     print(f"🪟 Modo headless: {headless}")
@@ -214,25 +298,36 @@ def analisar_estrutura(url, pegar_screenshot=False, headless=True):
 
     try:
         with sync_playwright() as p:
+            # ⭐ ARGUMENTOS ANTI-DETECÇÃO ⭐
+            args = [
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--disable-blink-features=AutomationControlled",
+                "--disable-features=IsolateOrigins,site-per-process",
+                "--disable-web-security",
+                "--disable-features=BlockInsecurePrivateNetworkRequests",
+            ]
+
             launch_options = {
                 "headless": headless,
                 "timeout": TIMEOUT_NAVEGADOR,
-                "args": [
-                    "--no-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--disable-gpu",
-                    "--disable-blink-features=AutomationControlled",
-                    "--disable-features=IsolateOrigins,site-per-process",
-                    "--disable-web-security",
-                    "--disable-features=BlockInsecurePrivateNetworkRequests",
-                ],
+                "args": args,
             }
 
-            if headless and CAMINHO_CHROME:
-                launch_options["executable_path"] = CAMINHO_CHROME
-                print(f"✅ Usando Chrome do sistema (headless)")
+            # ⭐ USA O CHROME REAL SEMPRE ⭐
+            if CAMINHO_CHROME_REAL:
+                launch_options["executable_path"] = CAMINHO_CHROME_REAL
+                print(f"✅ Usando Chrome REAL em: {CAMINHO_CHROME_REAL}")
             else:
-                print("🪟 Usando Chromium do Playwright (VISÍVEL)")
+                print("🪟 Usando Chromium do Playwright (modo alternativo)")
+
+            # ⭐ USA O PERFIL SE POSSÍVEL ⭐
+            if CAMINHO_PERFIL_CHROME and not headless:
+                launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
+                print(
+                    f"✅ Usando perfil do Chrome com cookies: {CAMINHO_PERFIL_CHROME}"
+                )
 
             print(f"🚀 Abrindo navegador... headless={launch_options.get('headless')}")
 

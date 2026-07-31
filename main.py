@@ -5,7 +5,35 @@ import threading
 import time
 import subprocess
 import json
-from flask import Response
+
+from flask import (
+    Flask,
+    Response,
+    session,
+    redirect,
+    url_for,
+    request,
+    render_template,
+    jsonify,
+    send_file,
+)
+
+import pandas as pd
+import io
+from collections import Counter
+import traceback
+from functools import wraps
+
+# ⭐ CONFIGURAÇÃO DO BANCO ⭐
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///data/mapas.db")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+# ⭐ CRIA O APP ⭐
+app = Flask(__name__)
+app.secret_key = os.environ.get(
+    "SECRET_KEY", "webstruct-secret-key-change-in-production"
+)
 
 
 def configurar_playwright():
@@ -25,31 +53,17 @@ def configurar_playwright():
 
 configurar_playwright()
 
-from flask import Flask, render_template, jsonify, send_file, request
-import pandas as pd
-import io
-from collections import Counter
-import traceback
-
-if getattr(sys, "frozen", False):
-    template_folder = os.path.join(sys._MEIPASS, "templates")
-    static_folder = os.path.join(sys._MEIPASS, "static")
-    core_folder = os.path.join(sys._MEIPASS, "core")
-    sys.path.insert(0, core_folder)
-else:
-    template_folder = "templates"
-    static_folder = "static"
-    core_folder = "core"
-    sys.path.insert(0, core_folder)
-
-from mapeador import (
+# ⭐ IMPORTA DA PASTA CORE ⭐
+from core.mapeador import (
     analisar_estrutura,
     salvar_mapa_atual,
     tirar_foto_rapida,
     analisar_estrutura_com_progresso,
+    verificar_modo_anonimo,
 )
-from processador import processar_estrutura
-from gerador_codigo import gerar_codigo
+from core.processador import processar_estrutura
+from core.gerador_codigo import gerar_codigo
+
 from database import (
     criar_tabelas,
     salvar_mapa,
@@ -60,23 +74,103 @@ from database import (
     contar_mapas_por_url,
     SessionLocal,
     Mapa,
+    Usuario,
+    verificar_usuario,
+    criar_usuario,
+    salvar_cookies_usuario,
+    buscar_cookies_usuario,
+    registrar_atividade,
 )
 
+# ⭐ CRIA AS TABELAS ⭐
 criar_tabelas()
 
-app = Flask(__name__, template_folder=template_folder, static_folder=static_folder)
+# ⭐ CACHE DO MAPA ⭐
 cache_mapa = {"dados": [], "url": "", "total": 0}
 
 
+# ============================================
+# ⭐ DECORADOR PARA ROTAS PROTEGIDAS ⭐
+# ============================================
+
+
+def login_obrigatorio(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if "usuario_id" not in session:
+            return redirect(url_for("login"))
+        return f(*args, **kwargs)
+
+    return decorated_function
+
+
+# ============================================
+# ⭐ ROTAS DE AUTENTICAÇÃO ⭐
+# ============================================
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+
+        usuario_data = verificar_usuario(email, senha)  # ⭐ AGORA É UM DICIONÁRIO
+        if usuario_data:
+            session["usuario_id"] = usuario_data["id"]  # ✅ PEGA DO DICIONÁRIO
+            session["usuario_email"] = usuario_data["email"]
+            session["usuario_nome"] = usuario_data["nome"]
+            registrar_atividade(usuario_data["id"], "login", "Login realizado")
+            return redirect(url_for("dashboard"))
+        else:
+            return render_template("login.html", erro="Email ou senha inválidos!")
+
+    return render_template("login.html")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        nome = request.form.get("nome")
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        confirmar = request.form.get("confirmar")
+
+        if senha != confirmar:
+            return render_template("register.html", erro="As senhas não coincidem!")
+
+        if criar_usuario(nome, email, senha):
+            return redirect(url_for("login"))
+        else:
+            return render_template("register.html", erro="Email já cadastrado!")
+
+    return render_template("register.html")
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
+
+# ============================================
+# ⭐ ROTA PRINCIPAL (PROTEGIDA) ⭐
+# ============================================
+
+
 @app.route("/")
-def index():
-    return render_template("dashboard.html")
+@login_obrigatorio
+def dashboard():
+    return render_template("dashboard.html", usuario=session.get("usuario_nome"))
 
 
 # ============================================
 # ⭐ ROTA PARA MAPEAR COM ESTRATÉGIAS ⭐
 # ============================================
+
+
 @app.route("/mapear_com_estrategias", methods=["POST"])
+@login_obrigatorio
 def mapear_com_estrategias():
     url = request.json.get("url", "")
     if not url:
@@ -86,13 +180,19 @@ def mapear_com_estrategias():
         from estrategias import analisar_com_todas_estrategias
 
         print(f"🧠 Mapeando com estratégias: {url}")
-        dados = analisar_com_todas_estrategias(url)
+
+        usuario_id = session.get("usuario_id")
+        cookies = buscar_cookies_usuario(usuario_id, url)
+
+        dados = analisar_com_todas_estrategias(url, cookies)
 
         if dados and len(dados) > 50:
             global cache_mapa
             cache_mapa["dados"] = dados
             cache_mapa["url"] = url
             cache_mapa["total"] = len(dados)
+
+            registrar_atividade(usuario_id, "mapear", url)
 
             return jsonify(
                 {
@@ -113,24 +213,54 @@ def mapear_com_estrategias():
 
 
 # ============================================
-# ⭐ ROTA PARA REINICIAR O SISTEMA ⭐
+# ⭐ ROTA PARA SALVAR COOKIES ⭐
 # ============================================
-@app.route("/reiniciar_sistema", methods=["POST"])
-def reiniciar_sistema_rota():
-    global cache_mapa
-    try:
-        cache_mapa = {"dados": [], "url": "", "total": 0}
-        print("🔄 Sistema reiniciado com sucesso!")
-        return jsonify({"sucesso": True, "mensagem": "Sistema reiniciado!"})
-    except Exception as e:
-        print(f"❌ Erro ao reiniciar sistema: {e}")
-        return jsonify({"sucesso": False, "erro": str(e)}), 500
+
+
+@app.route("/salvar_cookies", methods=["POST"])
+@login_obrigatorio
+def salvar_cookies():
+    site = request.json.get("site")
+    cookies = request.json.get("cookies")
+
+    if not site or not cookies:
+        return jsonify({"erro": "Dados incompletos"}), 400
+
+    usuario_id = session.get("usuario_id")
+    salvar_cookies_usuario(usuario_id, site, cookies)
+    registrar_atividade(usuario_id, "salvar_cookies", site)
+
+    return jsonify({"sucesso": True})
 
 
 # ============================================
-# ⭐ ROTA PARA FOTO RÁPIDA ⭐
+# ⭐ ROTA PARA VERIFICAR MODO ANÔNIMO ⭐
 # ============================================
+
+
+@app.route("/verificar_modo", methods=["GET"])
+@login_obrigatorio
+def verificar_modo():
+    anonimo = verificar_modo_anonimo()
+    return jsonify(
+        {
+            "anonimo": anonimo,
+            "mensagem": (
+                "⚠️ Modo anônimo detectado! A eficácia pode ser reduzida."
+                if anonimo
+                else "✅ Perfil do Chrome encontrado!"
+            ),
+        }
+    )
+
+
+# ============================================
+# ⭐ ROTAS EXISTENTES ⭐
+# ============================================
+
+
 @app.route("/previa_rapida", methods=["POST"])
+@login_obrigatorio
 def previa_rapida():
     url = request.json.get("url", "")
     if not url:
@@ -146,10 +276,8 @@ def previa_rapida():
         return jsonify({"erro": str(e)}), 500
 
 
-# ============================================
-# ⭐ ROTA PARA MAPEAMENTO COM PROGRESSO ⭐
-# ============================================
 @app.route("/mapear_progresso", methods=["GET"])
+@login_obrigatorio
 def mapear_progresso():
     url = request.args.get("url", "")
     if not url:
@@ -172,10 +300,8 @@ def mapear_progresso():
     return Response(generate(), mimetype="text/event-stream")
 
 
-# ============================================
-# ROTA DE MAPEAMENTO COMPLETO
-# ============================================
 @app.route("/mapear", methods=["POST"])
+@login_obrigatorio
 def mapear():
     global cache_mapa
     url = request.json.get("url", "")
@@ -211,7 +337,21 @@ def mapear():
         return jsonify({"erro": str(e)}), 500
 
 
+@app.route("/reiniciar_sistema", methods=["POST"])
+@login_obrigatorio
+def reiniciar_sistema_rota():
+    global cache_mapa
+    try:
+        cache_mapa = {"dados": [], "url": "", "total": 0}
+        print("🔄 Sistema reiniciado com sucesso!")
+        return jsonify({"sucesso": True, "mensagem": "Sistema reiniciado!"})
+    except Exception as e:
+        print(f"❌ Erro ao reiniciar sistema: {e}")
+        return jsonify({"sucesso": False, "erro": str(e)}), 500
+
+
 @app.route("/salvar_mapa", methods=["POST"])
+@login_obrigatorio
 def salvar_mapa_rota():
     global cache_mapa
     if not cache_mapa["dados"]:
@@ -226,6 +366,8 @@ def salvar_mapa_rota():
     mapa = salvar_mapa(dados, url, descricao)
 
     if mapa:
+        usuario_id = session.get("usuario_id")
+        registrar_atividade(usuario_id, "salvar_mapa", url)
         return jsonify(
             {
                 "sucesso": True,
@@ -239,6 +381,7 @@ def salvar_mapa_rota():
 
 
 @app.route("/listar_mapas", methods=["GET"])
+@login_obrigatorio
 def listar_mapas_rota():
     url = request.args.get("url")
     mapas = listar_mapas(url=url, limite=50)
@@ -246,6 +389,7 @@ def listar_mapas_rota():
 
 
 @app.route("/comparar_mapas", methods=["POST"])
+@login_obrigatorio
 def comparar_mapas_rota():
     global cache_mapa
     if not cache_mapa["dados"]:
@@ -255,11 +399,11 @@ def comparar_mapas_rota():
 
     from database import SessionLocal, Mapa, Elemento
 
-    session = SessionLocal()
+    session_db = SessionLocal()
 
     try:
         mapa_anterior = (
-            session.query(Mapa)
+            session_db.query(Mapa)
             .filter(Mapa.url == url)
             .order_by(Mapa.data_mapeamento.desc())
             .first()
@@ -299,16 +443,18 @@ def comparar_mapas_rota():
         traceback.print_exc()
         return jsonify({"erro": str(e)}), 500
     finally:
-        session.close()
+        session_db.close()
 
 
 @app.route("/estatisticas_banco", methods=["GET"])
+@login_obrigatorio
 def estatisticas_banco():
     total = contar_mapas()
     return jsonify({"total_mapas": total})
 
 
 @app.route("/verificar_mapa", methods=["GET"])
+@login_obrigatorio
 def verificar_mapa():
     url = request.args.get("url", "")
     if not url:
@@ -332,16 +478,17 @@ def verificar_mapa():
 
 
 @app.route("/carregar_mapa", methods=["GET"])
+@login_obrigatorio
 def carregar_mapa():
     url = request.args.get("url", "")
     if not url:
         return jsonify({"erro": "URL não fornecida"}), 400
 
-    session = SessionLocal()
+    session_db = SessionLocal()
 
     try:
         mapa = (
-            session.query(Mapa)
+            session_db.query(Mapa)
             .filter(Mapa.url == url)
             .order_by(Mapa.data_mapeamento.desc())
             .first()
@@ -390,19 +537,20 @@ def carregar_mapa():
         traceback.print_exc()
         return jsonify({"erro": str(e)}), 500
     finally:
-        session.close()
+        session_db.close()
 
 
 @app.route("/carregar_mapa_por_id", methods=["GET"])
+@login_obrigatorio
 def carregar_mapa_por_id():
     mapa_id = request.args.get("id")
     if not mapa_id:
         return jsonify({"erro": "ID não fornecido"}), 400
 
-    session = SessionLocal()
+    session_db = SessionLocal()
 
     try:
-        mapa = session.query(Mapa).filter(Mapa.id == mapa_id).first()
+        mapa = session_db.query(Mapa).filter(Mapa.id == mapa_id).first()
 
         if not mapa:
             return jsonify({"erro": "Mapa não encontrado"}), 404
@@ -442,10 +590,11 @@ def carregar_mapa_por_id():
         traceback.print_exc()
         return jsonify({"erro": str(e)}), 500
     finally:
-        session.close()
+        session_db.close()
 
 
 @app.route("/exportar", methods=["POST"])
+@login_obrigatorio
 def exportar():
     global cache_mapa
     if not cache_mapa["dados"]:
@@ -489,6 +638,7 @@ def exportar():
 
 
 @app.route("/gerar_codigo", methods=["POST"])
+@login_obrigatorio
 def gerar():
     dados = request.json
     seletor = dados.get("seletor")

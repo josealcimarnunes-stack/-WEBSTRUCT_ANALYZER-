@@ -7,36 +7,33 @@ from sqlalchemy import (
     Text,
     Boolean,
     ForeignKey,
+    JSON,
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
 import json
 import os
+from auth import hash_senha, verificar_senha
 
-# Cria a pasta data se não existir
+# ⭐ CONFIGURAÇÃO DO BANCO ⭐
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///data/mapas.db")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 os.makedirs("data", exist_ok=True)
 
-# Banco de dados SQLite
-DATABASE_URL = "sqlite:///data/mapas.db"
-
-# Cria o engine
 engine = create_engine(DATABASE_URL, echo=False)
-
-# Cria a base
 Base = declarative_base()
-
-# Cria a sessão
 SessionLocal = sessionmaker(bind=engine)
 
 
 # ============================================
-# FUNÇÃO AUXILIAR PARA CONVERTER TIPOS
+# ⭐ FUNÇÃO AUXILIAR ⭐
 # ============================================
 
 
 def para_string(valor):
-    """Converte qualquer valor para string segura para o banco"""
     if valor is None:
         return ""
     if isinstance(valor, dict):
@@ -49,7 +46,79 @@ def para_string(valor):
 
 
 # ============================================
-# MODELOS (TABELAS)
+# ⭐ MODELO DE USUÁRIO (NOVO) ⭐
+# ============================================
+
+
+class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nome = Column(String(100), nullable=False)
+    email = Column(String(200), unique=True, nullable=False)
+    senha_hash = Column(String(200), nullable=False)
+    data_criacao = Column(DateTime, default=datetime.now)
+    ultimo_login = Column(DateTime, nullable=True)
+    is_admin = Column(Boolean, default=False)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "email": self.email,
+            "data_criacao": self.data_criacao.strftime("%Y-%m-%d %H:%M:%S"),
+            "ultimo_login": (
+                self.ultimo_login.strftime("%Y-%m-%d %H:%M:%S")
+                if self.ultimo_login
+                else None
+            ),
+        }
+
+
+# ============================================
+# ⭐ MODELO DE COOKIES (NOVO) ⭐
+# ============================================
+
+
+class CookieUsuario(Base):
+    __tablename__ = "cookies_usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    site = Column(String(500), nullable=False)
+    cookies_json = Column(Text, nullable=False)
+    data_criacao = Column(DateTime, default=datetime.now)
+
+    usuario = relationship("Usuario")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "site": self.site,
+            "cookies": json.loads(self.cookies_json),
+            "data_criacao": self.data_criacao.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+
+
+# ============================================
+# ⭐ MODELO DE ATIVIDADES (NOVO) ⭐
+# ============================================
+
+
+class Atividade(Base):
+    __tablename__ = "atividades"
+
+    id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)
+    acao = Column(String(100), nullable=False)
+    detalhe = Column(String(500), nullable=True)
+    data = Column(DateTime, default=datetime.now)
+
+    usuario = relationship("Usuario")
+
+
+# ============================================
+# ⭐ MODELOS EXISTENTES ⭐
 # ============================================
 
 
@@ -118,7 +187,132 @@ class Elemento(Base):
 
 
 # ============================================
-# FUNÇÕES DE CRIAÇÃO E ACESSO
+# ⭐ FUNÇÕES DE AUTENTICAÇÃO ⭐
+# ============================================
+
+
+def criar_usuario(nome, email, senha):
+    session = SessionLocal()
+    try:
+        existente = session.query(Usuario).filter(Usuario.email == email).first()
+        if existente:
+            return False
+
+        usuario = Usuario(
+            nome=nome,
+            email=email,
+            senha_hash=hash_senha(senha),
+        )
+        session.add(usuario)
+        session.commit()
+        return True
+    except Exception as e:
+        print(f"❌ Erro ao criar usuário: {e}")
+        session.rollback()
+        return False
+    finally:
+        session.close()
+
+
+def verificar_usuario(email, senha):
+    """Verifica as credenciais do usuário e retorna o ID ou None"""
+    session = SessionLocal()
+    try:
+        usuario = session.query(Usuario).filter(Usuario.email == email).first()
+        if not usuario:
+            return None
+
+        if verificar_senha(senha, usuario.senha_hash):
+            # ⭐ SALVA O ID E OS DADOS ANTES DE FECHAR A SESSÃO ⭐
+            usuario_id = usuario.id
+            usuario_nome = usuario.nome
+            usuario_email = usuario.email
+
+            # Atualiza o último login
+            usuario.ultimo_login = datetime.now()
+            session.commit()
+
+            # ⭐ RETORNA OS DADOS EM UM DICIONÁRIO ⭐
+            return {"id": usuario_id, "nome": usuario_nome, "email": usuario_email}
+
+        return None
+    except Exception as e:
+        print(f"❌ Erro ao verificar usuário: {e}")
+        return None
+    finally:
+        session.close()
+
+
+# ============================================
+# ⭐ FUNÇÕES DE COOKIES ⭐
+# ============================================
+
+
+def salvar_cookies_usuario(usuario_id, site, cookies):
+    session = SessionLocal()
+    try:
+        session.query(CookieUsuario).filter(
+            CookieUsuario.usuario_id == usuario_id, CookieUsuario.site == site
+        ).delete()
+
+        cookie = CookieUsuario(
+            usuario_id=usuario_id, site=site, cookies_json=json.dumps(cookies)
+        )
+        session.add(cookie)
+        session.commit()
+        return True
+    except Exception as e:
+        print(f"❌ Erro ao salvar cookies: {e}")
+        session.rollback()
+        return False
+    finally:
+        session.close()
+
+
+def buscar_cookies_usuario(usuario_id, site):
+    session = SessionLocal()
+    try:
+        cookie = (
+            session.query(CookieUsuario)
+            .filter(CookieUsuario.usuario_id == usuario_id, CookieUsuario.site == site)
+            .order_by(CookieUsuario.data_criacao.desc())
+            .first()
+        )
+
+        if cookie:
+            return json.loads(cookie.cookies_json)
+        return []
+    except Exception as e:
+        print(f"❌ Erro ao buscar cookies: {e}")
+        return []
+    finally:
+        session.close()
+
+
+# ============================================
+# ⭐ FUNÇÕES DE ATIVIDADES ⭐
+# ============================================
+
+
+def registrar_atividade(usuario_id, acao, detalhe=None):
+    session = SessionLocal()
+    try:
+        atividade = Atividade(
+            usuario_id=usuario_id,
+            acao=acao,
+            detalhe=detalhe,
+        )
+        session.add(atividade)
+        session.commit()
+    except Exception as e:
+        print(f"❌ Erro ao registrar atividade: {e}")
+        session.rollback()
+    finally:
+        session.close()
+
+
+# ============================================
+# ⭐ FUNÇÕES EXISTENTES ⭐
 # ============================================
 
 
@@ -129,7 +323,6 @@ def criar_tabelas():
 
 def salvar_mapa(dados, url, descricao=None):
     session = SessionLocal()
-
     try:
         mapa = Mapa(
             url=url,
@@ -162,7 +355,6 @@ def salvar_mapa(dados, url, descricao=None):
             f"✅ Mapa salvo com sucesso! ID: {mapa.id} - {mapa.total_elementos} elementos"
         )
         return mapa
-
     except Exception as e:
         session.rollback()
         print(f"❌ Erro ao salvar mapa: {e}")

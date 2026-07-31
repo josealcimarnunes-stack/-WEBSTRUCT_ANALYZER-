@@ -42,7 +42,7 @@ else:
     core_folder = "core"
     sys.path.insert(0, core_folder)
 
-from mapeador import (
+from core.mapeador import (
     analisar_estrutura,
     salvar_mapa_atual,
     tirar_foto_rapida,
