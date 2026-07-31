@@ -82,34 +82,25 @@ def encontrar_chrome_real():
 
 
 def encontrar_perfil_chrome():
-    """Procura a pasta de perfil do Chrome REAL"""
-    sistema = platform.system()
-    usuario = os.path.expanduser("~")
+    """
+    Cria/retorna um diretório de perfil ISOLADO e exclusivo para o Bot.
+    Isso evita conflitos com o Chrome pessoal do usuário que já está em uso
+    (reuniões, YouTube, abas abertas) e previne travamentos por arquivo bloqueado.
+    """
+    # Define a pasta isolada dentro da raiz do projeto
+    pasta_perfil_bot = os.path.join(os.getcwd(), "bot_chrome_profile")
 
-    if sistema == "Windows":
-        caminhos = [
-            os.path.join(usuario, "AppData", "Local", "Google", "Chrome", "User Data"),
-            os.path.join(usuario, "AppData", "Local", "Chromium", "User Data"),
-        ]
-    elif sistema == "Darwin":  # macOS
-        caminhos = [
-            os.path.join(usuario, "Library", "Application Support", "Google", "Chrome"),
-            os.path.join(usuario, "Library", "Application Support", "Chromium"),
-        ]
-    else:  # Linux
-        caminhos = [
-            os.path.join(usuario, ".config", "google-chrome"),
-            os.path.join(usuario, ".config", "chromium"),
-            os.path.join(usuario, ".config", "google-chrome-beta"),
-        ]
+    # Cria a pasta caso ela ainda não exista
+    if not os.path.exists(pasta_perfil_bot):
+        try:
+            os.makedirs(pasta_perfil_bot, exist_ok=True)
+            print(f"✅ Criado novo perfil isolado para o bot em: {pasta_perfil_bot}")
+        except Exception as e:
+            print(f"⚠️ Erro ao criar pasta do perfil do bot: {e}")
+            return None
 
-    for caminho in caminhos:
-        if os.path.exists(caminho):
-            print(f"✅ Perfil do Chrome encontrado em: {caminho}")
-            return caminho
-
-    print("⚠️ Perfil do Chrome NÃO encontrado! Usando modo anônimo.")
-    return None
+    print(f"✅ Usando perfil isolado do Bot: {pasta_perfil_bot}")
+    return pasta_perfil_bot
 
 
 def verificar_modo_anonimo():
