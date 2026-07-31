@@ -19,7 +19,6 @@ function mostrarToast(mensagem, tipo = 'info') {
 // ============================================
 // MOSTRA INFORMAÇÕES DA URL DIGITADA
 // ============================================
-
 async function mostrarInfoUrl() {
     const url = document.getElementById('urlInput').value.trim();
     const infoDiv = document.getElementById('urlInfo');
@@ -89,9 +88,8 @@ async function mostrarInfoUrl() {
 }
 
 // ============================================
-// MAPEAR (COM FOTO RÁPIDA + 3 SEGUNDOS + OPÇÕES)
+// MAPEAR (COM FOTO RÁPIDA + 3 SEGUNDOS)
 // ============================================
-
 async function mapear() {
     console.log('🔥 Botão Map clicado!');
     const url = document.getElementById('urlInput').value.trim();
@@ -103,19 +101,16 @@ async function mapear() {
     }
     urlParaMapear = url;
 
-    // ⭐ BOTÃO MUDA PARA "MAPEANDO..."
     const btn = document.getElementById('btnPrincipal');
     btn.innerHTML = '⏳ Mapeando...';
     btn.disabled = true;
     btn.style.opacity = '0.8';
     btn.style.cursor = 'wait';
 
-    // Desabilita o input durante o mapeamento
     document.getElementById('urlInput').disabled = true;
     document.getElementById('urlInput').style.opacity = '0.6';
 
     try {
-        // ⭐ 1. TIRA A FOTO RÁPIDA ⭐
         const responsePreview = await fetch('/previa_rapida', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -123,9 +118,7 @@ async function mapear() {
         });
         const dataPreview = await responsePreview.json();
 
-        // 2. PREPARA O MODAL
         const modalBody = document.getElementById('modalBodyConfirm');
-        const modalFooter = document.getElementById('modalFooterConfirm');
         const confirmUrl = document.getElementById('confirmUrl');
         const previewDiv = document.getElementById('previaPagina');
         const previewImg = document.getElementById('screenshotPreview');
@@ -141,7 +134,6 @@ async function mapear() {
             if (previewDiv) previewDiv.style.display = 'none';
         }
 
-        // ⭐ MOSTRA O MODAL COM A FOTO E MENSAGEM DE CARREGAMENTO ⭐
         modalBody.innerHTML = `
             <div style="display: flex; flex-direction: column; gap: 10px;">
                 <div style="background: #0d1117; padding: 12px; border-radius: 8px; border-left: 4px solid #58a6ff;">
@@ -154,20 +146,17 @@ async function mapear() {
                     <img id="screenshotPreview" src="${fotoSrc}" alt="Prévia da página" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #30363d;">
                     <p style="color: #8b949e; font-size: 12px; margin-top: 4px;">📸 Prévia da página que será mapeada</p>
                 </div>
+                <div id="infoMapaSalvo" style="display: none; margin-top: 10px; padding: 12px; background: #0d1117; border-radius: 8px; border-left: 4px solid #3fb950;">
+                    <p style="color: #3fb950; font-weight: 600; margin: 0;">✅ Mapa salvo encontrado!</p>
+                    <p id="infoMapaSalvoDetalhes" style="color: #8b949e; margin: 4px 0 0 0; font-size: 13px;"></p>
+                </div>
             </div>
-        `;
-
-        // Remove os botões do footer temporariamente
-        modalFooter.innerHTML = `
-            <span style="color: #8b949e; font-size: 14px;">⏳ Carregando informações...</span>
         `;
 
         document.getElementById('confirmModal').style.display = 'flex';
 
-        // ⭐ 3. ESPERA 3 SEGUNDOS ⭐
         await new Promise(resolve => setTimeout(resolve, 3000));
 
-        // ⭐ 4. VERIFICA O MAPA SALVO E MOSTRA AS OPÇÕES ⭐
         const params = new URLSearchParams();
         params.append('url', url);
         const responseCheck = await fetch('/verificar_mapa?' + params.toString(), {
@@ -178,61 +167,14 @@ async function mapear() {
 
         console.log('✅ dataCheck recebido:', dataCheck);
 
-        // Atualiza o modal com as opções
-        if (dataCheck.existe) {
-            console.log('✅ Mapa encontrado! Mostrando opções...');
-            modalBody.innerHTML = `
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="background: #0d1117; padding: 12px; border-radius: 8px; border-left: 4px solid #3fb950;">
-                        <p style="color: #3fb950; font-weight: 600; margin: 0;">✅ Último mapa encontrado!</p>
-                        <p style="color: #8b949e; margin: 4px 0 0 0; font-size: 13px;">
-                            📅 ${dataCheck.data} — 📊 ${dataCheck.total_elementos} elementos
-                        </p>
-                    </div>
-                    <p style="color: #8b949e; font-size: 14px; margin: 0;">O que você quer fazer?</p>
-                </div>
-            `;
-            modalFooter.innerHTML = `
-                <button onclick="carregarMapaSalvoDireto()" class="btn-confirm btn-sim" style="background: linear-gradient(135deg, #1f6feb, #58a6ff);">
-                    📂 Carregar Mapa
-                </button>
-                <button onclick="confirmarMapeamento(true)" class="btn-confirm btn-sim">
-                    🔄 Re-Mapear
-                </button>
-                <button onclick="confirmarMapeamento(false)" class="btn-confirm btn-nao">
-                    ❌ Cancelar
-                </button>
-            `;
-        } else {
-            console.log('❌ Nenhum mapa encontrado.');
-            modalBody.innerHTML = `
-                <div style="display: flex; flex-direction: column; gap: 10px;">
-                    <div style="background: #0d1117; padding: 12px; border-radius: 8px; border-left: 4px solid #d29922;">
-                        <p style="color: #d29922; font-weight: 600; margin: 0;">📭 Nenhum mapa salvo para esta URL</p>
-                    </div>
-                    <p style="color: #8b949e; font-size: 14px; margin: 0;">Deseja mapear este site agora?</p>
-                </div>
-            `;
-            modalFooter.innerHTML = `
-                <button onclick="confirmarMapeamento(true)" class="btn-confirm btn-sim">
-                    🚀 Mapear
-                </button>
-                <button onclick="confirmarMapeamento(false)" class="btn-confirm btn-nao">
-                    ❌ Cancelar
-                </button>
-            `;
-        }
+        const infoMapaSalvo = document.getElementById('infoMapaSalvo');
+        const infoDetalhes = document.getElementById('infoMapaSalvoDetalhes');
 
-        // ⭐ MANTÉM A FOTO NO MODAL ⭐
-        const previewDiv2 = document.getElementById('previaPagina');
-        if (previewDiv2) {
-            previewDiv2.style.display = fotoSrc ? 'block' : 'none';
-            if (fotoSrc) {
-                previewDiv2.innerHTML = `
-                    <img id="screenshotPreview" src="${fotoSrc}" alt="Prévia da página" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #30363d;">
-                    <p style="color: #8b949e; font-size: 12px; margin-top: 4px;">📸 Prévia da página que será mapeada</p>
-                `;
-            }
+        if (dataCheck.existe) {
+            infoMapaSalvo.style.display = 'block';
+            infoDetalhes.textContent = `📅 ${dataCheck.data} — 📊 ${dataCheck.total_elementos} elementos`;
+        } else {
+            infoMapaSalvo.style.display = 'none';
         }
 
     } catch (error) {
@@ -240,7 +182,6 @@ async function mapear() {
         mostrarToast('Erro ao carregar prévia da página', 'error');
         document.getElementById('confirmModal').style.display = 'flex';
 
-        // ⭐ VOLTA O BOTÃO AO NORMAL ⭐
         const btn = document.getElementById('btnPrincipal');
         btn.innerHTML = '🚀 Map';
         btn.disabled = false;
@@ -254,7 +195,6 @@ async function mapear() {
 // ============================================
 // CONFIRMAR MAPEAMENTO (COM PROGRESSO)
 // ============================================
-
 async function confirmarMapeamento(confirmado) {
     document.getElementById('confirmModal').style.display = 'none';
 
@@ -263,7 +203,6 @@ async function confirmarMapeamento(confirmado) {
         document.getElementById('statusMapeamento').style.color = '#f85149';
         mostrarToast('Mapeamento cancelado!', 'error');
         
-        // Habilita o input novamente
         document.getElementById('urlInput').disabled = false;
         document.getElementById('urlInput').style.opacity = '1';
         
@@ -283,7 +222,6 @@ async function confirmarMapeamento(confirmado) {
     botao.disabled = true;
     botao.innerHTML = '⏳ Mapeando...';
 
-    // ⭐ MOSTRA O PROGRESSO ⭐
     const progressoContainer = document.getElementById('progressoContainer');
     const sucessoContainer = document.getElementById('sucessoContainer');
     progressoContainer.style.display = 'block';
@@ -298,7 +236,6 @@ async function confirmarMapeamento(confirmado) {
     mensagem.textContent = '⏳ Iniciando mapeamento...';
 
     try {
-        // ⭐ USA EVENT SOURCE PARA PROGRESSO EM TEMPO REAL ⭐
         const eventSource = new EventSource('/mapear_progresso?url=' + encodeURIComponent(urlParaMapear));
         
         let dadosFinal = [];
@@ -307,27 +244,22 @@ async function confirmarMapeamento(confirmado) {
             const data = JSON.parse(event.data);
             
             if (data.status === 'progresso') {
-                // Atualiza a barra de progresso
                 barra.style.width = data.percentual + '%';
                 porcentagem.textContent = data.percentual + '%';
                 mensagem.textContent = data.mensagem;
                 
-                // Atualiza o contador
                 document.getElementById('progressoAtual').textContent = data.atual;
                 document.getElementById('progressoTotal').textContent = data.total;
                 
             } else if (data.status === 'concluido') {
-                // Mapeamento concluído!
                 barra.style.width = '100%';
                 porcentagem.textContent = '100%';
                 mensagem.textContent = '✅ Mapeamento concluído!';
                 
                 dadosFinal = data.dados;
                 
-                // Fecha a conexão
                 eventSource.close();
                 
-                // Processa os resultados
                 dadosMapeados = dadosFinal;
                 elementosCompletos = dadosMapeados;
                 totalElementos = dadosMapeados.length;
@@ -342,7 +274,6 @@ async function confirmarMapeamento(confirmado) {
                 
                 mostrarResultados(dadosMapeados);
                 
-                // ⭐⭐⭐ MOSTRA O BOTÃO REINICIAR ⭐⭐⭐
                 document.getElementById('areaReiniciar').style.display = 'block';
                 document.getElementById('btnPrincipal').style.display = 'none';
                 
@@ -375,7 +306,6 @@ async function confirmarMapeamento(confirmado) {
 // ============================================
 // CARREGAR MAPA DIRETO DO MODAL
 // ============================================
-
 async function carregarMapaSalvoDireto() {
     const url = document.getElementById('urlInput').value.trim();
     
@@ -418,10 +348,6 @@ async function carregarMapaSalvoDireto() {
             elementosCompletos = dadosMapeados;
             totalElementos = data.total;
             
-            // document.getElementById('estatisticas').style.display = 'flex';
-            // document.getElementById('statTotal').textContent = data.total;
-            // document.getElementById('statTags').textContent = Object.keys(data.tags || {}).length;
-            
             document.getElementById('statusMapeamento').innerHTML = '✅ Mapa carregado do banco! ' + data.total + ' elementos';
             document.getElementById('statusMapeamento').style.color = '#3fb950';
             
@@ -451,7 +377,6 @@ function mapearNovo() {
 // ============================================
 // CONTROLE DO BOTÃO PRINCIPAL E REINICIAR
 // ============================================
-
 function alternarBotao(paraMap) {
     const btn = document.getElementById('btnPrincipal');
     const areaReiniciar = document.getElementById('areaReiniciar');
@@ -460,34 +385,28 @@ function alternarBotao(paraMap) {
     if (!btn) return;
     
     if (paraMap) {
-        // MODO MAPEAMENTO
         btn.innerHTML = '🚀 Map';
         btn.onclick = function() { mapear(); };
         btn.style.display = 'inline-block';
         btn.disabled = false;
         
-        // ESCONDE ÁREA REINICIAR
         if (areaReiniciar) {
             areaReiniciar.style.display = 'none';
         }
         
-        // HABILITA INPUT
         if (urlInput) {
             urlInput.disabled = false;
             urlInput.style.opacity = '1';
         }
         
     } else {
-        // MODO FINALIZADO - MOSTRA REINICIAR
         btn.style.display = 'none';
         btn.disabled = true;
         
-        // MOSTRA ÁREA REINICIAR
         if (areaReiniciar) {
             areaReiniciar.style.display = 'block';
         }
         
-        // DESABILITA INPUT
         if (urlInput) {
             urlInput.disabled = true;
             urlInput.style.opacity = '0.6';
@@ -496,9 +415,8 @@ function alternarBotao(paraMap) {
 }
 
 // ============================================
-// FUNÇÃO DE REINICIAR O SISTEMA (VIA ROTA)
+// FUNÇÃO DE REINICIAR O SISTEMA
 // ============================================
-
 function reiniciarSistema() {
     if (!confirm('🔄 Tem certeza que quer reiniciar? Os dados atuais serão perdidos!')) {
         return;
@@ -528,10 +446,112 @@ function reiniciarSistema() {
     });
 }
 
+function testarBotao() {
+    const btn = document.getElementById('btnTesteLado');
+    
+    if (btn) {
+        btn.style.background = 'linear-gradient(135deg, #f0883e, #f0a83e)';
+        btn.textContent = '⏳ REINICIANDO...';
+        btn.disabled = true;
+    }
+    
+    mostrarToast('🔄 Reiniciando sistema...', 'info');
+    
+    fetch('/reiniciar_sistema', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            mostrarToast('✅ Sistema reiniciado!', 'success');
+            setTimeout(function() {
+                location.reload();
+            }, 1000);
+        } else {
+            mostrarToast('❌ Erro ao reiniciar: ' + data.erro, 'error');
+            if (btn) {
+                btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+                btn.textContent = '🧪 TESTE';
+                btn.disabled = false;
+            }
+        }
+    })
+    .catch(error => {
+        mostrarToast('❌ Erro ao reiniciar: ' + error.message, 'error');
+        if (btn) {
+            btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
+            btn.textContent = '🧪 TESTE';
+            btn.disabled = false;
+        }
+    });
+}
+
+window.testarBotao = testarBotao;
+
+// ============================================
+// ⭐ FUNÇÃO PARA MAPEAR COM ESTRATÉGIAS ⭐
+// ============================================
+function mapearComEstrategias() {
+    const url = document.getElementById('urlInput').value.trim();
+    
+    if (!url) {
+        mostrarToast('❌ Digite uma URL!', 'error');
+        return;
+    }
+    
+    document.getElementById('confirmModal').style.display = 'none';
+    
+    mostrarToast('🧠 Testando estratégias anti-bot...', 'info');
+    
+    const status = document.getElementById('statusMapeamento');
+    status.innerHTML = '🧠 Testando estratégias... Aguarde!';
+    status.style.color = '#d29922';
+    
+    const btn = document.getElementById('btnPrincipal');
+    btn.innerHTML = '⏳ Mapeando com estratégias...';
+    btn.disabled = true;
+    
+    fetch('/mapear_com_estrategias', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            status.innerHTML = '✅ ' + data.mensagem;
+            status.style.color = '#3fb950';
+            mostrarToast('✅ ' + data.mensagem, 'success');
+            
+            // ⭐⭐⭐ RECARREGA A PÁGINA PARA MOSTRAR OS DADOS ⭐⭐⭐
+            // O servidor salvou no cache, a página vai carregar com os dados
+            setTimeout(() => location.reload(), 1500);
+            
+            btn.innerHTML = '🚀 Map';
+            btn.disabled = false;
+            
+        } else {
+            status.innerHTML = '❌ ' + data.erro;
+            status.style.color = '#f85149';
+            mostrarToast('❌ ' + data.erro, 'error');
+            btn.innerHTML = '🚀 Map';
+            btn.disabled = false;
+        }
+    })
+    .catch(error => {
+        status.innerHTML = '❌ Erro: ' + error.message;
+        status.style.color = '#f85149';
+        mostrarToast('❌ Erro: ' + error.message, 'error');
+        btn.innerHTML = '🚀 Map';
+        btn.disabled = false;
+    });
+}
 // ============================================
 // FILTRO E BUSCA
 // ============================================
-
 function filtrarElementos() {
     const input = document.getElementById('searchInput');
     if (!input) return;
@@ -606,7 +626,6 @@ function limparBusca() {
 // ============================================
 // RESULTADOS
 // ============================================
-
 function mostrarResultados(elementos) {
     if (elementos && elementos.length > 0 && 
         (elementos === dadosMapeados || elementos.length === dadosMapeados.length)) {
@@ -634,7 +653,6 @@ function mostrarResultados(elementos) {
         const idx = elementosCompletos.indexOf(elem);
         const indexReal = idx >= 0 ? idx : 0;
         
-        // ⭐ VERIFICA SE 'classe' É STRING ANTES DE USAR .slice() ⭐
         let classeDisplay = '';
         if (elem.classe && typeof elem.classe === 'string' && elem.classe.length > 0) {
             classeDisplay = '<span class="classe">.' + elem.classe.slice(0, 20) + '</span>';
@@ -694,10 +712,13 @@ function mostrarModal(index) {
     document.getElementById('elementoModal').style.display = 'flex';
 }
 
+function fecharModal() {
+    document.getElementById('elementoModal').style.display = 'none';
+}
+
 // ============================================
 // EXPORTAÇÃO
 // ============================================
-
 async function exportar(formato) {
     try {
         const response = await fetch('/exportar', {
@@ -759,7 +780,6 @@ async function exportar(formato) {
 // ============================================
 // FUNÇÕES DO BANCO DE DADOS
 // ============================================
-
 function mostrarBancoResultados(html, cor) {
     var container = document.getElementById('bancoResultados');
     var conteudo = document.getElementById('bancoConteudo');
@@ -863,9 +883,8 @@ async function listarMapas() {
 }
 
 // ============================================
-// COMPARAÇÃO MANUAL (ESCOLHA DE MAPAS)
+// COMPARAÇÃO MANUAL
 // ============================================
-
 function abrirCompararManualModal() {
     document.getElementById('compararManualModal').style.display = 'flex';
     document.getElementById('compManualResultado').style.display = 'none';
@@ -1103,7 +1122,6 @@ function compararMultiplosMapas(mapas) {
 // ============================================
 // INICIALIZAÇÃO
 // ============================================
-
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('urlInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') mapear();
@@ -1170,99 +1188,9 @@ function mostrarEstadoInicial() {
 }
 
 // ============================================
-// ⭐ FUNÇÃO DO BOTÃO DE TESTE (REINICIAR SISTEMA) ⭐
+// SISTEMA DE DETECÇÃO DE ERROS
 // ============================================
-
-function testarBotao() {
-    const btn = document.getElementById('btnTesteLado');
-    
-    if (btn) {
-        btn.style.background = 'linear-gradient(135deg, #f0883e, #f0a83e)';
-        btn.textContent = '⏳ REINICIANDO...';
-        btn.disabled = true;
-    }
-    
-    mostrarToast('🔄 Reiniciando sistema...', 'info');
-    
-    fetch('/reiniciar_sistema', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.sucesso) {
-            mostrarToast('✅ Sistema reiniciado!', 'success');
-            setTimeout(function() {
-                location.reload();
-            }, 1000);
-        } else {
-            mostrarToast('❌ Erro ao reiniciar: ' + data.erro, 'error');
-            if (btn) {
-                btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
-                btn.textContent = '🧪 TESTE';
-                btn.disabled = false;
-            }
-        }
-    })
-    .catch(error => {
-        mostrarToast('❌ Erro ao reiniciar: ' + error.message, 'error');
-        if (btn) {
-            btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
-            btn.textContent = '🧪 TESTE';
-            btn.disabled = false;
-        }
-    });
-}
-// ============================================
-// ⭐ FUNÇÃO DO BOTÃO DE TESTE ⭐
-// ============================================
-
-function testarBotao() {
-    const btn = document.getElementById('btnTesteLado');
-    if (btn) {
-        btn.style.background = 'linear-gradient(135deg, #f0883e, #f0a83e)';
-        btn.textContent = '⏳ REINICIANDO...';
-        btn.disabled = true;
-    }
-    mostrarToast('🔄 Reiniciando sistema...', 'info');
-    fetch('/reiniciar_sistema', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.sucesso) {
-            mostrarToast('✅ Sistema reiniciado!', 'success');
-            setTimeout(() => location.reload(), 1000);
-        } else {
-            mostrarToast('❌ Erro: ' + data.erro, 'error');
-            if (btn) {
-                btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
-                btn.textContent = '🧪 TESTE';
-                btn.disabled = false;
-            }
-        }
-    })
-    .catch(error => {
-        mostrarToast('❌ Erro: ' + error.message, 'error');
-        if (btn) {
-            btn.style.background = 'linear-gradient(135deg, #b91696, #f0883e)';
-            btn.textContent = '🧪 TESTE';
-            btn.disabled = false;
-        }
-    });
-}
-
-window.testarBotao = testarBotao;
-// ============================================
-// ⭐ SISTEMA DE DETECÇÃO DE ERROS ⭐
-// ============================================
-
-// Função que captura erros globais
 function capturarErros() {
-    // 1. Captura erros não tratados
     window.onerror = function(mensagem, url, linha, coluna, erro) {
         console.error('🚨 ERRO CAPTURADO:', mensagem, erro);
         mostrarToast('❌ Erro: ' + mensagem, 'error');
@@ -1271,7 +1199,6 @@ function capturarErros() {
         return true;
     };
 
-    // 2. Captura promessas rejeitadas
     window.addEventListener('unhandledrejection', function(event) {
         console.error('🚨 PROMESSA REJEITADA:', event.reason);
         mostrarToast('❌ Erro: ' + event.reason, 'error');
@@ -1279,7 +1206,6 @@ function capturarErros() {
         document.getElementById('statusMapeamento').style.color = '#f85149';
     });
 
-    // 3. Captura erros de fetch
     const fetchOriginal = window.fetch;
     window.fetch = function(...args) {
         return fetchOriginal.apply(this, args).catch(function(erro) {
@@ -1294,25 +1220,8 @@ function capturarErros() {
     console.log('✅ Sistema de detecção de erros ativado!');
 }
 
-// ============================================
-// ⭐ FUNÇÃO PARA LIMPAR ERROS DA TELA ⭐
-// ============================================
-
-function limparErros() {
-    const status = document.getElementById('statusMapeamento');
-    if (status) {
-        status.innerHTML = '';
-        status.style.color = '#e6edf3';
-    }
-}
-
-// ============================================
-// ⭐ FUNÇÃO PARA TESTAR ERRO ⭐
-// ============================================
-
 function testarErro() {
     try {
-        // Força um erro pra testar a detecção
         throw new Error('🧪 Erro de teste forçado!');
     } catch (erro) {
         console.error('🧪 Teste de erro:', erro);
@@ -1321,47 +1230,21 @@ function testarErro() {
         document.getElementById('statusMapeamento').style.color = '#f85149';
     }
 }
-async function mapear() {
-    // ... código existente ...
-    
-    try {
-        const response = await fetch('/mapear_progresso?url=' + encodeURIComponent(url));
-        // ... processa a resposta ...
-    } catch (error) {
-        // Se deu erro, mostra o aviso de anti-bot
-        document.getElementById('avisoAntiBot').style.display = 'block';
-        document.getElementById('statusMapeamento').innerHTML = '⚠️ Site detectou bot! Clique em "Abrir Janela" para continuar.';
-    }
+
+function gerarCodigoPlaywright(elemento) {
+    if (!elemento) return '// Elemento não encontrado';
+    const seletor = elemento.seletor_css || elemento.xpath || '';
+    return `await page.locator('${seletor}').click();`;
 }
 
-function confirmarJanela() {
-    const url = document.getElementById('urlInput').value.trim();
-    if (!url) {
-        mostrarToast('❌ Digite uma URL primeiro!', 'error');
+function copiarSeletor(texto, tipo) {
+    if (!texto || texto === 'N/A') {
+        mostrarToast('❌ Nada para copiar', 'error');
         return;
     }
-    
-    mostrarToast('🪟 Tentando mapear...', 'info');
-    document.getElementById('avisoAntiBot').style.display = 'none';
-    
-    fetch('/mapear_com_fallback', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ url: url })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.sucesso) {
-            mostrarToast('✅ ' + data.mensagem, 'success');
-            // Recarrega os dados
-            location.reload();
-        } else {
-            mostrarToast('❌ Erro: ' + data.erro, 'error');
-        }
-    })
-    .catch(error => {
-        mostrarToast('❌ Erro: ' + error.message, 'error');
+    navigator.clipboard.writeText(texto).then(() => {
+        mostrarToast(`✅ ${tipo} copiado!`, 'success');
+    }).catch(() => {
+        mostrarToast('❌ Erro ao copiar', 'error');
     });
 }

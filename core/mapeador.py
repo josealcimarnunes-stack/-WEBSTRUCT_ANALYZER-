@@ -8,14 +8,14 @@ import json
 import platform
 
 # ⭐ CONFIGURAÇÕES DE TIMEOUT GLOBAIS ⭐
-os.environ["PLAYWRIGHT_TIMEOUT"] = "300000"  # 5 minutos
-os.environ["PLAYWRIGHT_WS_TIMEOUT"] = "300000"  # 5 minutos
+os.environ["PLAYWRIGHT_TIMEOUT"] = "300000"
+os.environ["PLAYWRIGHT_WS_TIMEOUT"] = "300000"
 
-TIMEOUT_PAGINA = 120000  # 2 minutos para carregar a página
-TIMEOUT_NAVEGADOR = 60000  # 1 minuto para iniciar o navegador
+TIMEOUT_PAGINA = 120000
+TIMEOUT_NAVEGADOR = 60000
 
 
-# ⭐ DETECTA O SISTEMA OPERACIONAL E AJUSTA O CAMINHO DO CHROME ⭐
+# ⭐ DETECTA O SISTEMA OPERACIONAL ⭐
 def get_chrome_path():
     sistema = platform.system()
     if sistema == "Windows":
@@ -27,7 +27,7 @@ def get_chrome_path():
             if os.path.exists(caminho):
                 print(f"✅ Chrome encontrado em: {caminho}")
                 return caminho
-        print("❌ Chrome NÃO encontrado no Windows! Tentando baixar...")
+        print("❌ Chrome NÃO encontrado no Windows!")
         return None
     else:
         caminhos = [
@@ -40,7 +40,7 @@ def get_chrome_path():
             if os.path.exists(caminho):
                 print(f"✅ Chrome encontrado em: {caminho}")
                 return caminho
-        print("❌ Chrome NÃO encontrado no Linux! Tentando baixar...")
+        print("❌ Chrome NÃO encontrado no Linux!")
         return None
 
 
@@ -70,10 +70,8 @@ def gerar_xpath(tag, classe, id_elem, posicao):
 
 
 # ============================================
-# ⭐ FUNÇÃO PARA TIRAR FOTO RÁPIDA (CORRIGIDA) ⭐
+# ⭐ FUNÇÃO PARA TIRAR FOTO RÁPIDA ⭐
 # ============================================
-
-
 def tirar_foto_rapida(url):
     print(f"📸 Tirando foto rápida de: {url}")
     try:
@@ -105,10 +103,8 @@ def tirar_foto_rapida(url):
 
 
 # ============================================
-# ⭐ FUNÇÃO DE MAPEAMENTO COM PROGRESSO (CORRIGIDA) ⭐
+# ⭐ FUNÇÃO DE MAPEAMENTO COM PROGRESSO ⭐
 # ============================================
-
-
 def analisar_estrutura_com_progresso(url):
     print(f"🔍 Analisando: {url}")
     try:
@@ -156,7 +152,7 @@ def analisar_estrutura_com_progresso(url):
                     pai: el.parentElement ? el.parentElement.tagName.toLowerCase() : ''
                 }));
             }""")
-            print(f"🔍 Total de elementos encontrados via evaluate: {len(elementos)}")
+            print(f"🔍 Total de elementos encontrados: {len(elementos)}")
 
             dados = []
             for posicao, elem in enumerate(elementos, 1):
@@ -208,66 +204,109 @@ def analisar_estrutura_com_progresso(url):
 
 
 # ============================================
-# ⭐ FUNÇÃO DE MAPEAMENTO COMPLETO (CORRIGIDA) ⭐
+# ⭐ FUNÇÃO DE MAPEAMENTO COMPLETO ⭐
 # ============================================
-
-
 def analisar_estrutura(url, pegar_screenshot=False, headless=True):
     print(f"🔍 Analisando: {url}")
+    print(f"🪟 Modo headless: {headless}")
     dados = []
     screenshot_base64 = None
+
     try:
         with sync_playwright() as p:
             launch_options = {
-                "headless": headless,  # ⭐ AGORA USA O PARÂMETRO
+                "headless": headless,
                 "timeout": TIMEOUT_NAVEGADOR,
-                "args": ["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+                "args": [
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--disable-gpu",
+                    "--disable-blink-features=AutomationControlled",
+                    "--disable-features=IsolateOrigins,site-per-process",
+                    "--disable-web-security",
+                    "--disable-features=BlockInsecurePrivateNetworkRequests",
+                ],
             }
-            if CAMINHO_CHROME:
+
+            if headless and CAMINHO_CHROME:
                 launch_options["executable_path"] = CAMINHO_CHROME
-                print(f"✅ Usando Chrome em: {CAMINHO_CHROME}")
+                print(f"✅ Usando Chrome do sistema (headless)")
+            else:
+                print("🪟 Usando Chromium do Playwright (VISÍVEL)")
+
+            print(f"🚀 Abrindo navegador... headless={launch_options.get('headless')}")
 
             browser = p.chromium.launch(**launch_options)
-            page = browser.new_page()
-            page.goto(url, timeout=120000, wait_until="networkidle")
-            page.wait_for_selector("body", timeout=15000)
+
+            page = browser.new_page(
+                viewport={"width": 1280, "height": 720},
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            )
+
+            timeout = 30000 if headless else 90000
+            print(f"⏳ Carregando página... timeout={timeout}ms")
+
+            try:
+                page.goto(url, timeout=timeout, wait_until="networkidle")
+                print("✅ Página carregada!")
+            except Exception as e:
+                print(f"⚠️ Erro ao carregar: {e}")
+                print("Tentando com wait_until='domcontentloaded'...")
+                page.goto(url, timeout=timeout, wait_until="domcontentloaded")
+
+            try:
+                page.wait_for_selector("body", timeout=15000)
+                print("✅ Body carregado!")
+            except:
+                print("⚠️ Body não encontrado, continuando...")
+
+            print("⏳ Rolando a página para carregar tudo...")
+            for i in range(5):
+                page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
+                page.wait_for_timeout(2000)
+                print(f"  Scroll {i+1}/5")
+
+            page.evaluate("window.scrollTo(0, 0)")
+            page.wait_for_timeout(1000)
 
             if pegar_screenshot:
+                print("📸 Tirando screenshot...")
                 page.wait_for_timeout(2000)
                 screenshot = page.screenshot(full_page=True)
                 screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
                 print("📸 Screenshot capturado!")
 
-            print("⏳ Rolando a página para carregar conteúdo dinâmico...")
-            for _ in range(5):
-                page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
-                page.wait_for_timeout(2000)
-
-            page.evaluate("window.scrollTo(0, 0)")
-            page.wait_for_timeout(1000)
-
-            print("⏳ Coletando todos os elementos via evaluate...")
+            print("⏳ Coletando elementos da página...")
             elementos = page.evaluate("""() => {
                 const allElements = document.querySelectorAll('*');
-                return Array.from(allElements).map(el => ({
-                    tag: el.tagName.toLowerCase(),
-                    classe: el.className || '',
-                    id: el.id || '',
-                    link: el.getAttribute('href') || '',
-                    texto: (el.innerText || '').trim().slice(0, 300),
-                    profundidade: (() => {
-                        let depth = 0;
-                        let parent = el.parentElement;
-                        while (parent) {
-                            depth++;
-                            parent = parent.parentElement;
-                        }
-                        return depth;
-                    })(),
-                    pai: el.parentElement ? el.parentElement.tagName.toLowerCase() : ''
-                }));
+                const result = [];
+                for (const el of allElements) {
+                    const tag = el.tagName.toLowerCase();
+                    if (tag === 'html' || tag === 'head' || tag === 'meta' || tag === 'link' || tag === 'script' || tag === 'style') {
+                        continue;
+                    }
+                    result.push({
+                        tag: tag,
+                        classe: el.className || '',
+                        id: el.id || '',
+                        link: el.getAttribute('href') || '',
+                        texto: (el.innerText || '').trim().slice(0, 300),
+                        profundidade: (() => {
+                            let depth = 0;
+                            let parent = el.parentElement;
+                            while (parent) {
+                                depth++;
+                                parent = parent.parentElement;
+                            }
+                            return depth;
+                        })(),
+                        pai: el.parentElement ? el.parentElement.tagName.toLowerCase() : ''
+                    });
+                }
+                return result;
             }""")
-            print(f"🔍 Total de elementos encontrados via evaluate: {len(elementos)}")
+
+            print(f"🔍 Encontrados: {len(elementos)} elementos")
 
             for posicao, elem in enumerate(elementos, 1):
                 dados.append(
@@ -294,9 +333,8 @@ def analisar_estrutura(url, pegar_screenshot=False, headless=True):
                     }
                 )
 
-            print(f"✅ {len(dados)} elementos mapeados!")
             browser.close()
-            print("✅ Processo concluído!")
+            print(f"✅ {len(dados)} elementos mapeados!")
 
             if pegar_screenshot:
                 return dados, screenshot_base64
@@ -323,25 +361,3 @@ def salvar_mapa_atual(dados, url, descricao=None):
     except Exception as e:
         print(f"⚠️ Não foi possível salvar no banco: {e}")
         return None
-
-
-def analisar_estrutura_com_fallback(url):
-    # Tenta em modo headless primeiro
-    try:
-        print("🔍 Tentando mapear em modo headless...")
-        dados = analisar_estrutura(url, headless=True)
-        if dados:
-            print(f"✅ Mapeamento headless concluído! {len(dados)} elementos")
-            return dados
-        else:
-            raise Exception("Nenhum dado retornado do headless")
-    except Exception as e:
-        print(f"⚠️ Erro no headless: {e}")
-        print("🪟 Tentando com janela aberta...")
-        dados = analisar_estrutura(url, headless=False)
-        if dados:
-            print(f"✅ Mapeamento com janela concluído! {len(dados)} elementos")
-            return dados
-        else:
-            print("❌ Falha no mapeamento com janela também!")
-            return []

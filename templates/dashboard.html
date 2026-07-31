@@ -165,7 +165,7 @@
 
             <div id="resultadosContainer">
                 <div id="estadoInicial" class="estado-inicial">
-                    <img src="/static/gif2.gif" alt="Mapeie um site" class="gif-placeholder">
+                    <img src="/static/fundo.jpg" alt="Mapeie um site" class="gif-placeholder">
                     <h3>https://github.com/alcitech7-oss</h3>
                     <p>Enter the URL above and click on <strong>"Map"</strong></p>
                 </div>
@@ -202,26 +202,43 @@
         </div>
 
         <!-- MODAL DE CONFIRMAÇÃO -->
-        <div id="confirmModal" class="modal-confirm" style="display:none;">
-            <div class="modal-confirm-content">
-                <div class="modal-confirm-header">
-                    <span class="modal-confirm-icon">🔍</span>
-                    <h2>Confirmar Mapeamento</h2>
-                </div>
-                <div class="modal-confirm-body" id="modalBodyConfirm">
-                    <p style="color: #8b949e; font-size: 14px;">📸 Confira a prévia da página abaixo e decida o que fazer.</p>
-                    <p class="modal-confirm-url" id="confirmUrl">https://web.whatsapp.com/</p>
-                    <div id="previaPagina" style="margin-top: 10px; text-align: center; display: none;">
-                        <img id="screenshotPreview" src="" alt="Prévia da página" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #30363d;">
-                        <p style="color: #8b949e; font-size: 12px; margin-top: 4px;">📸 Prévia da página que será mapeada</p>
-                    </div>
-                </div>
-                <div class="modal-confirm-footer" id="modalFooterConfirm">
-                    <button class="btn-confirm btn-sim" onclick="confirmarMapeamento(true)">🚀 MAPEAR</button>
-                    <button class="btn-confirm btn-nao" onclick="confirmarMapeamento(false)">❌ CANCELAR</button>
-                </div>
+      <!-- MODAL DE CONFIRMAÇÃO -->
+<!-- MODAL DE CONFIRMAÇÃO - MAIOR E COM 4 BOTÕES FIXOS -->
+<div id="confirmModal" class="modal-confirm" style="display:none;">
+    <div class="modal-confirm-content" style="max-width: 600px; width: 95%;">
+        <div class="modal-confirm-header">
+            <span class="modal-confirm-icon">🔍</span>
+            <h2>Confirmar Mapeamento</h2>
+        </div>
+        <div class="modal-confirm-body" id="modalBodyConfirm">
+            <p style="color: #8b949e; font-size: 14px;">📸 Confira a prévia da página abaixo e decida o que fazer.</p>
+            <p class="modal-confirm-url" id="confirmUrl">https://example.com/</p>
+            <div id="previaPagina" style="margin-top: 10px; text-align: center; display: none;">
+                <img id="screenshotPreview" src="" alt="Prévia da página" style="max-width: 100%; max-height: 300px; border-radius: 8px; border: 1px solid #30363d;">
+                <p style="color: #8b949e; font-size: 12px; margin-top: 4px;">📸 Prévia da página que será mapeada</p>
+            </div>
+            <div id="infoMapaSalvo" style="display: none; margin-top: 10px; padding: 12px; background: #0d1117; border-radius: 8px; border-left: 4px solid #3fb950;">
+                <p style="color: #3fb950; font-weight: 600; margin: 0;">✅ Mapa salvo encontrado!</p>
+                <p id="infoMapaSalvoDetalhes" style="color: #8b949e; margin: 4px 0 0 0; font-size: 13px;"></p>
             </div>
         </div>
+        <!-- ⭐ 4 BOTÕES FIXOS - SEMPRE OS MESMOS ⭐ -->
+        <div class="modal-confirm-footer" id="modalFooterConfirm" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; border-top: 1px solid #30363d; padding-top: 20px;">
+            <button onclick="carregarMapaSalvoDireto()" class="btn-confirm btn-sim" style="background: linear-gradient(135deg, #1f6feb, #58a6ff);">
+                📂 Carregar Mapa
+            </button>
+            <button onclick="confirmarMapeamento(true)" class="btn-confirm btn-sim" style="background: linear-gradient(135deg, #238636, #2ea043);">
+                🚀 Mapear
+            </button>
+            <button onclick="mapearComEstrategias()" class="btn-confirm btn-sim" style="background: linear-gradient(135deg, #9e6a03, #d29922);">
+                🧠 Estratégias
+            </button>
+            <button onclick="confirmarMapeamento(false)" class="btn-confirm btn-nao">
+                ❌ Cancelar
+            </button>
+        </div>
+    </div>
+</div>
 
         <!-- MODAL DE DETALHES -->
         <div id="elementoModal" class="modal" style="display:none;">
