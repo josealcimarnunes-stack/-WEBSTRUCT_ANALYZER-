@@ -1,32 +1,18 @@
-FROM python:3.10-slim
+# Usa a imagem oficial do Playwright com Python e Linux prontos
+FROM mcr.microsoft.com/playwright/python:v1.40.0-jammy
 
+# Define a pasta de trabalho dentro do container
 WORKDIR /app
 
-# ⭐ INSTALA O CHROME ⭐
-RUN apt-get update && apt-get install -y \
-    wget \
-    gnupg \
-    unzip \
-    curl \
-    && wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-keyring.gpg \
-    && echo "deb [signed-by=/usr/share/keyrings/google-chrome-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update && apt-get install -y google-chrome-stable \
-    && rm -rf /var/lib/apt/lists/*
-
-# ⭐ INSTALA O PLAYWRIGHT E OS NAVEGADORES ⭐
-RUN pip install playwright && \
-    playwright install chromium && \
-    playwright install-deps
-
-# ⭐ COPIA E INSTALA DEPENDÊNCIAS ⭐
+# Copia a lista de dependências e instala
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# ⭐ COPIA O CÓDIGO ⭐
+# Copia todo o código do seu projeto para dentro do container
 COPY . .
 
-# ⭐ EXPÕE A PORTA ⭐
+# Expõe a porta que a Render costuma usar
 EXPOSE 10000
 
-# ⭐ RODA O APP COM GUNICORN ⭐
-CMD ["gunicorn", "main:app", "--bind", "0.0.0.0:10000"]
+# Inicializa a aplicação Flask com Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "main:app"]
