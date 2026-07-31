@@ -15,3 +15,23 @@ echo "*.dll" >> .gitignore
 echo "__pycache__/" >> .gitignore
 echo "*.pyc" >> .gitignore
 echo "venv/" >> .gitignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+data/
+*.db
+*.sqlite3
+*.log
+.DS_Store
+.vscode/
+.idea/
+*.exe
+dist/
+build/
+*.spec
+playwright_browsers/

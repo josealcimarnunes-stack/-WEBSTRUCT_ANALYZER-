@@ -6,6 +6,25 @@ import time
 import base64
 import json
 import platform
+import sys  # ⭐ ESSENCIAL PARA O getattr(sys, "frozen", False)
+
+
+def configurar_playwright():
+    if os.environ.get("RENDER"):
+        # Modo Render
+        browsers_path = os.path.join(os.getcwd(), ".cache", "ms-playwright")
+        os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
+        print(f"✅ Render mode: {browsers_path}")
+    elif getattr(sys, "frozen", False):
+        # Modo .exe
+        browsers_path = os.path.join(sys._MEIPASS, "playwright_browsers")
+        os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
+    else:
+        # Modo desenvolvimento
+        browsers_path = os.path.join(os.getcwd(), "playwright_browsers")
+        if os.path.exists(browsers_path):
+            os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
+
 
 # ⭐ CONFIGURAÇÕES DE TIMEOUT GLOBAIS ⭐
 os.environ["PLAYWRIGHT_TIMEOUT"] = "300000"
@@ -128,35 +147,52 @@ def gerar_xpath(tag, classe, id_elem, posicao):
 # ============================================
 # ⭐ FUNÇÃO PARA TIRAR FOTO RÁPIDA ⭐
 # ============================================
+# ... resto do código continua igual ...
+
+# ============================================
+# ⭐ FUNÇÃO PARA TIRAR FOTO RÁPIDA ⭐
+# ============================================
 
 
 def tirar_foto_rapida(url):
     print(f"📸 Tirando foto rápida de: {url}")
+
+    # ⭐ TENTATIVA 1: Chrome REAL com perfil ⭐
     try:
         with sync_playwright() as p:
-            launch_options = {
-                "headless": True,
-                "timeout": TIMEOUT_NAVEGADOR,
-                "args": [
-                    "--no-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--disable-gpu",
-                    "--disable-blink-features=AutomationControlled",
-                ],
-            }
+            if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+                print(f"✅ Tentando Chrome REAL com perfil...")
+                context = p.chromium.launch_persistent_context(
+                    user_data_dir=CAMINHO_PERFIL_CHROME,
+                    headless=False,
+                    executable_path=CAMINHO_CHROME_REAL,
+                    args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+                )
+                page = context.new_page()
+                page.goto(url, timeout=60000, wait_until="networkidle")
+                page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.3)")
+                page.wait_for_timeout(1000)
+                page.evaluate("window.scrollTo(0, 0)")
+                page.wait_for_timeout(1000)
+                screenshot = page.screenshot(full_page=False)
+                screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
+                context.close()
+                print("📸 Foto rápida capturada com Chrome REAL!")
+                return screenshot_base64
+    except Exception as e:
+        print(f"⚠️ Chrome REAL falhou: {e}")
+        print("🔄 Fallback: usando Chromium do Playwright...")
 
-            # ⭐ USA O CHROME REAL SE POSSÍVEL ⭐
-            if CAMINHO_CHROME_REAL:
-                launch_options["executable_path"] = CAMINHO_CHROME_REAL
-                print(f"✅ Usando Chrome REAL em: {CAMINHO_CHROME_REAL}")
-
-            # ⭐ USA O PERFIL SE POSSÍVEL ⭐
-            if CAMINHO_PERFIL_CHROME:
-                launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-                print(f"✅ Usando perfil do Chrome: {CAMINHO_PERFIL_CHROME}")
-
-            browser = p.chromium.launch(**launch_options)
-            page = browser.new_page()
+    # ⭐ FALLBACK: Chromium do Playwright ⭐
+    try:
+        with sync_playwright() as p:
+            print(f"🔄 Usando Chromium do Playwright (fallback)")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=True,
+                args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"],
+            )
+            page = context.new_page()
             page.goto(url, timeout=60000, wait_until="networkidle")
             page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.3)")
             page.wait_for_timeout(1000)
@@ -164,11 +200,11 @@ def tirar_foto_rapida(url):
             page.wait_for_timeout(1000)
             screenshot = page.screenshot(full_page=False)
             screenshot_base64 = base64.b64encode(screenshot).decode("utf-8")
-            browser.close()
-            print("📸 Foto rápida capturada com sucesso!")
+            context.close()
+            print("📸 Foto rápida capturada com Chromium (fallback)!")
             return screenshot_base64
     except Exception as e:
-        print(f"❌ Erro ao tirar foto rápida: {e}")
+        print(f"❌ Fallback também falhou: {e}")
         return None
 
 
@@ -181,30 +217,45 @@ def analisar_estrutura_com_progresso(url):
     print(f"🔍 Analisando: {url}")
     try:
         with sync_playwright() as p:
-            launch_options = {
-                "headless": True,
-                "timeout": TIMEOUT_NAVEGADOR,
-                "args": [
-                    "--no-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--disable-gpu",
-                    "--disable-blink-features=AutomationControlled",
-                ],
-            }
+            # ⭐ TENTA CHROME REAL COM PERFIL ⭐
+            try:
+                if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+                    print(f"✅ Tentando Chrome REAL com perfil...")
+                    context = p.chromium.launch_persistent_context(
+                        user_data_dir=CAMINHO_PERFIL_CHROME,
+                        headless=True,
+                        executable_path=CAMINHO_CHROME_REAL,
+                        args=[
+                            "--no-sandbox",
+                            "--disable-dev-shm-usage",
+                            "--disable-gpu",
+                            "--disable-blink-features=AutomationControlled",
+                        ],
+                    )
+                else:
+                    raise Exception("Sem Chrome REAL ou perfil")
+            except Exception as e:
+                print(f"⚠️ Chrome REAL falhou: {e}")
+                print(f"🔄 Fallback: Chromium do Playwright")
+                context = p.chromium.launch_persistent_context(
+                    user_data_dir="/tmp/playwright_temp",
+                    headless=True,
+                    args=[
+                        "--no-sandbox",
+                        "--disable-dev-shm-usage",
+                        "--disable-gpu",
+                        "--disable-blink-features=AutomationControlled",
+                    ],
+                )
 
-            if CAMINHO_CHROME_REAL:
-                launch_options["executable_path"] = CAMINHO_CHROME_REAL
-                print(f"✅ Usando Chrome REAL em: {CAMINHO_CHROME_REAL}")
+            page = context.new_page()
 
-            if CAMINHO_PERFIL_CHROME:
-                launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-                print(f"✅ Usando perfil do Chrome: {CAMINHO_PERFIL_CHROME}")
+            # ⭐ TIMEOUT AUMENTADO ⭐
+            page.goto(url, timeout=180000, wait_until="networkidle")
+            page.wait_for_selector("body", timeout=30000)
 
-            browser = p.chromium.launch(**launch_options)
-            page = browser.new_page()
-            page.goto(url, timeout=120000, wait_until="networkidle")
-            page.wait_for_selector("body", timeout=15000)
             yield json.dumps({"status": "carregando", "mensagem": "Página carregada!"})
+
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             page.wait_for_timeout(2000)
             page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.5)")
@@ -272,7 +323,8 @@ def analisar_estrutura_com_progresso(url):
                             "mensagem": f"Coletando elementos... {posicao} / {len(elementos)}",
                         }
                     )
-            browser.close()
+
+            context.close()
             yield json.dumps(
                 {
                     "status": "concluido",

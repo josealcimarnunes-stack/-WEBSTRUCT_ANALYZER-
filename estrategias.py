@@ -128,21 +128,30 @@ def estrategia_headless(url, cookies=None):
     print("🔇 [1] Tentando em modo headless (invisível)...")
 
     with sync_playwright() as p:
-        launch_options = {
-            "headless": True,
-            "args": ARGS_ANTI_DETECCAO,
-        }
-
-        if CAMINHO_CHROME_REAL:
-            launch_options["executable_path"] = CAMINHO_CHROME_REAL
-            print(f"   ✅ Usando Chrome REAL")
-
-        if CAMINHO_PERFIL_CHROME:
-            launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-            print(f"   ✅ Usando perfil do Chrome")
-
-        browser = p.chromium.launch(**launch_options)
-        context = browser.new_context()
+        # ⭐ USA launch_persistent_context COM PERFIL ⭐
+        if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL com perfil")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=CAMINHO_PERFIL_CHROME,
+                headless=True,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+            )
+        elif CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL (sem perfil)")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=True,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+            )
+        else:
+            print(f"   ⚠️ Usando Chromium do Playwright")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=True,
+                args=ARGS_ANTI_DETECCAO,
+            )
 
         if cookies:
             context.add_cookies(cookies)
@@ -161,7 +170,7 @@ def estrategia_headless(url, cookies=None):
             }));
         }""")
 
-        browser.close()
+        context.close()
         print(f"   ✅ Encontrou {len(elementos)} elementos")
         return elementos
 
@@ -175,21 +184,30 @@ def estrategia_normal(url, cookies=None):
     print("🪟 [2] Abrindo navegador visível...")
 
     with sync_playwright() as p:
-        launch_options = {
-            "headless": False,
-            "args": ARGS_ANTI_DETECCAO,
-        }
-
-        if CAMINHO_CHROME_REAL:
-            launch_options["executable_path"] = CAMINHO_CHROME_REAL
-            print(f"   ✅ Usando Chrome REAL")
-
-        if CAMINHO_PERFIL_CHROME:
-            launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-            print(f"   ✅ Usando perfil do Chrome com cookies")
-
-        browser = p.chromium.launch(**launch_options)
-        context = browser.new_context()
+        # ⭐ USA launch_persistent_context COM PERFIL ⭐
+        if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL com perfil e cookies")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=CAMINHO_PERFIL_CHROME,
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+            )
+        elif CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL (sem perfil)")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+            )
+        else:
+            print(f"   ⚠️ Usando Chromium do Playwright")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                args=ARGS_ANTI_DETECCAO,
+            )
 
         if cookies:
             context.add_cookies(cookies)
@@ -208,7 +226,7 @@ def estrategia_normal(url, cookies=None):
             }));
         }""")
 
-        browser.close()
+        context.close()
         print(f"   ✅ Encontrou {len(elementos)} elementos")
         return elementos
 
@@ -222,23 +240,33 @@ def estrategia_stealth(url, cookies=None):
     print("🕵️ [3] Tentando esconder que é bot...")
 
     with sync_playwright() as p:
-        launch_options = {
-            "headless": False,
-            "args": ARGS_ANTI_DETECCAO,
-        }
-
-        if CAMINHO_CHROME_REAL:
-            launch_options["executable_path"] = CAMINHO_CHROME_REAL
-            print(f"   ✅ Usando Chrome REAL")
-
-        if CAMINHO_PERFIL_CHROME:
-            launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-            print(f"   ✅ Usando perfil do Chrome com cookies")
-
-        browser = p.chromium.launch(**launch_options)
-        context = browser.new_context(
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        )
+        # ⭐ USA launch_persistent_context COM PERFIL ⭐
+        if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL com perfil e cookies")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=CAMINHO_PERFIL_CHROME,
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            )
+        elif CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL (sem perfil)")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            )
+        else:
+            print(f"   ⚠️ Usando Chromium do Playwright")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                args=ARGS_ANTI_DETECCAO,
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            )
 
         if cookies:
             context.add_cookies(cookies)
@@ -268,7 +296,7 @@ def estrategia_stealth(url, cookies=None):
             }));
         }""")
 
-        browser.close()
+        context.close()
         print(f"   ✅ Encontrou {len(elementos)} elementos")
         return elementos
 
@@ -282,26 +310,42 @@ def estrategia_fingerprint(url, cookies=None):
     print("🎭 [4] Simulando usuário real completo...")
 
     with sync_playwright() as p:
-        launch_options = {
-            "headless": False,
-            "args": ARGS_ANTI_DETECCAO,
-        }
-
-        if CAMINHO_CHROME_REAL:
-            launch_options["executable_path"] = CAMINHO_CHROME_REAL
-            print(f"   ✅ Usando Chrome REAL")
-
-        if CAMINHO_PERFIL_CHROME:
-            launch_options["user_data_dir"] = CAMINHO_PERFIL_CHROME
-            print(f"   ✅ Usando perfil do Chrome com cookies")
-
-        browser = p.chromium.launch(**launch_options)
-        context = browser.new_context(
-            viewport={"width": 1366, "height": 768},
-            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            locale="pt-BR",
-            timezone_id="America/Sao_Paulo",
-        )
+        # ⭐ USA launch_persistent_context COM PERFIL ⭐
+        if CAMINHO_PERFIL_CHROME and CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL com perfil e cookies")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=CAMINHO_PERFIL_CHROME,
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+                viewport={"width": 1366, "height": 768},
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                locale="pt-BR",
+                timezone_id="America/Sao_Paulo",
+            )
+        elif CAMINHO_CHROME_REAL:
+            print(f"   ✅ Usando Chrome REAL (sem perfil)")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                executable_path=CAMINHO_CHROME_REAL,
+                args=ARGS_ANTI_DETECCAO,
+                viewport={"width": 1366, "height": 768},
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                locale="pt-BR",
+                timezone_id="America/Sao_Paulo",
+            )
+        else:
+            print(f"   ⚠️ Usando Chromium do Playwright")
+            context = p.chromium.launch_persistent_context(
+                user_data_dir="/tmp/playwright_temp",
+                headless=False,
+                args=ARGS_ANTI_DETECCAO,
+                viewport={"width": 1366, "height": 768},
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                locale="pt-BR",
+                timezone_id="America/Sao_Paulo",
+            )
 
         if cookies:
             context.add_cookies(cookies)
@@ -324,7 +368,7 @@ def estrategia_fingerprint(url, cookies=None):
             }));
         }""")
 
-        browser.close()
+        context.close()
         print(f"   ✅ Encontrou {len(elementos)} elementos")
         return elementos
 
