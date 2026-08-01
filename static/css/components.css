@@ -1,0 +1,7 @@
+.card {
+    border: 1px solid #2d2d2d;
+    border-radius: 8px;
+}
+.table-hover tbody tr:hover {
+    background-color: #2a2a2a !important;
+}

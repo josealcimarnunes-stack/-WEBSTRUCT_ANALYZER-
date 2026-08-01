@@ -1,0 +1,28 @@
+[33mb48f1bf[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmegatron[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m mensagem
+[33m17b797a[m Configuracoes para deploy na Render com Docker
+[33maece516[m 🐳 Docker configurado para deploy na Render
+[33m6f0891b[m mensagem
+[33m7295d4c[m mensagem
+[33mda680c0[m Fix: setuptools antes do pandas e ordem correta
+[33m71b1bc5[m Fix: adiciona setuptools e wheel antes do pandas
+[33mfc1ce4a[m Fix: Python 3.10 e dependências compatíveis
+[33mb9d15df[m Deploy na Render sem Docker
+[33m9c5c7b5[m 🚀 WebStruct.Analyzer pronto para deploy na Render
+[33m813bd21[m mensagem
+[33m2f0a47c[m mensagem
+[33m7c6181b[m 🚀 MASTER UPDATE: Sistema redondo, botão Map, Reiniciar, Fallback e Detecção de Erros
+[33ma184f46[m 🔥 Sistema redondo: mapeamento, reinício, detecção de erro e organização
+[33m9d90625[m salvando os quarque
+[33m63fb6a6[m[33m ([m[1;33mtag: [m[1;33mversao_1.0[m[33m)[m 100% full com docker
+[33m611bb74[m fix: app 100% funcional - foto, escaneamento e download
+[33m6b44b03[m 🔥 Versão estável: corrige foto rápida, progresso e dashboard
+[33m6bf5b29[m Adiciona rota /previa_rapida e import de tirar_foto_rapida
+[33m09f11cd[m 🚀 Versão estável: foto no modal, fluxo de 3 segundos, headless
+[33mb17eadb[m Configura Flask para rodar na porta do Render
+[33m7be98a8[m Resolve conflitos e mantém requirements com Flask
+[33mcf03e93[m Atualiza requirements com Flask e todas as dependências
+[33m797b2ec[m Update requirements.txt
+[33mf0e5f7b[m Versão parruda com Docker, histórico e comparação
+[33m77fe951[m Versão estável: Struct Analyzer com barra de busca e exportação
+[33m741465d[m Atualizado requirements.txt com playwright e README.md
+[33mae069e2[m 🚀 WebStruct Analyzer Pro source code - clean version

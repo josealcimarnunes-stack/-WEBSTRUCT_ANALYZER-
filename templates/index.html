@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-2">
+    <!-- FORMULÁRIO -->
+    <div class="card bg-secondary text-white shadow-lg mb-4">
+        <div class="card-body">
+            <div class="row g-3">
+                <!-- 1. URL Alvo -->
+                <div class="col-md-6">
+                    <label for="input-url" class="form-label fw-bold">1. URL Alvo</label>
+                    <div class="input-group">
+                        <input type="url" id="input-url" class="form-control bg-dark text-light border-secondary" placeholder="https://exemplo.com.br" required>
+                        <button id="btn-iniciar" class="btn btn-info fw-bold">Iniciar Sessão</button>
+                    </div>
+                </div>
+
+                <!-- 2. Seletor Alvo -->
+                <div class="col-md-6">
+                    <label for="input-seletor" class="form-label fw-bold">2. Seletor Alvo</label>
+                    <div class="input-group">
+                        <input type="text" id="input-seletor" class="form-control bg-dark text-light border-secondary" placeholder="Ex: p.text-on-surface-1">
+                        <button id="btn-mapear" class="btn btn-warning fw-bold" disabled>
+                            <i class="fa-solid fa-magnifying-glass me-1"></i> MAPEAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROGRESSO (ETAPAS) -->
+    <div id="status-container" class="mt-3 p-3 bg-secondary rounded" style="display: none;">
+        <div class="d-flex align-items-center mb-2">
+            <div class="spinner-border spinner-border-sm text-info me-2"></div>
+            <span id="status-texto" class="fw-bold text-info">Iniciando...</span>
+        </div>
+        <div class="progress" style="height: 10px;">
+            <div id="status-barra" class="progress-bar bg-info" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- RESULTADO DO SELETOR ALVO -->
+    <div id="card-resultado-alvo" class="card mt-3 border-success bg-dark text-light" style="display: none;">
+        <div class="card-header bg-success text-white fw-bold">🎯 Elemento Encontrado</div>
+        <div class="card-body">
+            <p class="mb-1"><strong>Tag:</strong> <span id="alvo-tag" class="badge bg-info"></span></p>
+            <p class="mb-2"><strong>Texto:</strong> <span id="alvo-texto" class="text-warning fw-bold"></span></p>
+            <p class="mb-1"><small class="text-muted">CSS:</small> <code id="alvo-css" class="text-info"></code></p>
+            <p class="mb-0"><small class="text-muted">XPath:</small> <code id="alvo-xpath" class="text-success"></code></p>
+        </div>
+    </div>
+
+    <!-- TABELA GERAL -->
+    <div id="container-tabela-elementos" class="mt-4" style="display: none;">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr><th>#</th><th>Tag</th><th>ID</th><th>Classe</th><th>Texto</th><th>Ação</th></tr>
+            </thead>
+            <tbody id="tabela-elementos-corpo"></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

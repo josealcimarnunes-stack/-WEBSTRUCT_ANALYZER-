@@ -1,48 +1,15 @@
-"""
-PROCESSADOR DE ESTRUTURA - WebStruct Analyzer
-Processa os dados do mapeamento e constrói a árvore
-"""
+from collections import Counter
 
 
-def processar_estrutura(dados_brutos):
-    if not dados_brutos:
-        return {"arvore": [], "total": 0, "estatisticas": {}}
-
-    return {
-        "arvore": construir_arvore(dados_brutos),
-        "total": len(dados_brutos),
-        "estatisticas": extrair_estatisticas(dados_brutos),
-    }
-
-
-def construir_arvore(elementos):
-    if not elementos:
-        return []
-    raiz = elementos[0] if elementos else None
-    return [raiz] if raiz else []
-
-
-def extrair_estatisticas(elementos):
-    tags = {}
-    total_com_texto = total_com_classe = total_com_id = 0
-
-    for elem in elementos:
-        tag = elem.get("tag", "")
-        tags[tag] = tags.get(tag, 0) + 1
-
-        if elem.get("texto"):
-            total_com_texto += 1
-        if elem.get("classe"):
-            total_com_classe += 1
-        if elem.get("id"):
-            total_com_id += 1
+def processar_estatisticas_elementos(elementos):
+    """Processa contagens e relatórios estatísticos dos elementos capturados."""
+    tags = [e.get("tag_name") for e in elementos if e.get("tag_name")]
+    ids = [e.get("id") for e in elementos if e.get("id")]
+    com_texto = [e for e in elementos if e.get("text")]
 
     return {
         "total_elementos": len(elementos),
-        "total_com_texto": total_com_texto,
-        "total_com_classe": total_com_classe,
-        "total_com_id": total_com_id,
-        "tags_mais_comuns": dict(
-            sorted(tags.items(), key=lambda x: x[1], reverse=True)[:5]
-        ),
+        "top_tags": dict(Counter(tags).most_common(5)),
+        "total_com_id": len(ids),
+        "total_com_texto": len(com_texto),
     }

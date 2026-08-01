@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(rgba(18 18 18 / 51%), rgba(18, 18, 18, 0.95)), 
+                url('../img/background.png') no-repeat center center fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+/* Transparência suave para os cards destacarem do fundo */
+.card {
+    background-color: rgba(33, 37, 41, 0.85) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.navbar {
+    background-color: rgba(33, 37, 41, 0.95) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+}
