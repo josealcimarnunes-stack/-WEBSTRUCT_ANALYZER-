@@ -1,0 +1,139 @@
+=== RELATÓRIO DE PACAOTES DE DADOS (JSON APENAS) ===
+URL Alvo: https://www.mercadolivre.com.br/
+Total de JSONs Limpos Capturados: 1
+
+================ PACOTE JSON #1 ================
+URL DA REQUISIÇÃO: https://www.mercadolivre.com.br/adn/api?placement=adn&page=home&site_id=MLB&resolution_name=2x&platform=desktop&slot_id=billboard1&ad_unit=ADN_HOME_DESKTOP_1%2CADN_HOME_DESKTOP_2&domain=1&unique_id=b08ce8e2-2392-4486-93bf-980645853b2a
+TIPO: application/json;charset=utf-8
+CONTEÚDO DA BOLSA (DADOS ESTRUTURADOS):
+{
+    "experiments": {},
+    "items": [
+        {
+            "type": "adn",
+            "is_off_meli": false,
+            "start_date": "2026-04-12T03:00:00Z",
+            "end_date": "2026-09-01T02:59:59Z",
+            "event_tracking": {
+                "print": [
+                    {
+                        "url": "https://print1.mercadoclics.com/display/prints/MLB/count?d=3baz2mbee8FSYdC0GCOYB94ydcWo7cz0MMIWq8JwAmYW57rC7h45tkKpmjNBxuUWzEMmzpJJZEbK_JTp1Yc32TweIaKmdvs14EmslvCOM_0Z7e3Ks7Ld_DKsQxGp7gIYT24kqP01f-2HqwyOZOD1St3DMKnWZUVhQIuMGPC1N1Q7bHv0acKklZfAPN4uty7aIfzFnusZFUQDok_uV17_gDuUsl5l-0AGwy7Lb1kFCBnu9iQWxZ8JzxVJFYy0iaWi9GdKTmZT8LI7zW5T3i4X1lRVGPfKOIOW9fEirNtE-lRPg0rLMLF-oR1ZlGPJv4Fe1U2FggERDcl-uGVwSSagRgY5O4O10wL8ctftqkwxQAfgUwDlAwKF5z_mk8OntUflYmmuD5oa69uMo8YmcrRODFAf8R-BsKguGW0uc7dU__qsM6LeK2rtrESidRbfwjCK_0hfP1t2Z7oXCcvLAvW7dijSfXMe7lJJ79WiePIXm-iwbivsLpi0M_3mBcuN3wUnXOk9BBhB2rGep59tk8phLqrBPz23S9suXrS3mQJyA0oPb6DRko266s4A96TL8SVHg08J5COkDIArLmAzwgrLcC_1uHUGOnECOsnAhN0dQNQC5EV1YCyEjxQYKDcf7QTnPghbLHyUVBWgaIDZ3kcIRDtKF-OYCUz_Le80J-Y8w7APpxvcHKcsrwlu0tZjzGrvwQLG4HB3svWWT-DTnMe2QelcWEDK3BBkpl487SQ6uvD1Z1-G4qPYgP1oMmMrsBnyrW-QzdAQWrK6nXauKGHgr12goknqf57BLnw-FGlXpTQD3uQsRnY96Z1oaevc_05lN8xFoA5imlCs0KRuDJyVE44ScLf1HpfsQQZQiSvmkUp0oRJfazDC95HH7xfyylhIfDqzX3ABuDgm1ExPd38fc8KQa6jV3Wa8PtIcdOvtVw0cJPHckyO9OBIiCqSmhuV-m6W_6IkSNfivNT4q2bBO1tBrgEztwXC87ANw5pfnmh0OzkdOFLn8LQsiBugaaVMkpYKg_Y4h-XUm193yEU0ppUCHGluCZ3uivhyL5YEA0DqltEhpuDaCdr-RFtMZiidKAdmgDiBi1N41W0Mv6eJfMX666gaIjtv7M8D198A96_ujKZCIZWWiGchEPDBmk1obKRTIq-N02mQQmCaWtdgcEOGF7DPRSoaCWHg44Y0lmOsLtAGiMYc5KjU_Pb6eW92TbOEUHMphvuqkx0fQQJcQr7PVOoqYp9HoYsW082QX1iiSbm6lQh5gZkYvS7a1LQVVMf-UulKA4TLFdxG60jcFvISBUdgLLMui8CWSQ_4ntg6kbDLxUNHFOqlcr1j0CeHicRTTa7K6VXjNW8Z4QisIcah2vOMjgtDjMTISc_n-wlvSZGM3e_ZpEdLY0o_6TztQX2RiMALSOp_wFNf4lvejpwbeL1TIkZLH1XEFtzi1zjpzGn8G2LlCr1shDsE_bjkqLFt61YA_CiR3C-ysU_E1Ex4lEV_ICi6o9Uh-5gpsUe4I-EL7eZ-IHRXuVGioRdmysvtAc31RJ-VDJTclZwP7b14krXf2an-Evy4VAF6e0rOkWFRzm7_MxJ_U6n_gMWXBE9Z_TE_7iG2eX3uJR1p9n-VCoqeyKDiRhzJyGsfIGBvO0qX7SPMRFjyzPcp_Sg02FFHZ-DDbJEk7pKgZpA38Ny9J47zi_WScFQZRi77DN2rNJa99FSgjJ78AMfu9oAH6Zk4wcfZ8wH85d_txhbmZ6KSEs7jQDtYdgbbgM0W2laCzvtHI_-5Z9vS5tHjM9hGLxQmsZ6Oe_7VdYGRRRLoaxxg_zi0KnzyVaAnhs5n0jxnE3wZ1_M638jJiSvr2fMuvNU1XVE2yMcA36CVlQyU7rnZvOwU4_--wmhSwIUaorQnf4IPouvY3PnKkY8piftRoSbGpfmXqngErSn4-YZMhFq__c_kQFPy-xK5oj14omqHyWbe79KeNjXhHyqdhE39oPyIdRKEMAyWsOoB7iOK4Fi9mgDUe_EvReUnfYsMV0dCrZ63zxn9ORZN9KtcOnxwduNHBZL-CLq5xzVQR0f5U0smZxSD7-L5m0Shc9qV76NQoHomV994GUpYTTIEzd0hdOi6kpoY_Kw-ucgbvGWzkgqv7CuOpEZf26eHIQllsVNquz9-nUm0AKAchzs9sCBg5Q1UzzT-8dMTvmj2uqIlsVecvPX2LO2reZYXWDMT-ejZQcn0UeKJzU6wCJN15GYDgUnxRY0vHYGomqHBwhqvcrWMa7IHGp3ypDSchJdpJsiSL3morVSvL4e60zF-4t77jXs1isrliKpi8m1TIgc-eRHsFKqlGuS7rZt6aav4zHZXapUr4_bDj9N8BNft8cMA98CKMRTb6X7HErJgn0YO8FcF3pj07OQq7naG43W5bUWhiwE00SGbJUyltwZ_zgfUiPRp8P5yWbf53xwB4YrqnPjYk97NHXDWITJf1ExKtcJhdXvQ3ro5TD-QLQAv8M7jaz5goafu5mYQtV_dUkxkGCS40Sypbd2aqCUrz3G0-wT-njkzCYX_MIFtFyiDI9S8KVhPfgjN46bQcHooZKjcFVqsoiHK86_WHYMouXlzDlQkc8MhuTI_2qGD24Oqnzqh834lJEAGOtZU8cmov7nMK_1YB58dn3L9uAAHLFhBo4_nOmQJ4_SRYbMR8YIaDYkvDpbZPKXsqqs0H2IdOu4mukmE5ErbgDSfz9W_NY2Fbs8iM789qJZ3rtJ-ugoeRy_p9NkOYRvtIhTONSIUW5M9MvwTWCLNfQo8yHX6ZDGTG_gxiD-0UJe_J9gBfeC0Ea84f&cipher=v2"
+                    }
+                ],
+                "view": [
+                    {
+                        "url": "https://print1.mercadoclics.com/display/views/MLB/count?d=3baz2mbee8FSYdC0GCOYB94ydcWo7cz0MMIWq8JwAmYW57rC7h45tkKpmjNBxuUWzEMmzpJJZEbK_JTp1Yc32TweIaKmdvs14EmslvCOM_0Z7e3Ks7Ld_DKsQxGp7gIYT24kqP01f-2HqwyOZOD1St3DMKnWZUVhQIuMGPC1N1Q7bHv0acKklZfAPN4uty7aIfzFnusZFUQDok_uV17_gDuUsl5l-0AGwy7Lb1kFCBnL6NRT6emMbCwjMOia-XxhYkbOWvMqfDr-M7DCphMJmWGm1zmSuaD9ujZVv9g9THFhna6o52ZSlvuOm9ec7ygAm76uZRc_nfRM7Q9mKzPfncJJWyBwcxpf3rnoPJay52sN21L2PJdEpJzYlwQq5fEuhZZGu5AbwviZn0mV_i1p3k0HT3viBfff1o-uolUobCbYu71HLMvnrnKsETGjs5Df5jhr_fbyADXgLrbpJvtG3OZZQ5-JnHBHjIbEsClKk_Fm53RyqIb91wphaJSs8_Fx66O3JfBGU28F1XFOEH8-xJpEeggxqucXK6J7Q-N-m6YtrKizl_6P-Wd1gucdsquCIvHV2on2_h_-7B8ENjTjI0bToj3sNI6yZejwf-I1Q1lUFDYTTWijCQtSjryQGka7tSG7gERh2mYmWUWzg7GEAUAT7nrX8eegvlv1MZuf-tidbdj7k17dVpA-eyYX9gtQ70DBXZQI_qV7ezhyHSiCJb9U-4iLTSkGt5CSDeqx03JqYwSeQSqmNY_unBfnm51NvqbuVk2gnxNBc0No9rKIAsErPpITWjOunQ1fKRc2OXy9qLtwFTdOSdWoNnJayQpiS2N4xP6eNzhyqV_7ycORzR8FXktbLV7j5UAvSybWufcwClHhuvEU-sVQprISD0lBjhTsjN2lHmALSFjrKrec0nj-39xYcDvUaBMDAXMexCNQ1cE6SnHlq3M4sqaj0h-i&cipher=v2"
+                    }
+                ],
+                "click": [
+                    {
+                        "url": "https://click1.mercadolivre.com.br/display/clicks/MLB/count?a=3baz2mbee8FSYdC0GCOYBxYRByHss3tDSrP53vW-V65NW69rSld6G_ZQCpq49qm-v2hr5jxCUKPjh7AyETHr9Lnlo4oWt7BoGsXQJ4ChJKtZH1heIScsMB6gzf4W-3sQs7ZcioCkyICciul9oN5aYFn4vT6xx6n6WDHv14iep0hKNy1WvcRJpvCz64zsRNjjodL2dwy3cJ3gNXxlRi3ptWsgpPU7I0NjTzSmSqSqe8fKnLj_jo2UPkr2vv496HdC0-YLD2DG01KrvSsPnaLo0fwJ2xDqGeAsKW-yj2asR--T_hIdAA-4rJQkWOSf5sOPrn6wDa1W1Yy2YmB9IKa218-AxN5JAZ9PGoy6xVPWt_E_V61zinV9OA5oRr79m1VLYLY1_IX65QeHpSQceaLu_avX7-5aWDT6Flo5iwgYo1Tcy8RZNmX7HaEXs-HID3bgdP-oEl7waXcJP7eQAtgNGtGe5N39tnXQitazb3eCOxAfIl0uAkeVprizpRjwTSVLeaIFWZkDbrUQHILHWt_MsJMPCd2-2HOdhWey9shus-CL9AZqtqoEddjYBni6xpWzEKPpD7-i3em6Htct9NbHWPBRmMTNBpFzu2x3qBb3kDTPFxuTM8_7sJPcHigN575lxJvUy9ljwV6vyMc3hyywWXbZDF5Uif4jppHnqi88qZI6y8kU4DiFGxh_j5KfCUAfbgJPCThGmW_r_k71ihGjZMJPVEeFwNz7jAlwoCUKHV0Eg_ox9sBF6vN0Tb48BrgFaIMWN8e0EMDbyuoQH4HzaORkzY3hxKiKSMfArZdsr4I&cipher=v2"
+                    }
+                ]
+            },
+            "event_data": {},
+            "view": {},
+            "verification_resources": [],
+            "content": {
+                "texts": {
+                    "cta": "Carro equipado!",
+                    "secondary_title": "SEU CARRO!",
+                    "primary_title": "TRANSFORME"
+                },
+                "images": {
+                    "primary_logo": "https://http2.mlstatic.com/D_NQ_2X_920737-MLA110350809287_042026-OO.webp",
+                    "picture": "https://http2.mlstatic.com/D_NQ_2X_712311-MLA109483097044_042026-OO.webp"
+                },
+                "colors": {
+                    "card_background_color": "#d12440",
+                    "card_text_color": "#ffffff"
+                },
+                "actions": {
+                    "content_link": {
+                        "action_id": "advertising",
+                        "link": "https://www.mercadolivre.com.br/loja/id/65942e47c257439eafb7c6b1365b6fd726658901#origin=ads",
+                        "event_data": {},
+                        "target": "external_link"
+                    }
+                },
+                "a11y": {
+                    "context_banner": "TRANSFORME SEU CARRO! Carro equipado!"
+                }
+            },
+            "template": {
+                "url": "https://http2.mlstatic.com/frontend-assets/adn-frontend-library/horizontal-medium-banner-double.2.9.32-search-va-src.0.js",
+                "tag": "horizontal-medium-banner-double"
+            },
+            "lazy_loading_print_percentage": 50,
+            "slot_id": "billboard1",
+            "show_feedback_ad": false,
+            "creative_id": "4816603",
+            "placement_id": "ADN_HOME_DESKTOP_1",
+            "print_id": "b08d6c2e-5478-429e-a28b-f0ecfbd6dbee"
+        },
+        {
+            "type": "adn",
+            "is_off_meli": false,
+            "start_date": "2026-07-10T03:00:00Z",
+            "end_date": "2026-09-01T02:59:59Z",
+            "event_tracking": {
+                "print": [
+                    {
+                        "url": "https://print1.mercadoclics.com/display/prints/MLB/count?d=yz4X7b_ygs1TqfPKFtUB36mWy57q3sTnXs5PzTU8t06djIaDoYPSvwrNj61giduIRstfoXkfEnZtM7yu_WVbAZEYcmKMX_lVPClZq_hBQFDDMQ1lhT7QI97ytNmYgGKcWASj5dqgRobqNaxMc7wtTz6jrQQbAvglBJC3osILg9g4e-B7XsnhKwS-BEaOAlJaCX_mC6mIqB1y4AkfkwKTKy-tDP-iAXKsWCd_TRJq8huVrPdXJ8oSI0zKcdH0WsP02HiRL7KNaqtT_py19t13CoIicw_7u-zey98qRBrGme2CBDh4iJbpCu4NauLhg0XYk2l8g4I_hXEBjtAa1TvuBd_1Dfm1Mh5kQm1a12qA805vrBoynw3PiRqp0xq8uM5smKRVEtvnLpXMIwu0dp-cGF6YNA0HiCfTOs4L0AcqnW5dfYs2Ftl7_LhlTZBegneeEy4Y_T_fIFlY15mlz85dhu_qXoxGOslsDTQCnIfECKycNEzzIWPopp2kut3cMPk-LCYBTXAl1TlBAkS00esMuDN9mfdvltwQAGu8lA90M4DLBZLsCRjt9aaAHhm_r_kXYA_tH3QLQkTiWK4OLIw_oo_eWolhAlkGUhlbj2lZs3OK1OegIezR0Cy8EcDJHmVKpfQa2iDKrQubt4lfkpS_NYpdrfIXxRD8Apiw6jki-hxrTn7qlF5MOcvXj2HwRlFeGVIvZd0iL-miF8DlDKVCtnMbvvXPL3Hv9xACk7CEEZ0IBarZiHy-1wZWZh555rMMc1MDe-w1IP6jYwOJkLRaJ5GzU4qrnp9B_s0GledwkWCaDaSoZoAqR-w2TGd9_lbUYO2aPOYOkgr2vDUTQTe7-tCDQDIWHpYkK91xviVhlovOidm244bIHzzOesJIfvNF2DFQNoP3VJBydEJyphMPLeMBmqvBt4Ln0UvONQrZeUnmZZWD7JwfluCpne4ixAa6YLIXtg1HbdoCLJOZ_jK364Nl8HV3qa-1uvILr9b3BAVWIYGlLZXIf34R00OUyh623y_CTTeLS9KfHhOQoDefpijFvtcsGert26lsAlEx9OsZhnbMBZCij0DFcCBkT5mOP7izcwzFJgCEaXTGeGHyC8UARmxyBs-WjbWy_YSgJAuXfKP-Ydm32aQf_GNLAaPG9gkzPmHZPQrGpjCnI3k78WhC5EJ2ZaHTtWwnGaFYEJuax2CHWcf3Q_Ds0pcYgxgJY7EuNLccB_2YV3eQnTfgIsFnvYUTpyZQgsh3IJ5cMe3XxdmuKEv-I7BfRO2YQvaAx3JSwYhi7BpRykJwlSmCJbqG45V69CPG1NQUl-iLCxvDB_USc03z24Jsb9snUWnSkk1OYBcyvzZ-em9zkWC2iO9W1t32kuW2PknMP_OytRoNUr9nlh9-LXGdf0RLodj_2YreOqbrUKbtw2paxpPYSLO7uxgGy7ntu-ZbWf-0cmlHOIkVInPgeL091KU47xbhovKg1E3HEtiIBUFJkKt9_pysdwERb8V449pjD7udqegAgVZM95X9TdZlnjH7gDPO2PlXaSr0A_mfd_uREQMrGCYfcvLTf8nX7hNexU1beF_kI5Li_y4wNetDTRaJWVIm8w4f-iNV4WBMBzxi2BZFf7VuID9MKWUE78Ww040x__KgrmsxYF1KkuRJWpMN7YO7LhOkTU0wasxfWKe47HCK4Vil6QOqaXjZLeUAtOfZuaE59WWubRKMryNrg5y9LO-T-NmRHqDoDbW3Z-ZDElvEpwHtoyBo0ppHw6_1Q_Gyvk2fe-bLGTvn53le1FBqXuLRkZc8G9AgZVYbxgMg-HvX2-VFnal0c8igh7qRWkNumLsaabY3HHNQNskdD9kKVjKyDhyzA_Bc8vIGy_NIdYSjBqM9vfto3_Dj3cmIwNwUwLZ-M9y-x-CT_uXIwEUVIXKHMccBnS_J7Zjbg5FibvK90wsWGRm8utTnvRshhW0aW9zWsHXlrf1e1R4NF8BjqLeoUvAfMiiYw3Hq95o1QzmZqUs9nBrUJy4lK0_1yZ0jCZJHO8Qy2EPYoBttzwugS1KRIS54dRNmLPqB_-Qb6vLbshUL0ZjN1F_ciX64YSRuarNegHKtOdJ30K8guRImrSGSWTftFFjcIEr3zuMvx4iiDzd_afRvyJchIU7fiYLW4_6SezNL_gEtD_DU_aS-N6m6ienc7vTfHUR7mUpXJScZA2lEt0GGN6Z3vst1PMpz9W9EYEApEwXZw9LluYxXnB9NFnBEguNIffOZDpp76_Q-__4FwHaMq-R3Mq6C-D4GditpVocwTsQR8PCs_uaqcLy2EJgXH3Mcu4i_V9jluSVY88bfdzUL9HeswcLYbbvda6dMMI1ldZkQ14aVOONpiOoWTndB_0hu-a57ezsYA1gIiinHzLYZnQGulBQb_DMGha0FeC6XEGJfiCKRyiZfEdOJMtxNiSU51DzCkoR_naibc9kS-iscfqF2Gxy88vQW5syu1agZ5E8LiaelYammKPzMMhpkQv4355SlzpS3BAgiW_JCx6lHjZSyGfkj8lZosy21oMBe1Rco3Lcg-l0Cqw2r3tdEc_7P2uUtlHSgvjhCbG1uNoLnQ_9nTP-TNveQ2dS0T7uN8X817fgSBeHMP7mAoYVoqvyVUuYUWIKrJ9V0sPXfi5g5PsTsXFwfo_1Hpn-JAouLs5M4Jq-lHfSYRJI12_XL8bVqFUWFAVV1qVCIjTLDDhDUQK94uGLk5m8YcGCqEJOrfqHmeC3NPRgu7u8ojdjsZLWyXYA8v5gt8C6oxJoOEBQ15594mqnxbo4tZDo&cipher=v2"
+                    }
+                ],
+                "view": [
+                    {
+                        "url": "https://print1.mercadoclics.com/display/views/MLB/count?d=yz4X7b_ygs1TqfPKFtUB36mWy57q3sTnXs5PzTU8t06djIaDoYPSvwrNj61giduIRstfoXkfEnZtM7yu_WVbAZEYcmKMX_lVPClZq_hBQFDDMQ1lhT7QI97ytNmYgGKcWASj5dqgRobqNaxMc7wtTz6jrQQbAvglBJC3osILg9g4e-B7XsnhKwS-BEaOAlJaCX_mC6mIqB1y4AkfkwKTKy-tDP-iAXKsWCd_TRJq8hvyfqjOe26lDwQKrzg3_aefybNbeOcDJ5CcDWQQ8PSkNqIvyxpjIoj6ZZFnkCuo8sOfjzm5FhCmJVuPAlylXA0ctSoesPgO_7ndt680BIO4ja-nwDMx-65eBMbQ4OTtmjiHAG_HE5YbDLIKQqhVDrPHLJFHCggdmdvSJWzI58hicogwBiLPeWJFBjapCLXjAmH4H4cCYB-8hy94ieWhuI5slvHMrhy8y8KX_RQUDT77niASFnrvoT6VDDokHddSmPItNlOKDGAEvpEH-J0oQWMRtHf22TSj4sFkGRT6PA7ux2mWog0jZpYXIA8Ygls-OlJVHjHCwiinXG9tWys0cuQ8mEwbq9aeVuilylKb6z4uwF5nU8mAwRljGAUxIBD8MWCHpwd2cwRTVaYkwlHRRSP44NqmFeHyon-bKqZ4pmeTJz-2JBTrWe-_QvrAY0eN32JnkjEODij61NWx1lnN8Euy1NhCumxHsV6WaPtb0KCoUmsyK8Pr3zqB6XmR3yh_Pk5TrR7795l2VeQrFBe12VYr0LKzprUqFHScDnSh6E7YkQ61QEqc6741MqCcUWvj0P9tevXsxblfcspbq0HIDf3M3Lq0x-ox1k4rwR6TRTP6JygCxgArFIP3sBAM8yEciFyOP8TJ4HdJxdZwXR-8-jHp1kbnRuaCkxZS9HRuG60aj0d31SDeXCypdweVqYXMKnbshAGfy8x1QQa036UbJ8ZJ&cipher=v2"
+                    }
+                ],
+                "click": [
+                    {
+                        "url": "https://click1.mercadolivre.com.br/display/clicks/MLB/count?a=yz4X7b_ygs1TqfPKFtUB30hunaIFTq6qnZkes46N0OkuYS3TN61RwMiA5V0MvOXmnzJXHBNS9ywfvdoswKTOAY88kV7UHBvRJGbxC67wk3BlnC74o4wDtsofblOs1Nkqffj2cua-1bUWboMDfp3g1auHetyHqKh1366IVeu9FeHKVkM_pDHBtKKZWYxWgKztU9VnhtTvJTMXZMXljJlxc-Mk_brIGIa6roXYQ20kfeg_h6WaW8PTXOexWSM2WVethJk6nvcjp19j0tdQHit_hNHa7hRPAFP3lAVMxDjRxEAdo186IvtsCKBiXf-2XNs8MUwFzoDHYx-Ny2XSslOR2BSi4KbjNzV8S1FKPkPah4EEzucTnreeKsd_kuQQhXiJOM6WnKm7WtzGxgHXOcUQW6XQTF4iDpsqeIh4g1wmRtTkv_ONbRz4AsKhKwTzg6rkTJR0sqxT8GGzZcDYjzROBwIaqdcSGg1nkDfBiufuhe-r4m3fv0alZz80qq665EwVR2pKL6pEDiY1KWpsl_gwyAHMCDKrJIzGqbVTwAWCVnaYBIxul7eo4KC_uHhe-wH29YIL-aj00QCbjogUhF4qXymYX43xqFuIwaCfuyQAGCHjb4prRjAz9qis1Gj3zX3R5V3qdOYiRLAk_WTqL6P-cIWdW12vVFpKYXefNNq80TKq8X-f5XkX2Tv-dsVznf1cEt5ZnNiIvkq7p8ZjR1gGIyg3Qt53vZb84xs0Ovt3eQHzgu_kz-2WE6xvqgzkX1PpCr6Yv0FT0dkOpP0jbPnQg-DMJgCEQNGMHnhc05SX-35fsLKNm3Wm7qLQv5C8_go038q_dRWrHUkbdoQV-kqr1_XlU9tcp7lMJGY_sUk-rPiqKGqc47kz7RwWz2p8KQhV&cipher=v2"
+                    }
+                ]
+            },
+            "event_data": {},
+            "view": {},
+            "verification_resources": [],
+            "content": {
+                "texts": {
+                    "cta": "Saiba mais",
+                    "secondary_title": "100% ELÉTRICO",
+                    "volanta": "O MAIS ECONÔMICO",
+                    "primary_title": "GEELY EX2"
+                },
+                "images": {
+                    "primary_logo": "https://http2.mlstatic.com/D_NQ_2X_906430-MLA111404580904_052026-OO.webp",
+                    "picture": "https://http2.mlstatic.com/D_NQ_2X_787673-MLA112449950127_052026-OO.webp"
+                },
+                "colors": {
+                    "card_background_color": "#000000",
+                    "card_text_color": "#ffffff"
+                },
+                "actions": {
+                    "content_link": {
+                        "action_id": "advertising",
+                        "link": "https://www.mercadolivre.com.br/vpp/MLB-6518680560-geely-ex2-_JM?utm_campaign=GeelyEX2s&utm_source=mercadolivre&utm_medium=Display%26Video",
+                        "event_data": {},
+                        "target": "external_link"
+                    }
+                },
+                "a11y": {
+                    "context_banner": "O MAIS ECONÔMICO GEELY EX2 100% ELÉTRICO Saiba mais"
+                }
+            },
+            "template": {
+                "url": "https://http2.mlstatic.com/frontend-assets/adn-frontend-library/horizontal-medium-banner-double.2.9.32-search-va-src.0.js",
+                "tag": "horizontal-medium-banner-double"
+            },
+            "lazy_loading_print_percentage": 50,
+            "slot_id": "billboard1",
+            "show_feedback_ad": false,
+            "creative_id": "5022467",
+            "placement_id": "ADN_HOME_DESKTOP_2",
+            "print_id": "45c8572c-1686-4035-8551-376b26170ba0"
+        }
+    ]
+}
+

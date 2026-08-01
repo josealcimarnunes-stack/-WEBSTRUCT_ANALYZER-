@@ -1,0 +1,355 @@
+=== RELATÓRIO DE ESCUTA DE REDE ===
+URL Alvo: https://www.mercadolivre.com.br/
+Total de pacotes sigilosos contados (protegidos): 0
+Total de pacotes úteis salvos: 70
+
+--- PACOTE #1 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/home.desktop.09d78bc9.css
+Tipo: text/css
+Conteúdo (Amostra): .ui-card{box-shadow:0 1px 1px 0 rgba(0,0,0,.1)}.clipped{border:0;position:absolute;z-index:-1;clip:rect(0 0 0 0);-webkit-clip-path:inset(50%);clip-path:inset(50%);display:block;margin:0 -1px -1px 0;overflow:hidden;padding:0}.m-0{margin:0}.p-0{padding:0}.mt-0{margin-top:0}.pt-0{padding-top:0}.mb-0{margin-bottom:0}.pb-0{padding-bottom:0}.ml-0{margin-left:0}.pl-0{padding-left:0}.mr-0{margin-right:0}.pr-0{padding-right:0}.m-2{margin:2px}.p-2{padding:2px}.mt-2{margin-top:2px}.pt-2{padding-top:2px}.mb
+
+--- PACOTE #2 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/polycard-web-lib.ea30a08a.css
+Tipo: text/css
+Conteúdo (Amostra): .polylabel-icon {   vertical-align: calc(0.35em - var(--polylabel-icon-half-height, 8px)); } .polylabel-pill {   -webkit-box-decoration-break: clone;   align-items: center;   background-color: var(--polylabel-pill-background-color, var(--andes-color-blue-200, rgba(65, 137, 230, 0.2)));   border-radius: 2px;   box-decoration-break: clone;   color: var(--polylabel-pill-color, var(--andes-color-blue-500, #3483fa));   cursor: pointer;   display: inline;   font-size: var(--polylabel-pill-font-size, 1
+
+--- PACOTE #3 ---
+URL: https://http2.mlstatic.com/frontend-assets/cookies-consent-banner-builder/1.2.1/cookie-consent-banner-opt-out/default-desktop.css
+Tipo: text/css
+Conteúdo (Amostra): .ccb-wrapper{display:block!important}.cookie-consent-banner-opt-out{position:fixed;display:flex;align-items:center;justify-content:center;bottom:0;left:0;right:0;z-index:2147483640;-webkit-font-smoothing:antialiased;background-color:#fff;color:rgba(0,0,0,.9);font-family:var(--andes-font-family-primary,"Proxima Nova",-apple-system,"Roboto",Arial,sans-serif);box-shadow:0 -8px 16px rgba(0,0,0,.1);border-radius:6px 6px 0 0}.cookie-consent-banner-opt-out *{box-sizing:border-box}.cookie-consent-banner
+
+--- PACOTE #4 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/agent.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): !function(){if(window.__wm_loaded||window.WMANS)return;window.__wm_loaded=!0;class wm_a{static queue=new Map;push(wm_b,wm_c){wm_a.queue.has(wm_b)?wm_a.queue.get(wm_b).push(wm_c):wm_a.queue.set(wm_b,[wm_c])}pop(wm_b){if(wm_a.queue.has(wm_b)){const wm_c=wm_a.queue.get(wm_b);return wm_a.queue.delete(wm_b),wm_c}return null}hasData(){return wm_a.queue.size>0}}const wm_b=100;function wm_c(wm_a){var wm_b,wm_c,wm_d;return!!(null!=wm_a&&wm_a.code||null!=wm_a&&null!==(wm_b=wm_a.reason)&&void 0!==wm_b&&wm_
+
+--- PACOTE #5 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/7.35.0/mercadolibre/navigation-desktop.css
+Tipo: text/css
+Conteúdo (Amostra): @charset "utf-8"; /*  * Navigation  * @platform "mercadolibre"  * @version 7.35.0  * @author MercadoLibre.com  */ @font-face{font-family:"navigation";src:url("https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/7.35.0/mercadolibre/navigation.eot");src:url("https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/7.35.0/mercadolibre/navigation.eot#iefix") format("embedded-opentype"),url("https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navig
+
+--- PACOTE #6 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/bases.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): class wm_a{}const wm_b={AVAILABILITY_FAILURE:"failure",AVAILABILITY_TRANSFER_SIZE:"transfersize",BROWSER_RENDER:"browser.enduser.render",BROWSER_RENDER_DROPPED:"browser.enduser.render.dropped",WINDOW_DOM:"window-dom",D2ID:"d2id",NETWORK_TYPE:"network-type",NETWORK_SPEED:"network-speed",USER_AGENT:"user-agent",RAM_SIZE:"ram-size",CPU_CORES:"cpu-cores",WINDOW_WIDTH:"window-width",WINDOW_HEIGHT:"window-height",DEVICE_PIXEL_RATIO:"device-pixel-ratio",LCP:"lcp",CLS:"cls",FCP:"fcp",FID:"fid",INP:"inp"
+
+--- PACOTE #7 ---
+URL: https://www.mercadolivre.com.br/
+Tipo: text/html; charset=utf-8
+Conteúdo (Amostra): <!DOCTYPE html><html lang="pt-BR" data-assets-prefix="https://http2.mlstatic.com/frontend-assets/homes-palpatine/"><head><meta charSet="utf-8"/><link rel="preconnect" href="https://http2.mlstatic.com"/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/><link rel="preload" href="https://http2.mlstatic.com/ui/webfonts/v3.0.0/proxima-nova/proximanova-light.woff2" as="font" crossorigin="" type="font/woff2"/><link rel="preload" href="https://http2.mlstatic.com/u
+
+--- PACOTE #8 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/widgets/7.35.0/modal-iframe.js
+Tipo: text/javascript
+Conteúdo (Amostra): var ModalIframe=function(){"use strict";const{entries:e,setPrototypeOf:t,isFrozen:n,getPrototypeOf:o,getOwnPropertyDescriptor:i}=Object;let{freeze:a,seal:r,create:s}=Object,{apply:l,construct:c}="undefined"!=typeof Reflect&&Reflect;a||(a=function(e){return e}),r||(r=function(e){return e}),l||(l=function(e,t,n){return e.apply(t,n)}),c||(c=function(e,t){return new e(...t)});const d=x(Array.prototype.forEach),m=x(Array.prototype.lastIndexOf),p=x(Array.prototype.pop),u=x(Array.prototype.push),f=x(Ar
+
+--- PACOTE #9 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/widgets/7.35.0/snackbar.js
+Tipo: text/javascript
+Conteúdo (Amostra): var SnackbarWidget=function(){"use strict";const{entries:e,setPrototypeOf:t,isFrozen:n,getPrototypeOf:i,getOwnPropertyDescriptor:a}=Object;let{freeze:o,seal:r,create:s}=Object,{apply:l,construct:c}="undefined"!=typeof Reflect&&Reflect;o||(o=function(e){return e}),r||(r=function(e){return e}),l||(l=function(e,t,n){return e.apply(t,n)}),c||(c=function(e,t){return new e(...t)});const u=N(Array.prototype.forEach),m=N(Array.prototype.lastIndexOf),p=N(Array.prototype.pop),d=N(Array.prototype.push),f=N
+
+--- PACOTE #10 ---
+URL: https://http2.mlstatic.com/frontend-assets/adn-frontend-library/adn-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): !function(){"use strict";var t={2356:function(t,e,n){n.d(e,{calculateIframeHeight:function(){return o}});var r={ADN_HORIZONTAL:{width:118,height:25},TOP_HOME_MOBILE:{width:320,height:80},SPONSOR_DESKTOP:{width:728,height:165},SPONSOR_MOBILE:{width:320,height:130},DCA_WIDTH:278,VIDEO_ASPECT_RATIO:16/9},i={"adn-banner-vertical-square-image":{height:449,aspectRatio:r.DCA_WIDTH/449},"adn-banner-vertical-landscape-image":{height:381,aspectRatio:.924},"adn-banner-vertical":{height:412,aspectRatio:.728
+
+--- PACOTE #11 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/widgets/7.35.0/categories.js
+Tipo: text/javascript
+Conteúdo (Amostra): var CategoriesWidget=function(){"use strict";const{entries:e,setPrototypeOf:t,isFrozen:i,getPrototypeOf:n,getOwnPropertyDescriptor:o}=Object;let{freeze:r,seal:s,create:a}=Object,{apply:l,construct:c}="undefined"!=typeof Reflect&&Reflect;r||(r=function(e){return e}),s||(s=function(e){return e}),l||(l=function(e,t,i){return e.apply(t,i)}),c||(c=function(e,t){return new e(...t)});const h=_(Array.prototype.forEach),d=_(Array.prototype.lastIndexOf),u=_(Array.prototype.pop),m=_(Array.prototype.push),p
+
+--- PACOTE #12 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/widgets/7.35.0/one-tap.js
+Tipo: text/javascript
+Conteúdo (Amostra): var OneTapWidget=function(){"use strict";var t={HEADERS:{CONTENT_TYPE:"Content-Type",X_CLIENT_TYPE:"X-Client-Type",X_CONTEXTUAL:"X-Contextual",X_PLATFORM_ID:"X-Platform-Id",X_SITE_ID:"X-Site-Id",X_SOURCE:"X-Source",X_USER_AGENT:"X-User-Agent"},MELIDATA_ACTION:{CLEAN_AND_SEND:"cleanAndSend"},MELIDATA_TYPE:{EVENT:"event",SHOW:"show"},NOT_APPLY:"not_apply",TRACK_KEY:{ONE_TAP_SHOW:"oneTapShow",ONE_TAP_COMPLETE:"oneTapComplete",ONE_TAP_SKIPPED:"oneTapSkipped"}};const{MELIDATA_ACTION:e,MELIDATA_TYPE:a
+
+--- PACOTE #13 ---
+URL: https://http2.mlstatic.com/frontend-assets/cookies-consent-banner-builder/1.2.1/cookie-consent-banner-opt-out/script.js
+Tipo: text/javascript
+Conteúdo (Amostra): (()=>{"use strict";function e(e,t){return t||(t=e.slice(0)),Object.freeze(Object.defineProperties(e,{raw:{value:Object.freeze(t)}}))}function t(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function n(e){return n="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},n(e)}function a(e){var t=function(e,t){if("objec
+
+--- PACOTE #14 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5081.ccb9b79d.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5081],{62939(e,t,n){n.d(t,{Tq:()=>A,ab:()=>C});var r=n(89379),o=n(80045),i=n(96540),a=n(46942),s=n.n(a),c=n(17376),u=n(69247),l=n(97987),d=n(88460),p=n(95990),f=n(58168),m=n(97355),v=n(68156),h=n(67983),g=n(13887);const b="andes-badge",y=["top-left","top-right","bottom-left","bottom-right"],w=["accent","green","orange","red","gray"],x="This color will be deprecated in a future major version,\n please use 'c
+
+--- PACOTE #15 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5990.3317147b.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5990],{17586(_,e,t){t.d(e,{wR:()=>D});var s=t(96540);const A=(0,s.createContext)({}),D=()=>(0,s.useContext)(A)},95990(_,e,t){t.d(e,{wR:()=>s.wR});var s=t(17586)}}]); //# sourceMappingURL=5990.3317147b.js.map
+
+--- PACOTE #16 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/7808.5304697c.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[7808],{37808(e,a,t){t.d(a,{$n:()=>E,C3:()=>A});var r=t(58168),n=t(89379),s=t(80045),l=t(96540),c=t(46942),i=t.n(c),o=t(57387),d=t(17376),u=t(88460),m=t(69247),b=t(95990),f=t(48529);const h="andes-button",p=["children","className","disabled","fullWidth","hierarchy","href","id","loading","onClick","size","srAnnouncement","srLabel","type","ref","backgroundType","data-andes-state"],v={small:"xsmall",medium:"xsm
+
+--- PACOTE #17 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/8581.2bdcb790.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[8581],{81023(e,t,n){n.d(t,{Fm:()=>i,Jd:()=>o,_f:()=>u,il:()=>r,t6:()=>l,wn:()=>c});const r="ArrowUp",o="ArrowDown",i="Enter",u="Escape",l="Space",c="Tab"},50479(e,t,n){n.d(t,{A:()=>h});var r=n(72166),o=n(49953),i=n(24514),u=n(69202);const l="undefined"!=typeof window&&window.visualViewport,c=new Set(["checkbox","radio","range","color","file","image","button","submit","reset"]),a=e=>{const t=window.getComput
+
+--- PACOTE #18 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5045.5551187a.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5045],{54812(e,t,n){n.d(t,{h:()=>i,n:()=>r});const i=e=>{},r=e=>({sendCustom:()=>{},sendHeadless:()=>{},sendSlots:()=>{},sendStyleOverrides:()=>{},sendTokens:()=>{}})},17376(e,t,n){n.d(t,{Y:()=>v,s:()=>m});var i=n(58168),r=n(80045),s=n(96540),a=n(46942),l=n.n(a);const o="andes-visually-hidden",c=o,d=`${o}-focusable`,u=["children","component"];var m=e=>{let{children:t,component:n="span"}=e,a=(0,r.A)(e,u);ret
+
+--- PACOTE #19 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/133.0d2768a3.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[133],{97987(e,C,l){l.d(C,{A:()=>t});const t=(e,C)=>-1!==e.indexOf(C)},133(e,C,l){l.d(C,{BH:()=>el,$2:()=>nl,cB:()=>ll});var t=l(58168),n=l(89379),a=l(96540),o=l(46942),r=l.n(o),i=l(69247),s=l(17376),c=l(97987),m=l(88460);const u="ARS",d="BOB",p="BRL",L="CLF",E="CLP",h="COP",g="CRC",f="CUC",_="CNY",y="CUP",v="DOP",R="EUR",w="GTQ",U="HNL",b="MXN",M="NIO",N="PAB",A="PEN",Z="PYG",x="USD",H="UYU",P="VEF",Y="VES"
+
+--- PACOTE #20 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/home.desktop.604539da.js
+Tipo: text/javascript
+Conteúdo (Amostra): /*! For license information please see home.desktop.604539da.js.LICENSE.txt */ (()=>{var e,t,n,r,o,a={7024(e,t,n){var r={"./desktop/adn":[86976,[2638]],"./desktop/adn.js":[86976,[2638]],"./desktop/categories-new-design":[13269,[5990,7492,3521]],"./desktop/categories-new-design.js":[13269,[5990,7492,3521]],"./desktop/collections-v2-design":[36485,[5990,7492,7058]],"./desktop/collections-v2-design.js":[36485,[5990,7492,7058]],"./desktop/complaints-book":[15453,[1037]],"./desktop/complaints-book.js
+
+--- PACOTE #21 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-exhibitor.8a99f112.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[489],{64737(_,A,D){D.r(A),D.d(A,{default:()=>L.A});var L=D(33131)}}]);
+
+--- PACOTE #22 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5840.d81280e3.js
+Tipo: text/javascript
+Conteúdo (Amostra): (self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5840],{61678(e,t,r){"use strict";r.d(t,{Wu:()=>C,Zp:()=>_,wL:()=>L});var n=r(58168),o=r(80045),a=r(96540),i=r(46942),l=r.n(i),s=r(69247),c=r(95990),u=r(88460),d=r(97987),p=r(46956),m=r(85647);const f="andes-card",v=`${f}__content`,b=`${f}__footer`,g="accent",h="green",y="orange",E="informative",$="positive",A="caution",T="negative",x=[g,h,"red",y],N=[E,$,T,A,"none"],w=["animated","children","className","color","componen
+
+--- PACOTE #23 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/8398.c6641542.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[8398],{78398(e,t,n){n.d(t,{a:()=>X});var i=n(58168),o=n(89379),l=n(80045),a=n(96540),s=n(46942),r=n.n(s);var c=n(50479);var d=(e,t)=>-1!==e.indexOf(t);var u=()=>{};const h=["STYLE","SCRIPT"],b=()=>"undefined"!=typeof window&&"inert"in HTMLElement.prototype,p=(e,t,n,i)=>{if(!e)return;if(i&&e.shadowRoot===i){const e=Array.from(i.children||[]);for(let o=0;o<e.length;o+=1){const l=e[o];l instanceof HTMLElement&
+
+--- PACOTE #24 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/9557.3f325b0f.js
+Tipo: text/javascript
+Conteúdo (Amostra): /*! For license information please see 9557.3f325b0f.js.LICENSE.txt */ (self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[9557],{31410(e){const{protocol:t,host:n,pathname:r}=window.location,o=r.endsWith("/")?r.substring(0,r.length-1):r;e.exports={adapter:"xhr",baseURL:`${t}//${n}${o}/api`,method:"get",timeout:3e3,responseType:"json",maxRedirects:0,sendCSRFToken:!0,transitional:{clarifyTimeoutError:!0}}},89557(e,t,n){"use strict";function r(e){return r="function"==typeof
+
+--- PACOTE #25 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/7243.8940d2da.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[7243],{82212(e,t,n){n.d(t,{A:()=>c});var a=n(89379),s=n(80045),o=(n(96540),n(74848));const i=["label","target","htmlTarget","accesibilityText"];const c=function(e){let t=e.label,n=e.target,c=e.htmlTarget,r=void 0===c?null:c,l=e.accesibilityText,d=void 0===l?null:l,m=(0,s.A)(e,i);return(0,o.jsxs)("a",(0,a.A)((0,a.A)({href:n,target:r},m),{},{children:[t,d&&(0,o.jsx)("span",{className:"andes-visually-hidden",c
+
+--- PACOTE #26 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-dynamic-access.9d3a45d7.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[141],{45794(e,i,s){s.d(i,{A:()=>m});var a=s(89379),t=s(80045),r=(s(55081),s(96540)),c=s(46942),l=s.n(c),n=s(74848);const d=["id","title","height","onLoad","onMessage","scrolling","src","className"],o=e=>{let i=e.id,s=void 0===i?null:i,c=e.title,o=void 0===c?null:c,m=e.height,u=void 0===m?null:m,h=e.onLoad,_=void 0===h?null:h,v=e.onMessage,p=void 0===v?null:v,x=e.scrolling,g=void 0===x?"auto":x,$=e.src,y=e.c
+
+--- PACOTE #27 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5461.23ccdf09.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5461],{84620(e,t,n){n.d(t,{S:()=>v});var l=n(58168),i=n(96540),o=n(46942),r=n.n(o),s=n(69247),a=n(17376),c=n(95990);const u=e=>{let{color:t="var(--andes-color-icon-primary, rgba(0, 0, 0, 0.9))",i18n:n,srLabel:l}=e;return i.createElement("svg",{"aria-hidden":l?void 0:!l,"aria-label":l||void 0,role:l?"img":void 0,color:t,width:"16",height:"16",viewBox:"0 0 16 16",fill:"currentColor"},l&&i.createElement("title
+
+--- PACOTE #28 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/2287.579ff166.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[2287],{42287(e,n,a){a.d(n,{dk:()=>te,zQ:()=>$,xF:()=>ce});var c=a(89379),t=a(64467),i=a(80045),o=a(46942),s=a.n(o),l=a(87774),r=a(133),d=a(47405),m=a(74848),u="recommendations-full_icon",p=a(80296),x=a(96540),v=a(18988),h={",":"comma",".":"dot"},_=function(e){var n=e.namespace,a=e.installments,c=e.svg,i=e.fontSizeOverride,o="".concat(n,"__installments"),l=a.middle_text;return(0,m.jsx)(m.Fragment,{children:a
+
+--- PACOTE #29 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/5351.c01c917d.js
+Tipo: text/javascript
+Conteúdo (Amostra): /*! For license information please see 5351.c01c917d.js.LICENSE.txt */ "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5351],{13019(e,t,n){n.d(t,{C:()=>Sl,P:()=>qr,a:()=>lr,b:()=>dr,c:()=>mr,m:()=>ur,u:()=>Vr});var a=n(96540),i=n(74848),r=n(89557),o=n(37808),l=n(58168),s=n(46942),c=n.n(s),d=n(17376),u=n(69247),m=n(57387);const p=e=>{let{color:t="var(--andes-color-icon-primary, rgba(0, 0, 0, 0.9))",i18n:n,srLabel:i}=e;return a.createElement("svg",{"aria-h
+
+--- PACOTE #30 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/1046.e748802a.js
+Tipo: text/javascript
+Conteúdo (Amostra): /*! For license information please see 1046.e748802a.js.LICENSE.txt */ "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[1046],{86047(e,t,n){var r=n(96540),a=n(40961);function o(e){var t="https://react.dev/errors/"+e;if(1<arguments.length){t+="?args[]="+encodeURIComponent(arguments[1]);for(var n=2;n<arguments.length;n++)t+="&args[]="+encodeURIComponent(arguments[n])}return"Minified React error #"+e+"; visit "+t+" for the full message or use the non-minifie
+
+--- PACOTE #31 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/3658.6a66dc49.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[3658],{64182(e,s,t){t.d(s,{E:()=>f});var i=t(47405),a=t(64467),o=t(89379),n=t(80296),r=t(80045),c=t(96540),l=t(46942),d=t.n(l),m=t(37492),h=t(87774),u=t(13019),v=t(74848),p=["className","classnameFromResponse","classNamesMap","classNamesIndexMap","slidesPerView","Card","cardProps","IconFactory","buttonSize","hideRebates","onItemClick","onBookmarkClick","onTitleTagIconClick","bookmarkedItems","bookmarkText",
+
+--- PACOTE #32 ---
+URL: https://http2.mlstatic.com/frontend-assets/ml-web-navigation/widgets/7.35.0/searchbox.js
+Tipo: text/javascript
+Conteúdo (Amostra): var Searchbox=function(){"use strict";function e(e){return e&&e.__esModule&&Object.prototype.hasOwnProperty.call(e,"default")?e.default:e}var t,n={exports:{}},o={exports:{}},i="object"==typeof Reflect?Reflect:null,r=i&&"function"==typeof i.apply?i.apply:function(e,t,n){return Function.prototype.apply.call(e,t,n)};t=i&&"function"==typeof i.ownKeys?i.ownKeys:Object.getOwnPropertySymbols?function(e){return Object.getOwnPropertyNames(e).concat(Object.getOwnPropertySymbols(e))}:function(e){return Obj
+
+--- PACOTE #33 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-recommendations.2fa4dccb.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[893],{17749(_,A,D){D.r(A),D.d(A,{default:()=>L.A});var L=D(73658)}}]);
+
+--- PACOTE #34 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-thb-double.86172845.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[2267],{95396(e,t,n){n.d(t,{_V:()=>m,x4:()=>r,nr:()=>v,jR:()=>o});var i=n(99378),l=n(74848);const r=e=>{let{url:t}=e;return(0,l.jsx)(i.e,{children:`\n       var trackMclicks = document.createElement('img');\n        trackMclicks.src = '${t}';\n        trackMclicks.style.opacity='0.0';\n        trackMclicks.style.visibility='hidden';\n        trackMclicks.style.position='absolute';\n        trackMclicks.style
+
+--- PACOTE #35 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-loyalty-partner-subscriptions.e0c26a07.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[5531],{54812(s,e,t){t.d(e,{h:()=>r,n:()=>l});const r=s=>{},l=s=>({sendCustom:()=>{},sendHeadless:()=>{},sendSlots:()=>{},sendStyleOverrides:()=>{},sendTokens:()=>{}})},38083(s,e,t){t.d(e,{H:()=>a});var r=t(80045),l=t(58168),i=t(96540);const n=["ref"];var a=function(s){let e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};class t extends i.PureComponent{constructor(s){super(s),"undefined"==typeof w
+
+--- PACOTE #36 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-loyalty-essential-benefits.c6ae9c98.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[8837],{57951(e,t,l){function i(e){return e.displayName||e.name||"Component"}function a(e,t){return`${i(e)}(${i(t)})`}l.d(t,{A:()=>a})},6295(e,t,l){l.d(t,{A:()=>d});var i=l(89379),a=l(96540),n=l(74629),o=l(57951),r=l(74848);const s=l.g.requestIdleCallback?requestIdleCallback:setTimeout;const d=function(e){const t=(arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}).noWrapper,d=void 0!==t&&t;class c ex
+
+--- PACOTE #37 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-adn.7d3385ad.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[2638],{57951(t,e,n){function i(t){return t.displayName||t.name||"Component"}function s(t,e){return`${i(t)}(${i(e)})`}n.d(e,{A:()=>s})},6295(t,e,n){n.d(e,{A:()=>d});var i=n(89379),s=n(96540),r=n(74629),a=n(57951),o=n(74848);const c=n.g.requestIdleCallback?requestIdleCallback:setTimeout;const d=function(t){const e=(arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}).noWrapper,d=void 0!==e&&e;class l ex
+
+--- PACOTE #38 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-mplay-media-card.947bbe4f.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[280],{57951(e,t,i){function n(e){return e.displayName||e.name||"Component"}function l(e,t){return`${n(e)}(${n(t)})`}i.d(t,{A:()=>l})},6295(e,t,i){i.d(t,{A:()=>s});var n=i(89379),l=i(96540),o=i(74629),r=i(57951),a=i(74848);const d=i.g.requestIdleCallback?requestIdleCallback:setTimeout;const s=function(e){const t=(arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}).noWrapper,s=void 0!==t&&t;class c ext
+
+--- PACOTE #39 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/9256.05f2a8a4.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[9256],{95396(e,t,i){i.d(t,{_V:()=>m,x4:()=>a,nr:()=>h,jR:()=>o});var n=i(99378),s=i(74848);const a=e=>{let{url:t}=e;return(0,s.jsx)(n.e,{children:`\n       var trackMclicks = document.createElement('img');\n        trackMclicks.src = '${t}';\n        trackMclicks.style.opacity='0.0';\n        trackMclicks.style.visibility='hidden';\n        trackMclicks.style.position='absolute';\n        trackMclicks.style
+
+--- PACOTE #40 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-recommendations-carousel-dual.d78b2a68.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[9507],{88372(e,s,i){i.d(s,{A:()=>t});function t(e,s){if(e&&Object.keys(e).length>0){const i=e.cents_type,t=e.currency_id,a=e.value,r=e.suffix;return{size:s||24,centsType:i||"superscript",currencyId:t,value:{fraction:a.fraction,cents:a.cents},suffix:r}}return null}},44577(e,s,i){i.d(s,{A:()=>g});i(96540);var t=i(46942),a=i.n(t),r=i(61678),l=i(37808),c=i(6295),n=i(76957),d=i(89379),o=i(133),m=i(93309),u=i(121
+
+--- PACOTE #41 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/3771.43c8a78e.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[3771],{62939(e,t,r){r.d(t,{Tq:()=>E,ab:()=>x});var n=r(89379),o=r(80045),a=r(96540),i=r(46942),l=r.n(i),c=r(17376),s=r(69247),d=r(97987),m=r(88460),u=r(95990),h=r(58168),g=r(97355),v=r(68156),p=r(67983),f=r(13887);const b="andes-badge",A=["top-left","top-right","bottom-left","bottom-right"],y=["accent","green","orange","red","gray"],w="This color will be deprecated in a future major version,\n please use 'c
+
+--- PACOTE #42 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-discovery.cbac031a.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[8871],{61003(_,A,D){D.r(A),D.d(A,{default:()=>L.A});var L=D(69256)}}]);
+
+--- PACOTE #43 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/7492.c745da44.js
+Tipo: text/javascript
+Conteúdo (Amostra): /*! For license information please see 7492.c745da44.js.LICENSE.txt */ "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[7492],{37492(e,t,n){n.d(t,{iW:()=>nt,G:()=>Je,j5:()=>et});var i=n(58168),s=n(80045),o=n(96540),r=n(46942),a=n.n(r),l=n(69247),d=n(89379);const c=e=>{let{color:t="var(--andes-color-icon-primary, rgba(0, 0, 0, 0.9))",i18n:n,srLabel:i}=e;return o.createElement("svg",{"aria-hidden":i?void 0:!i,"aria-label":i||void 0,role:i?"img":void 0,color
+
+--- PACOTE #44 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-categories-new-design.b5371a6b.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[3521],{61678(e,t,n){n.d(t,{Wu:()=>_,Zp:()=>k,wL:()=>T});var r=n(58168),a=n(80045),i=n(96540),s=n(46942),o=n.n(s),c=n(69247),l=n(95990),d=n(88460),m=n(97987),h=n(46956),p=n(85647);const u="andes-card",f=`${u}__content`,v=`${u}__footer`,A="accent",y="green",g="orange",w="informative",N="positive",x="caution",$="negative",b=[A,y,"red",g],E=[w,N,$,x,"none"],j=["animated","children","className","color","componen
+
+--- PACOTE #45 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/available-components-desktop-site-shopping-info.b3643071.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[984],{57951(e,t,n){function i(e){return e.displayName||e.name||"Component"}function r(e,t){return`${i(e)}(${i(t)})`}n.d(t,{A:()=>r})},6295(e,t,n){n.d(t,{A:()=>c});var i=n(89379),r=n(96540),a=n(74629),s=n(57951),o=n(74848);const l=n.g.requestIdleCallback?requestIdleCallback:setTimeout;const c=function(e){const t=(arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}).noWrapper,c=void 0!==t&&t;class d ext
+
+--- PACOTE #46 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/resource_timing.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{M as wm_a}from"./bases.min.js";var wm_b;class wm_c{constructor(wm_a,wm_b,wm_c=[]){var wm_d;this.aggregator=wm_a,this.config=wm_b,this.domains=wm_c,null!==(wm_d=window)&&void 0!==wm_d&&null!==(wm_d=wm_d.WMANS)&&void 0!==wm_d&&null!==(wm_d=wm_d.TMP)&&void 0!==wm_d&&wm_d.resource_timing&&delete window.WMANS.TMP.resource_timing}start(){this.resourceObserver=new PerformanceObserver(wm_a=>{wm_a.getEntries().filter(wm_a=>this.config.metricSupport.includes(wm_a.initiatorType)).forEach(wm_a=>this.
+
+--- PACOTE #47 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/logs.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{V as wm_a,i as wm_b}from"./index.min.js";import{p as wm_c,e as wm_d,c as wm_e,a as wm_f,S as wm_g,b as wm_h,f as wm_i,g as wm_j,i as wm_k,m as wm_l,B as wm_m,d as wm_n,T as wm_o}from"./NoopLogger.min.js";import{t as wm_p,d as wm_q,q as wm_r,J as wm_s,K as wm_t,I as wm_u,L as wm_v,P as wm_w,M as wm_x,r as wm_y,T as wm_z,N as wm_A,H as wm_B,f as wm_C,Q as wm_D,j as wm_E,z as wm_F,x as wm_G,w as wm_H,S as wm_I,U as wm_J,v as wm_K,k as wm_L,n as wm_M,p as wm_N,D as wm_O,R as wm_P,A as wm_Q,O 
+
+--- PACOTE #48 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/heaviest_resources.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{M as wm_a}from"./bases.min.js";var wm_b;class wm_c{constructor(wm_a,wm_b,wm_c=[]){var wm_d;this.aggregator=wm_a,this.config=wm_b,this.domains=wm_c,null!==(wm_d=window)&&void 0!==wm_d&&null!==(wm_d=wm_d.WMANS)&&void 0!==wm_d&&null!==(wm_d=wm_d.TMP)&&void 0!==wm_d&&wm_d.heaviest_resources&&delete window.WMANS.TMP.heaviest_resources}start(){this.resourceObserver=new PerformanceObserver(wm_a=>{const wm_b=new Set;wm_a.getEntries().filter(this.filterEntries(wm_b)).forEach(wm_a=>this.attach(wm_a
+
+--- PACOTE #49 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/web_vitals.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): var wm_a,wm_b,wm_c=function(){var wm_a=self.performance&&performance.getEntriesByType&&performance.getEntriesByType("navigation")[0];if(wm_a&&wm_a.responseStart>0&&wm_a.responseStart<performance.now())return wm_a},wm_d=function(wm_a){if("loading"===document.readyState)return"loading";var wm_b=wm_c();if(wm_b){if(wm_a<wm_b.domInteractive)return"loading";if(0===wm_b.domContentLoadedEventStart||wm_a<wm_b.domContentLoadedEventStart)return"dom-interactive";if(0===wm_b.domComplete||wm_a<wm_b.domComplet
+
+--- PACOTE #50 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/traces.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{b as wm_a,p as wm_b,S as wm_c,i as wm_d,s as wm_e,B as wm_f,a as wm_g,c as wm_h,W as wm_i,m as wm_j,N as wm_k,d as wm_l,e as wm_m,T as wm_n}from"./NoopLogger.min.js";import{i as wm_o,d as wm_p,o as wm_q,g as wm_r,a as wm_s,h as wm_t,b as wm_u,m as wm_v,c as wm_w,e as wm_x,t as wm_y,f as wm_z,T as wm_A,j as wm_B,k as wm_C,l as wm_D,n as wm_E,D as wm_F,p as wm_G,q as wm_H,s as wm_I,E as wm_J,I as wm_K,R as wm_L,r as wm_M,u as wm_N,v as wm_O,_ as wm_P,w as wm_Q,x as wm_R,y as wm_S,z as wm_T,
+
+--- PACOTE #51 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/metrics.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{d as wm_a,G as wm_b,m as wm_c,E as wm_d,q as wm_e,R as wm_f,H as wm_g,z as wm_h,x as wm_i,w as wm_j,y as wm_k,O as wm_l,k as wm_m,A as wm_n,B as wm_o}from"./resources.min.js";import{V as wm_p,i as wm_q}from"./index.min.js";import{g as wm_r,u as wm_s}from"./timer-util.min.js";var wm_t,wm_u;!function(wm_a){wm_a[wm_a.DELTA=0]="DELTA",wm_a[wm_a.CUMULATIVE=1]="CUMULATIVE"}(wm_t||(wm_t={})),function(wm_a){wm_a[wm_a.HISTOGRAM=0]="HISTOGRAM",wm_a[wm_a.EXPONENTIAL_HISTOGRAM=1]="EXPONENTIAL_HISTOGR
+
+--- PACOTE #52 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/1078.2dac771c.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[1078],{91078(e,t,r){r.d(t,{loadableReady:()=>o});r(16280),r(23792),r(18111),r(81148),r(7588),r(13579),r(3362),r(58335),r(62953),r(96540);var n=r(10423);const i="undefined"!=typeof window;async function o(){let e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:()=>{},{namespace:t="",chunkLoadingGlobal:r="__LOADABLE_LOADED_CHUNKS__"}=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};if(!i)retur
+
+--- PACOTE #53 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/index.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{q as wm_a,s as wm_b}from"./resources.min.js";var wm_c;!function(wm_a){wm_a[wm_a.INT=0]="INT",wm_a[wm_a.DOUBLE=1]="DOUBLE"}(wm_c||(wm_c={}));var wm_d={_export:function(wm_c,wm_d){return new Promise(function(wm_e){wm_a.with(wm_b(wm_a.active()),function(){wm_c.export(wm_d,function(wm_a){wm_e(wm_a)})})})}};export{wm_c as V,wm_d as i};//# sourceMappingURL=index.min.js.map 
+
+--- PACOTE #54 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/NoopLogger.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{W as wm_a,X as wm_b,Y as wm_c,Z as wm_d,$ as wm_e,N as wm_f,a0 as wm_g,d as wm_h,t as wm_i,i as wm_j,f as wm_k,T as wm_l}from"./resources.min.js";var wm_m=window&&window.__read||function(wm_a,wm_b){var wm_c="function"==typeof Symbol&&wm_a[Symbol.iterator];if(!wm_c)return wm_a;var wm_d,wm_e,wm_f=wm_c.call(wm_a),wm_g=[];try{for(;(void 0===wm_b||wm_b-- >0)&&!(wm_d=wm_f.next()).done;)wm_g.push(wm_d.value)}catch(wm_a){wm_e={error:wm_a}}finally{try{wm_d&&!wm_d.done&&(wm_c=wm_f.return)&&wm_c.cal
+
+--- PACOTE #55 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/resources.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): var wm_a,wm_b=function(){function wm_a(wm_a){this._delegate=wm_a}return wm_a.prototype.export=function(wm_a,wm_b){this._delegate.export(wm_a,wm_b)},wm_a.prototype.forceFlush=function(){return this._delegate.forceFlush()},wm_a.prototype.shutdown=function(){return this._delegate.shutdown()},wm_a}(),wm_c=window&&window.__extends||(wm_a=function(wm_b,wm_c){return wm_a=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(wm_a,wm_b){wm_a.__proto__=wm_b}||function(wm_a,wm_b){for(var wm_c in 
+
+--- PACOTE #56 ---
+URL: https://http2.mlstatic.com/frontend-assets/web-monitoring/1.5.9/timer-util.min.js
+Tipo: text/javascript
+Conteúdo (Amostra): import{d as wm_a}from"./resources.min.js";var wm_b=function(wm_b){wm_a.error(function(wm_a){return"string"==typeof wm_a?wm_a:JSON.stringify(function(wm_a){for(var wm_b={},wm_c=wm_a;null!==wm_c;)Object.getOwnPropertyNames(wm_c).forEach(function(wm_a){if(!wm_b[wm_a]){var wm_d=wm_c[wm_a];wm_d&&(wm_b[wm_a]=String(wm_d))}}),wm_c=Object.getPrototypeOf(wm_c);return wm_b}(wm_a))}(wm_b))};function wm_c(wm_a){try{wm_b(wm_a)}catch(wm_a){}}function wm_d(wm_a){}export{wm_c as g,wm_d as u};//# sourceMappingUR
+
+--- PACOTE #57 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #58 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/7814.2132a3e9.js
+Tipo: text/javascript
+Conteúdo (Amostra): "use strict";(self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[7814],{27814(n,e,s){s.d(e,{getWrappedChildren:()=>h});var r=s(80296),t=(s(23792),s(3362),s(62953),s(74848)),i=s(35657);const a=n=>n.children;async function c(){return a}const d=n=>{let e=n.children;return(0,t.jsxs)(a,{children:[(0,t.jsx)(a,{},"Head"),(0,t.jsxs)(a,{children:[(0,t.jsx)(a,{},"StartedScript"),(0,t.jsx)(a,{},"MelidataTrack"),e,(0,t.jsx)(a,{},"CookiesConsentBanner"),(0,t.jsx)(a,{},"ReadyScript"),
+
+--- PACOTE #59 ---
+URL: https://www.mercadolivre.com.br/adn/api?placement=adn&page=home&site_id=MLB&resolution_name=2x&platform=desktop&slot_id=billboard1&ad_unit=ADN_HOME_DESKTOP_1%2CADN_HOME_DESKTOP_2&domain=1&unique_id=43529630-328b-497a-a8d5-b391ff452946
+Tipo: application/json;charset=utf-8
+Conteúdo (Amostra): {"experiments":{},"items":[{"type":"adn","is_off_meli":false,"start_date":"2026-06-08T03:00:00Z","end_date":"2026-08-10T02:59:59Z","event_tracking":{"print":[{"url":"https://print1.mercadoclics.com/display/prints/MLB/count?d=4rw3Uu1LmPx8Du-Dq7Pm9CFHd8w_uqUe8pUXBKBp5vo3RX2gEabW815gHJwXWXcn4Ne5EcSsK3Y40yzddM4R3ai1jxjB5TeBTwRg4KXhKjBclDwAMAweIqRpfGu-rESCBB7yq2qFAupiAxRnCHn5bWiwcPkgqL6-0L3TM-Q_BX45d73rwhAfWhaBwBTHYeV9R6c28EHb0HxdQL6sqCTkQKXPsVrzIJqYqhRLCh8W7NHuNXI70ddoIhL4hyFm4ymPhsHM5O_h4pzWTwYEQwh
+
+--- PACOTE #60 ---
+URL: https://http2.mlstatic.com/frontend-assets/homes-palpatine/6795.2bb9ae70.js
+Tipo: text/javascript
+Conteúdo (Amostra): (self.__LOADABLE_LOADED_CHUNKS__=self.__LOADABLE_LOADED_CHUNKS__||[]).push([[6795],{46795(t,r,e){t.exports=e(8603)},8603(t,r,e){var s,p,o;s={548(t,r,e){e(602),e(63),e(885),e(697);const{createElement:s}=e(15),p=t=>{let{children:r}=t;return r},o=t=>r=>{if(!r)return null;const{type:e,childNodes:n}=r;if("app"===e)return t;const u=(null==n?void 0:n.map(o(t)))||[];return s(p,{},...u)};t.exports={NavigationHydrateWrapper:t=>{let{structure:r,children:e}=t;const n=(r||window.navigationHydrateWrapperStruc
+
+--- PACOTE #61 ---
+URL: https://api.mercadolibre.com/melidata/tracks
+Tipo: application/json
+Conteúdo (Amostra): {"records":[{"status":200},{"status":200},{"status":200}],"configuration":null,"failed_record_count":0,"mobile_configuration":null}
+
+--- PACOTE #62 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #63 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #64 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #65 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #66 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #67 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #68 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #69 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+
+--- PACOTE #70 ---
+URL: https://http2.mlstatic.com/frontend-assets/frontend-viewability/measurement-script.js
+Tipo: text/javascript
+Conteúdo (Amostra): var frontend_viewability;!function(){"use strict";var e={};e.g=function(){if("object"==typeof globalThis)return globalThis;try{return this||new Function("return this")()}catch(e){if("object"==typeof window)return window}}();let t;t=(()=>{if(void 0!==t&&t)return t;if(void 0!==e.g&&e.g)return e.g;if("undefined"!=typeof window&&window)return window;if("undefined"!=typeof globalThis&&globalThis)return globalThis;const i=Function("return this")();if(i)return i;throw new Error("Could not determine glo
+

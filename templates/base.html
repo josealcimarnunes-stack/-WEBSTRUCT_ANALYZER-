@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebStruct Analyzer Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/code_modal.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary px-3">
+        <a class="navbar-brand fw-bold" href="#">🚀 WebStruct Analyzer Pro</a>
+        <div class="ms-auto">
+            <button class="btn btn-outline-info btn-sm me-2" onclick="abrirModalSeletores()">📂 Seletores Salvos</button>
+            <a href="/logout" class="btn btn-outline-danger btn-sm">Sair</a>
+        </div>
+    </nav>
+    <div class="container-fluid py-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- MODAL DE SELETORES SALVOS E CONFIGURAÇÕES DE AGENDAMENTO -->
+    <div class="modal fade" id="modalSeletores" tabindex="-1" aria-labelledby="modalSeletoresLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content bg-secondary text-light border-0 shadow-lg">
+                <div class="modal-header border-bottom border-dark">
+                    <h5 class="modal-title fw-bold" id="modalSeletoresLabel">📂 Gerenciador de Seletores Salvos & Agendamento</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Bloco de Parâmetros de Tempo e Execução do Bot movido para cá -->
+                    <div class="card bg-dark text-white border-secondary mb-4 p-3">
+                        <h6 class="text-info fw-bold mb-3">⚙️ Parâmetros de Execução do Bot por Seletor</h6>
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label for="input-data" class="form-label fw-bold">📅 Data de Execução</label>
+                                <input type="date" id="input-data" class="form-control bg-secondary text-light border-secondary">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="input-hora" class="form-label fw-bold">⏰ Hora de Início</label>
+                                <input type="time" id="input-hora" class="form-control bg-secondary text-light border-secondary">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="input-duracao" class="form-label fw-bold">⏳ Duração / Tempo (min)</label>
+                                <input type="number" id="input-duracao" class="form-control bg-secondary text-light border-secondary" placeholder="Ex: 30" min="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabela / Lista de Seletores Salvos -->
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped align-middle">
+                            <thead>
+                                <tr>
+                                    <th># ID</th>
+                                    <th>Nome / Rótulo</th>
+                                    <th>Seletor CSS / XPath</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-seletores-salvos-corpo">
+                                <!-- Preenchido dinamicamente via JS -->
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Nenhum seletor salvo encontrado no momento.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-dark">
+                    <button type="button" class="btn btn-outline-light btn-sm" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-info btn-sm fw-bold" onclick="salvarConfiguracaoSeletor()">Salvar Configurações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/scraping.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/maps.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/code_generator.js') }}"></script>
+</body>
+</html>
